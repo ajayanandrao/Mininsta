@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Login from './Authentication/Login';
+import SignUp from './Authentication/SignUp';
+import Avtar from './Avtar';
+import MobileNavebar from './MobileNavbar/MobileNavebar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Post from './Post/Post';
+import Feed from './Feed/Feed';
+import Home from './Home/Home';
+import Option from './Option/Option';
+import SearchUser from './Search/SearchUser';
+import Message from './Message/Message';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router  basename='/Mininsta'>
+        <MobileNavebar />
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route path="home" element={<Home />} />
+          <Route path="signUp" element={<SignUp />} />
+          <Route path="option" element={<Option />} />
+          <Route path="search" element={<SearchUser />} />
+          <Route path="message" element={<Message />} />
+        </Routes>
+      </Router>
+
+    </>
   );
 }
 
