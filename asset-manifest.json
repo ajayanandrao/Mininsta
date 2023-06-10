@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/SharePost/static/css/main.a6678214.css",
-    "main.js": "/SharePost/static/js/main.2702556a.js",
-    "static/js/787.3c880708.chunk.js": "/SharePost/static/js/787.3c880708.chunk.js",
-    "static/media/emoji.png": "/SharePost/static/media/emoji.01635c34bc0740667935.png",
-    "index.html": "/SharePost/index.html",
-    "main.a6678214.css.map": "/SharePost/static/css/main.a6678214.css.map",
-    "main.2702556a.js.map": "/SharePost/static/js/main.2702556a.js.map",
-    "787.3c880708.chunk.js.map": "/SharePost/static/js/787.3c880708.chunk.js.map"
+    "main.css": "/Mininsta/static/css/main.a6678214.css",
+    "main.js": "/Mininsta/static/js/main.7b4dfe3e.js",
+    "static/js/787.3c880708.chunk.js": "/Mininsta/static/js/787.3c880708.chunk.js",
+    "static/media/emoji.png": "/Mininsta/static/media/emoji.01635c34bc0740667935.png",
+    "index.html": "/Mininsta/index.html",
+    "main.a6678214.css.map": "/Mininsta/static/css/main.a6678214.css.map",
+    "main.7b4dfe3e.js.map": "/Mininsta/static/js/main.7b4dfe3e.js.map",
+    "787.3c880708.chunk.js.map": "/Mininsta/static/js/787.3c880708.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a6678214.css",
-    "static/js/main.2702556a.js"
+    "static/js/main.7b4dfe3e.js"
   ]
 }
