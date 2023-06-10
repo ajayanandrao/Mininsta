@@ -1,9 +1,9 @@
 {
+  "homepage": "http://ajayanandrao02.github.io/SharePost",
   "name": "firebase-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "homepage": "http://ajayanandrao02.github.io/Mininsta",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.10.5",
