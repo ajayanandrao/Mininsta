@@ -1,11 +1,11 @@
+import "./UserPost.scss";
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import "./Feed.scss"
 import { BsFillChatDotsFill, BsFillHeartFill, BsThreeDotsVertical } from "react-icons/bs"
 import { FaPlay, FaShare } from "react-icons/fa"
 import ReactTimeago from 'react-timeago';
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
-import { db, storage } from '../Firebase';
-import { AuthContext } from '../AuthContaxt';
+import { db, storage } from './../../Firebase';
+import { AuthContext } from './../../AuthContaxt';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import englishStrings from 'react-timeago/lib/language-strings/en';
 import { IoMdClose, IoMdSend, IoMdShareAlt } from "react-icons/io";
@@ -13,7 +13,8 @@ import TimeAgo from 'react-timeago';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Picker from '@emoji-mart/react';
 
-const Feed = ({ post }) => {
+const UserPost = ({ post }) => {
+
     const { currentUser } = useContext(AuthContext);
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
@@ -282,6 +283,7 @@ const Feed = ({ post }) => {
         setEditImg(null);
     }
 
+
     return (
         <>
             <div className="feed-container">
@@ -318,7 +320,7 @@ const Feed = ({ post }) => {
 
 
                     {/* Feed Text */}
-                    <div className="feed-post-text">
+                    <div className="feed-post-text userPost-text">
                         {post.postText}
                     </div>
 
@@ -375,11 +377,10 @@ const Feed = ({ post }) => {
                                         return (
                                             <>
                                                 <div key={item.id}>
-                                                    <div className='mx-1' style={{ fontSize: "11px" }}>{item.name}</div>
+                                                    <div className='mx-1' style={{ fontSize: "11px", color: "black" }}>{item.name}</div>
                                                 </div>
                                             </>
                                         )
-
                                     })}
                                 </div>
                             </div>
@@ -447,4 +448,4 @@ const Feed = ({ post }) => {
     )
 }
 
-export default Feed
+export default UserPost

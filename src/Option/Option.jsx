@@ -10,7 +10,7 @@ import { AuthContext } from '../AuthContaxt';
 const Option = () => {
     const { currentUser } = useContext(AuthContext);
 
-    const LogOut = async() => {
+    const LogOut = async () => {
         const PresenceRef = doc(db, "userPresece", currentUser.uid);
 
         await updateDoc(PresenceRef, {
@@ -38,13 +38,13 @@ const Option = () => {
 
     return (
         <>
-            <div className="option-container">
+            <div className="option-container w3-animate-opacity">
 
                 <div className="option-back-div">
-                    <i onClick={goBack} class="bi bi-arrow-left "></i>
+                    <i onClick={goBack} className="bi bi-arrow-left "></i>
                 </div>
-                <hr />
                 <div className="option-inner-div">
+
                     <div className="option-profile-div">
                         <img src={currentUser && currentUser.photoURL} className='option-profile-img' alt="" />
 

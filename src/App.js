@@ -10,13 +10,19 @@ import Home from './Home/Home';
 import Option from './Option/Option';
 import SearchUser from './Search/SearchUser';
 import Message from './Message/Message';
+import Users from './Params/Users';
+import UsersDetails from './Params/UsersDetails';
+import UserProfile from './UserProfile/UserProfile';
+import { useEffect } from 'react';
+import ScrollToTop from './ScrollTop';
 
 function App() {
 
   return (
     <>
-      <Router  basename='/Mininsta'>
+      <Router basename='/Mininsta'>
         <MobileNavebar />
+        <ScrollToTop />
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route path="home" element={<Home />} />
@@ -24,6 +30,12 @@ function App() {
           <Route path="option" element={<Option />} />
           <Route path="search" element={<SearchUser />} />
           <Route path="message" element={<Message />} />
+
+          <Route path='users' element={<Users />} />
+          <Route path='users/:id' element={<UsersDetails />} />
+
+          <Route path='profile' element={<UserProfile />} />
+
         </Routes>
       </Router>
 

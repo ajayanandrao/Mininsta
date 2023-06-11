@@ -29,7 +29,7 @@ const MobileNavebar = () => {
     return (
         <>
             <div className="mobile-nav-container" id='navIdB'>
-                <Link to="home/" className='link'> <div className='mobile-nav-title'>Ajay</div></Link>
+                <Link to="home/" className='link'> <div className='mobile-nav-title'>ShareBook</div></Link>
                 <div className='mobile-item-div'>
 
                     <span className='mobile-nav-mainu'>
@@ -47,10 +47,14 @@ const MobileNavebar = () => {
             </div>
 
             <div className="mobile-nav-bottom-container" id='navId'>
-                <AiFillHome className='mobile-nav-bottom-icon' />
+                <Link to={"home/"}>
+                    <AiFillHome className='mobile-nav-bottom-icon' />
+                </Link>
                 <AiFillHeart className='mobile-nav-bottom-icon' />
                 <Link to="message/"> <i className="bi bi-messenger"></i></Link>
-                <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />
+
+                <Link to={"profile/"}> <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />
+                </Link>
                 {/* <AiFillHeart className='mobile-nav-bottom-icon' /> */}
             </div>
         </>

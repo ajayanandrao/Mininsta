@@ -13,6 +13,7 @@ import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
 import { FaPlay } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 const Post = () => {
@@ -179,9 +180,12 @@ const Post = () => {
 
           <div className="post-profile-div">
             <div>
-              <div style={{ backgroundImage: `url(${currentUser && currentUser.photoURL})` }} className='post-img'>
-                <div className="post-img-dot"></div>
-              </div>
+
+              <Link to={"/profile"}>
+                <div style={{ backgroundImage: `url(${currentUser && currentUser.photoURL})` }} className='post-img'>
+                  <div className="post-img-dot"></div>
+                </div>
+              </Link>
             </div>
 
             <input type="text" className='post-input mx-3' placeholder="What's on your mind ? "
@@ -251,7 +255,7 @@ const Post = () => {
           </div>)}
 
         </div>
-      </div>
+      </div >
     </>
   )
 }
