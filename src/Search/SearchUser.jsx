@@ -33,7 +33,7 @@ const SearchUser = () => {
                         className='Seatch-User-input'
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
-                        placeholder='Search User' />
+                        placeholder='Search friends' />
                 </div>
             </div>
 
