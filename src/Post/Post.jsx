@@ -14,6 +14,7 @@ import data from '@emoji-mart/data';
 
 import { FaPlay } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Box, LinearProgress } from '@mui/material';
 
 
 const Post = () => {
@@ -177,83 +178,89 @@ const Post = () => {
       <div className="post-contianer">
         <div className="post-div">
 
+          <div className='post-padding'>
 
-          <div className="post-profile-div">
-            <div>
+            <div className="post-profile-div">
+              <div>
 
-              <Link to={"/profile"}>
-                <div style={{ backgroundImage: `url(${currentUser && currentUser.photoURL})` }} className='post-img'>
-                  <div className="post-img-dot"></div>
-                </div>
-              </Link>
-            </div>
-
-            <input type="text" className='post-input mx-3' placeholder="What's on your mind ? "
-              onChange={(e) => setPostText(e.target.value)}
-              value={postText}
-              onKeyDown={handleKey}
-            />
-            <div className='post-send-text' onClick={handleUpload} >Post</div>
-          </div>
-
-          <div className='post-icon-container'>
-            <label htmlFor="photo" onClick={Wrapp} style={{ cursor: "pointer" }}>
-              <div className="post-icon-div">
-                <img src={photo} className='post-icon' alt="" />
-                <div className="post-icon-text">
-                  Photo/Video
-                </div>
-              </div>
-              <input type="file" id="photo" accept="image/*, video/*" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
-            </label>
-
-
-            <label htmlFor="photo" onClick={Wrapp} style={{ cursor: "pointer" }}>
-              <div className="post-icon-div">
-                <img src={video} className='post-icon' alt="" />
-                <div className="post-icon-text">
-                  Video
-                </div>
-              </div>
-              <input type="file" id="photo" accept="video/*" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
-            </label>
-
-            <div className="post-icon-div" onClick={Emoji} >
-              <img src={smile} className='post-icon' alt="" />
-              <div className="post-icon-text">
-                Emoji
-              </div>
-            </div>
-          </div>
-
-          <div className="Selected-imageOrVideo-container">
-
-            {img && img.type.startsWith('image/') && (
-              <img className="postImg" src={URL.createObjectURL(img)} alt="" />
-            )}
-
-            {img && img.type.startsWith('video/') && (
-              <div className="video-container mb-5">
-                <video ref={videoRef} onClick={handleClick} className="video ">
-                  <source src={URL.createObjectURL(img)} type={img.type} />
-                </video>
-                {!isPlaying && (
-                  <div className="play-button" onClick={handleClick}>
-                    <FaPlay className='play-button' />
+                <Link to={"/profile"}>
+                  <div style={{ backgroundImage: `url(${currentUser && currentUser.photoURL})` }} className='post-img'>
+                    <div className="post-img-dot"></div>
                   </div>
-                )}
+                </Link>
               </div>
-            )}
 
+              <input type="text" className='post-input mx-3' placeholder="What's on your mind ? "
+                onChange={(e) => setPostText(e.target.value)}
+                value={postText}
+                onKeyDown={handleKey}
+              />
+              <div className='post-send-text' onClick={handleUpload} >Post</div>
+            </div>
+
+            <div className='post-icon-container'>
+              <label htmlFor="photo" onClick={Wrapp} style={{ cursor: "pointer" }}>
+                <div className="post-icon-div">
+                  <img src={photo} className='post-icon' alt="" />
+                  <div className="post-icon-text">
+                    Photo/Video
+                  </div>
+                </div>
+                <input type="file" id="photo" accept="image/*, video/*" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
+              </label>
+
+
+              <label htmlFor="photo" onClick={Wrapp} style={{ cursor: "pointer" }}>
+                <div className="post-icon-div">
+                  <img src={video} className='post-icon' alt="" />
+                  <div className="post-icon-text">
+                    Video
+                  </div>
+                </div>
+                <input type="file" id="photo" accept="video/*" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
+              </label>
+
+              <div className="post-icon-div" onClick={Emoji} >
+                <img src={smile} className='post-icon' alt="" />
+                <div className="post-icon-text">
+                  Emoji
+                </div>
+              </div>
+            </div>
+
+            <div className="Selected-imageOrVideo-container">
+
+              {img && img.type.startsWith('image/') && (
+                <img className="postImg" src={URL.createObjectURL(img)} alt="" />
+              )}
+
+              {img && img.type.startsWith('video/') && (
+                <div className="video-container mb-5">
+                  <video ref={videoRef} onClick={handleClick} className="video ">
+                    <source src={URL.createObjectURL(img)} type={img.type} />
+                  </video>
+                  {!isPlaying && (
+                    <div className="play-button" onClick={handleClick}>
+                      <FaPlay className='play-button' />
+                    </div>
+                  )}
+                </div>
+              )}
+
+
+            </div>
+
+            {showEmoji && (<div>
+              <div className='emoji'>
+                <Picker dynamicWidth={false} emojiSize={18} emojiButtonSize={30} onEmojiSelect={addEmoji} />
+              </div>
+            </div>)}
 
           </div>
 
-          {showEmoji && (<div>
-            <div className='emoji'>
-              <Picker dynamicWidth={false} emojiSize={18} emojiButtonSize={30} onEmojiSelect={addEmoji} />
-            </div>
-          </div>)}
-
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress id="p1" style={{ display: "none" }} />
+          </Box>
         </div>
       </div >
     </>
