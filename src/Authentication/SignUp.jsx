@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "./Login.scss";
+import "./Signup.scss";
 import { Link } from 'react-router-dom';
 import { auth, db, storage } from "./../Firebase";
 import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
@@ -119,10 +119,50 @@ const SignUp = () => {
 
     return (
         <>
-            <div className="form-background-container">
+
+
+            <div className="Signup-form-container signup-div">
+                <h3 className='login-title'>ShareBook</h3>
+
+                <label htmlFor="photo" >
+                    <img className="form-user-img" src={img ? URL.createObjectURL(img) : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS1rDH_nWadT1GXFPomdutqV1PUMA8uXIWS2Js5_fq4pJ1lwG16"} alt="" />
+
+                    <input type="file" className="photoinput" id="photo" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
+                </label>
+
+                <div className="form-inner-div">
+                    <input className="login-input mt-1" type="text"
+                        placeholder="Name"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                    />
+                    <input className="login-input mt-1" type="email"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
+                    <input className="login-input my-1" type="password"
+                        placeholder="Password"
+                        onChange={(e) => setPass(e.target.value)}
+                        value={password}
+                    />
+                    <button className="btn-primary-custom w-100 my-5"
+                        onClick={submit}>Sign Up</button>
+
+
+
+                    <Link to="/" className='link'>
+                        <div className='create-new-a'> Already have an account ?</div>
+                    </Link>
+
+                </div>
+            </div>
+
+
+            {/* <div className="form-background-container">
 
                 <div className="form-div">
-                    {/* <div className='form-title'><h3>SignUP</h3></div> */}
+                    <div className='form-title'><h3>SignUP</h3></div>
 
                     <div className="form-inner-div">
 
@@ -157,7 +197,7 @@ const SignUp = () => {
                         </Link>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

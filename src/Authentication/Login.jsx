@@ -6,6 +6,9 @@ import { AuthContext } from '../AuthContaxt';
 import { auth, db } from '../Firebase';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Box, TextField } from '@mui/material';
+
+
 
 const Login = () => {
 
@@ -87,32 +90,41 @@ const Login = () => {
 
     return (
         <>
-            <div className="form-background-container">
+
+            <div className="login-form-container">
+                <h3 className='login-title'>ShareBook</h3>
+                <div className="form-inner-div">
+                    <input className="login-input mt-3" type="text"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
+                    <input className="login-input my-3" type="password"
+                        placeholder="Password"
+                        onChange={(e) => setPass(e.target.value)}
+                        value={password}
+                    />
+                    <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
+                    <span className='forgot-text'>Forgotten password?</span>
+                    <Link to="signUp/" className='link'>
+                        <button className="btn-success-outline my-4">Create New Account</button>
+                    </Link>
+                </div>
+            </div>
+
+
+
+
+
+
+            {/* <div className="form-background-container">
                 <div className="form-div">
                     <div className='form-title'><h3>Login</h3></div>
 
-                    <div className="form-inner-div">
-                        <input type="text" className='from-control form-width ' placeholder='Email' 
-                        onChange={(e)=>setEmail(e.target.value)}
-                        value={email}
-                        />
-                        <input type="password" className='from-control my-4 form-width ' placeholder='Password' 
-                        onChange={(e)=>setPass(e.target.value)}
-                        value={password}
-                        />
-                        <button type="button" class=" w-100 mt-4 btn-primary-custom form-width"
-                        onClick={login}
-                        >Login</button>
+                    <div></div>
 
-                        <span className='mt-4 forgotten'>Forgotten password?</span>
-
-                        <hr className='w-100 form-width' />
-                        <Link to="signUp/" className='link'>
-                            <div className='create-new-a'> Create New Account</div>
-                        </Link>
-                    </div>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

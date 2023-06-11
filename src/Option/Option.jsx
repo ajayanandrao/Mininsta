@@ -71,7 +71,7 @@ const Option = () => {
 
                     <div className="option-mainu">
                         <div className="option-mainu-icon">
-                            <i className="bi bi-door-open-fill"></i>
+                            <i className="bi bi-door-open-fill" onClick={LogOut}></i>
                         </div>
                         <div className="option-mainu-name" onClick={LogOut}>
                             Log Out

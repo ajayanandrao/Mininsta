@@ -52,7 +52,7 @@
     bottom: 0;
     background-color: white;
     padding: 10px 20px;
-    border-top:1px solid #ccc ;
+    border-top: 1px solid #ccc;
     // box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
     /* Added box-shadow to the top */
     z-index: 9999;
@@ -65,15 +65,29 @@
         font-size: 28px;
         color: black;
     }
-    .bi-messenger{
+
+    .bi-messenger {
         color: black;
         font-size: 24px;
     }
-    .mobile-nav-bottom-photo{
+
+    .mobile-nav-bottom-photo {
         width: 40px;
         height: 40px;
         object-fit: cover;
         object-position: center;
         border-radius: 50%;
+    }
+}
+
+.link-title {
+    border: none;
+    text-decoration: none;
+    box-shadow: none;
+    &:focus{
+        box-shadow: none;
+        outline: none;
+        border: none;
+        text-decoration: none;
     }
 }

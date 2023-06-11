@@ -83,15 +83,18 @@
   .btn-primary-custom {
     background: #297fb9;
     border: none;
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 0.8rem;
     border-radius: 5px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
     &:hover {
-      background:#226a9b;
+      background: #226a9b;
     }
   }
+
   .btn-success-custom {
     background: #28a745;
     border: none;
@@ -100,17 +103,26 @@
     color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     cursor: pointer;
+
     &:hover {
-      background:#23a141;
+      background: #23a141;
     }
   }
 
-  .link{
+  Link {
     text-decoration: none;
     color: black;
     cursor: pointer;
   }
 
-  .bi-arrow-left{
+  .bi-arrow-left {
     font-size: 24px;
+  }
+
+  .btn-success-outline {
+    border: 1px solid #28a745;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
   }
