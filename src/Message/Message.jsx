@@ -4,7 +4,7 @@ import "./Message.scss";
 import { useNavigate } from 'react-router-dom';
 import Flickity from 'react-flickity-component';
 import natur from "./nature.json";
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { styled, keyframes } from '@mui/system';
@@ -105,6 +105,31 @@ const Message = () => {
         }
         document.getElementById(cityName).style.display = "block";
     }
+    // Friend Request
+
+    const [friendRequests, setFriendRequests] = useState([]);
+
+    useEffect(() => {
+
+        const colRef = collection(db, 'friendRequests')
+        const userlist = () => {
+            onSnapshot(colRef, (snapshot) => {
+                let newbooks = []
+                snapshot.docs.forEach((doc) => {
+                    newbooks.push({ ...doc.data(), id: doc.id })
+                });
+                setFriendRequests(newbooks);
+            })
+        };
+        return userlist();
+    }, []);
+
+
+    const DeleteRequest = async (id) => {
+        const RequestRef = doc(db, 'friendRequests', id);
+        await deleteDoc(RequestRef);
+    };
+
     return (
         <>
             <div className="Message-container">
@@ -120,72 +145,86 @@ const Message = () => {
 
 
                 <div className="tab-block">
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('London')}>Message</button>
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('Paris')}>Online</button>
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('Tokyo')}>People</button >
+                    <button className="w3-bar-item w3-button" onClick={() => openCity('Message')}>Message</button>
+                    <button className="w3-bar-item w3-button" onClick={() => openCity('Online')}>Online</button>
+
+                    <button className="w3-bar-item w3-button" onClick={() => openCity('Request')}>Request</button >
+
                 </div >
 
 
-                <div id="London" className="w3-container w3-animate-left city">
+                <div id="Message" className=" w3-animate-left city">
                     <h2 className='tab-title'>Sorry</h2>
                     <p>Developers are working on this page.</p>
                 </div>
 
-                <div id="Paris" className="w3-container w3-animate-bottom city" style={{ display: "none" }}>
+                <div id="Online" className=" w3-animate-bottom city" style={{ display: "none" }}>
 
-                    {onlineUsers.map((item) => {
-                        if (item.uid !== currentUser.uid) {
-                            return (
-                                <div key={item.id} className="online-user-div">
+                    {onlineUsers.length === 0 ? (<div style={{ color: "black" }}>No users are currently online</div>) :
+                        (onlineUsers.map((item) => {
+                            if (item.uid !== currentUser.uid) {
 
-                                    <span>
-                                        <StyledBadge
-                                            overlap="circular"
-                                            anchorOrigin={{ vertical: 'top',horizontal: 'right' }}
-                                            variant="dot"
-                                        >
-                                            <Avatar alt="Remy Sharp" src={item.photoUrl} />
-                                        </StyledBadge>
+                                return (
+                                    <div key={item.id} className="online-user-div">
+                                        <span>
+                                            <StyledBadge
+                                                overlap="circular"
+                                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                                variant="dot"
+                                            >
+                                                <Avatar alt="Remy Sharp" src={item.photoUrl} />
+                                            </StyledBadge>
 
-                                    </span>
+                                        </span>
 
-                                    <span className="online-user-name">{item.presenceName}</span>
-                                </div>
-                            )
+                                        <span className="online-user-name">{item.presenceName}</span>
+                                    </div>
+                                )
 
-                        }
-                    })}
+                            }
+                        })
+                        )
+                    }
 
                 </div>
 
-                <div id="Tokyo" className="w3-container w3-animate-right city" style={{ display: "none" }}>
+                <div id="Request" className=" w3-animate-right city" style={{ display: "none" }}>
 
-                    {
-                        api
-                            .filter((value) => {
-                                if (search === "") {
-                                    return value;
-                                } else if (
-                                    value.name.toLowerCase().includes(search.toLowerCase())
-                                ) {
-                                    return value;
-                                }
-                            })
-                            .map((item) => {
+
+
+                    {friendRequests.length === 0 ? (
+                        <div style={{ textAlign: "center" }} className='num-requ' >You have no request</div>
+                    ) : (
+                        friendRequests.map((item) => {
+                            if (item.receiverUid === currentUser.uid && item.status !== 'accepted') {
                                 return (
                                     <div key={item.id}>
-                                        <div className="People-container">
-                                            <img
-                                                src={item.PhotoUrl}
-                                                className="People-profile-img"
-                                                alt=""
-                                            />
-                                            <div className="People-profile-name">{item.name}</div>
+                                        <div className="request-container">
+                                            <div>
+                                                <img src={item.senderPhotoUrl} className='request-img' alt="" />
+                                            </div>
+
+                                            <div className='request-inne-container'>
+                                                <div className='request-name'>{item.senderName}</div>
+
+                                                <div className="request-btn-div"    >
+                                                    <div className="btn-success-custom">Accept</div>
+                                                    <div className="btn-D-custom ms-4"
+                                                        onClick={() => DeleteRequest(item.id)}
+                                                    >Remove</div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 );
-                            })
-                    }
+                            } else {
+                                return null;
+                            }
+                        })
+                    )}
+
 
 
                 </div>

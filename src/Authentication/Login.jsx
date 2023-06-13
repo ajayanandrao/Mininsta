@@ -92,7 +92,7 @@ const Login = () => {
         <>
 
             <div className="login-form-container">
-                <h3 className='login-title'>ShareBook</h3>
+                <h3 className='login-title'>LinkupWorld</h3>
                 <div className="form-inner-div">
                     <input className="login-input mt-3" type="text"
                         placeholder="Email"
@@ -110,7 +110,9 @@ const Login = () => {
                         <button className="btn-success-outline my-4">Create New Account</button>
                     </Link>
                 </div>
+                <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
             </div>
+
 
 
 

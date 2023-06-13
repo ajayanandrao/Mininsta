@@ -9,6 +9,7 @@ import { db, storage } from '../Firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4, uuidv4 } from "uuid";
 
+
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
@@ -26,6 +27,18 @@ const Post = () => {
   const [img, setImg] = useState(null);
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImg, setShowImg] = useState(false);
+
+
+  const dataRef = collection(db, "users");
+  const [userPhoto, setUserPhoto] = useState(null);
+
+  useEffect(() => {
+    const unsub = onSnapshot(dataRef, (snapshot) => {
+      setUserPhoto(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+    return unsub;
+  }, []);
+
 
 
   const handleUpload = async () => {

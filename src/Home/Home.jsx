@@ -7,6 +7,7 @@ import { AuthContext } from '../AuthContaxt';
 import { db } from '../Firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import FlipMove from 'react-flip-move';
+import { Height } from '@mui/icons-material';
 
 const Home = () => {
 
@@ -36,6 +37,7 @@ const Home = () => {
         };
     }, []);
 
+
     const newData = api.map((item) => {
         return (
             <div key={item.id}>
@@ -48,6 +50,7 @@ const Home = () => {
         <>
             <Post />
             <FlipMove>{newData}</FlipMove>
+            <div className='height' ></div>
         </>
     )
 }

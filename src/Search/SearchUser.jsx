@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./SearchUser.scss";
 import { MdDarkMode } from "react-icons/md"
 import { Link, useNavigate } from 'react-router-dom';
 import { db } from "./../Firebase";
 import { collection, onSnapshot } from 'firebase/firestore';
+import { AuthContext } from '../AuthContaxt';
 
 const SearchUser = () => {
+
+    const { currentUser } = useContext(AuthContext);
     const [search, setSearch] = useState("");
     const nav = useNavigate();
     const goBack = () => {
@@ -50,20 +53,25 @@ const SearchUser = () => {
                             }
                         })
                         .map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <div className="Search-user-profile-div">
-                                        <img
-                                            src={item.PhotoUrl}
-                                            className="Search-user-profile-img"
-                                            alt=""
-                                        />
-                                        <Link to={`/users/${item.uid}`}>
-                                            <div className="Search-user-profile-name">{item.name}</div>
-                                        </Link>
+
+                            if (item.uid !== currentUser.uid) {
+                                return (
+                                    <div key={item.id}>
+                                        <div className="Search-user-profile-div">
+                                            <img
+                                                src={item.PhotoUrl}
+                                                className="Search-user-profile-img"
+                                                alt=""
+                                            />
+                                            <Link to={`/users/${item.uid}`}>
+                                                <div className="Search-user-profile-name">{item.name}</div>
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                            );
+                                );
+                            }
+
+
                         })
                 }
             </div>

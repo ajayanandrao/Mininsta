@@ -12,6 +12,9 @@ import { IoMdClose, IoMdSend, IoMdShareAlt } from "react-icons/io";
 import TimeAgo from 'react-timeago';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Picker from '@emoji-mart/react';
+import "./FeedOverlay.scss";
+import photo from "./../Image/img/photo.png";
+import { LinearProgress } from '@mui/material';
 
 const Feed = ({ post }) => {
     const { currentUser } = useContext(AuthContext);
@@ -198,6 +201,8 @@ const Feed = ({ post }) => {
     const [EditImg, setEditImg] = useState(null);
     const [updating, setUpdating] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     const done = async (id) => {
         setUpdating(true);
         const postRef = doc(db, 'AllPosts', id);
@@ -223,7 +228,10 @@ const Feed = ({ post }) => {
         }
         setEditInput("");
         setUpdating(false);
-        document.getElementById(`overlay-${id}`).style.display = 'none';
+        document.getElementById(`FeedOverlay-${id}`).style.display = 'none';
+        const x = document.getElementById(`myDropdown-${id}`);
+        x.style.display = 'none';
+
     }
 
     // Emoji 
@@ -277,14 +285,76 @@ const Feed = ({ post }) => {
         deleteDoc(colRef)
     }
 
-    function off(id) {
-        document.getElementById(`overlay-${id}`).style.display = 'none';
+    function feedOff(id) {
+        document.getElementById(`FeedOverlay-${id}`).style.display = 'none';
         setEditImg(null);
+        const x = document.getElementById(`myDropdown-${id}`);
+        x.style.display = 'none';
+        setEditInput("");
     }
+
+    function feedOn(id) {
+        document.getElementById(`FeedOverlay-${id}`).style.display = "block";
+    }
+
+
 
     return (
         <>
+
+            <div id={`FeedOverlay-${post.id}`}
+                className='feed-overlay-container' style={{ display: "none" }} >
+                <div className="feed-overlay-inner">
+
+                    <div className="feed-Edit-card">
+                        <div className="feed-edit-inner-div">
+                            <div className='feed-close-div' >
+                                <IoMdClose style={{ fontSize: "24px" }} onClick={() => feedOff(post.id)} />
+                            </div>
+                            <div className="feed-main-card">
+                                {updating ? (<LinearProgress className='l-progress' />) : null}
+
+                                <div className='feed-main-innner'>
+                                    <div>
+                                        <input type="text"
+                                            placeholder="What's on your mind"
+                                            className='feed-edit-input'
+                                            onChange={(e) => setEditInput(e.target.value)}
+                                            value={editInput}
+                                            id={`editInput-${post.id}`}
+                                        />
+                                    </div>
+
+
+                                    <label htmlFor="EditImg">
+                                        <div className='feed-edit-photo-div'>
+                                            <img src={photo} s alt="" /><span className='feed-ed-photo-text'>Photo</span>
+                                        </div>
+                                    </label>
+
+                                    {EditImg && EditImg.type.startsWith('image/') && (
+                                        <img className="postImg" src={URL.createObjectURL(EditImg)} alt="" />
+                                    )}
+
+                                    <input type="file" id='EditImg'
+                                        onChange={(e) => setEditImg(e.target.files[0])}
+                                        style={{ display: "none" }} accept="image/*, video/*" />
+
+
+                                    <div className="btn-primary-custom mt-3"
+                                        onClick={(e) => done(post.id)}
+                                    >Update</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div className="feed-container">
+
                 <div className="feed-div">
 
                     <div className="feed-profile-div">
@@ -304,7 +374,8 @@ const Feed = ({ post }) => {
                             </div>
                             <div className="feed-option-mainu-div" id={`myDropdown-${post.id}`} style={{ display: "none" }}>
 
-                                <div className='feed-option-edit' id={`edit-${post.id}`} onClick={() => postEdit(post.id)}>Edit</div>
+                                <div className='feed-option-edit' id={`edit-${post.id}`}
+                                    onClick={() => feedOn(post.id)}>Edit</div>
 
                                 <div className='feed-option-delete'
                                     id={`del-${post.id}`}

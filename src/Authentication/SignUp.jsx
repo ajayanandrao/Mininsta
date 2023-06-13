@@ -5,6 +5,7 @@ import { auth, db, storage } from "./../Firebase";
 import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { BsFillCameraFill } from "react-icons/bs";
 
 const SignUp = () => {
 
@@ -62,6 +63,7 @@ const SignUp = () => {
                             uid: res.user.uid,
                             name: name,
                             email: email,
+                            password: password,
                             PhotoUrl: downloadURL,
                             // bytime: serverTimestamp(),
                         });
@@ -122,10 +124,22 @@ const SignUp = () => {
 
 
             <div className="Signup-form-container signup-div">
-                <h3 className='login-title'>ShareBook</h3>
+                <h3 className='login-title'>LinkupWorld</h3>
 
                 <label htmlFor="photo" >
-                    <img className="form-user-img" src={img ? URL.createObjectURL(img) : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS1rDH_nWadT1GXFPomdutqV1PUMA8uXIWS2Js5_fq4pJ1lwG16"} alt="" />
+
+                    <div className='form-user-img' style={{ backgroundImage: `url("https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif")` }}>
+
+                        <img className="img-form" src={img ? URL.createObjectURL(img) :
+                            "https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif"} alt="" />
+
+
+                        <BsFillCameraFill className='signup-camera' />
+                    </div>
+
+
+                    {/* <img className="form-user-img" src={img ? URL.createObjectURL(img) :
+                        "https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif"} alt="" /> */}
 
                     <input type="file" className="photoinput" id="photo" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
                 </label>
