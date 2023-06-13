@@ -92,7 +92,7 @@ const Login = () => {
         <>
 
             <div className="login-form-container">
-                <h3 className='login-title'>LinkupWorld</h3>
+                <h3 className='login-title'>Mininsta</h3>
                 <div className="form-inner-div">
                     <input className="login-input mt-3" type="text"
                         placeholder="Email"

@@ -124,7 +124,7 @@ const SignUp = () => {
 
 
             <div className="Signup-form-container signup-div">
-                <h3 className='login-title'>LinkupWorld</h3>
+                <h3 className='login-title'>Mininsta</h3>
 
                 <label htmlFor="photo" >
 
