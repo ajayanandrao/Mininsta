@@ -92,7 +92,7 @@ const People = ({ userP }) => {
             });
     }
 
-    
+
     useEffect(() => {
 
         const colRef = collection(db, 'friendRequests')
@@ -180,10 +180,13 @@ const People = ({ userP }) => {
                                                     </div> */}
 
                                                     <div
+                                                        className="btn-primary-custom"
+                                                    >Add a friend</div>
+                                                    {/* <div
                                                         id={`add-${item.id}`}
                                                         className="btn-primary-custom"
                                                         onClick={() => sendFriendRequest
-                                                            (item.id, item.uid, item.name, item.PhotoUrl)}>Add a friend</div>
+                                                            (item.id, item.uid, item.name, item.PhotoUrl)}>Add a friend</div> */}
 
 
                                                     {request.map((re) => {
