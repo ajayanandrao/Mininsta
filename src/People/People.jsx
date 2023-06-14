@@ -45,7 +45,7 @@ const People = ({ userP }) => {
     function sendFriendRequest(id, otherUserId, otherUserName, otherUserPhotoUrl) {
         const x = document.getElementById(`add-${id}`)
 
-        if (x.style.display == "inline-block") {
+        if (x.style.display === "") {
             x.style.display = "none"
         }
 
@@ -92,6 +92,7 @@ const People = ({ userP }) => {
             });
     }
 
+    
     useEffect(() => {
 
         const colRef = collection(db, 'friendRequests')
@@ -106,7 +107,6 @@ const People = ({ userP }) => {
         };
         return userlist();
     }, []);
-
 
     const DeleteRequest = async (id) => {
         const x = document.getElementById(`add-${id}`)

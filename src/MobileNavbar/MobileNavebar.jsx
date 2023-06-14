@@ -42,7 +42,7 @@ const MobileNavebar = () => {
     return (
         <>
             <div className="mobile-nav-container" id='navIdB'>
-                <Link to="home/" style={{ textDecoration: 'none' }}> <div className='mobile-nav-title'>ShareBook</div></Link>
+                <Link to="home/" style={{ textDecoration: 'none' }}> <div className='mobile-nav-title'>Mininsta</div></Link>
                 <div className='mobile-item-div'>
 
                     <span className='mobile-nav-mainu'>
