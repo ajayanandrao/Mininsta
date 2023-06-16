@@ -56,6 +56,27 @@
     padding-top: 2rem;
 
 
+    .message-profile-div {
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+        .message-user-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+        }
+
+        .message-user-name {
+            font-size: 16px;
+            font-weight: 600 !important;
+            margin-left: 1rem;
+        }
+    }
+
+
+
     .fbox {
         width: 70px;
         height: 70px;
@@ -148,7 +169,7 @@
     }
 
     .online-user-name {
-        margin-left: 0.5rem;
+        margin-left: 1rem;
         font-weight: 600;
         text-transform: capitalize;
     }
@@ -173,24 +194,29 @@
         margin-bottom: 1rem;
     }
 
-    .People-container {
-        display: flex;
-        align-items: center;
+    // .People-container {
+    //     display: flex;
+    //     align-items: center;
 
-        .People-profile-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center;
-            margin: 0.5rem 0;
-        }
+    //     .People-profile-img {
+    //         width: 30px;
+    //         height: 30px;
+    //         border-radius: 50%;
+    //         object-fit: cover;
+    //         object-position: center;
+    //         margin: 0.5rem 0;
+    //     }
 
-        .People-profile-name {
-            margin-left: 0.5rem;
-            font-weight: 600;
-            text-transform: capitalize;
-        }
-    }
+    //     .People-profile-name {
+    //         margin-left: 0.5rem;
+    //         font-weight: 600;
+    //         text-transform: capitalize;
+    //     }
+    // }
 
+}
+
+.avt {
+    width: 50px !important;
+    height: 50px !important;
 }

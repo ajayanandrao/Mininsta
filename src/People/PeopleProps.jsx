@@ -1,10 +1,11 @@
 import { collection, onSnapshot } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { db } from '../Firebase';
 import People from './People';
+import { AuthContext } from '../AuthContaxt';
 
 const PeopleProps = () => {
-
+    const { currentUser } = useContext(AuthContext);
     const [api, setApiData] = useState([]);
     useEffect(() => {
         const colRef = collection(db, 'users');
@@ -19,13 +20,15 @@ const PeopleProps = () => {
 
     return (
         <div>
-            <People />
-            {/* {api.map((item) => {
-                return (
-                    <>
-                    </>
-                )
-            })} */}
+            {api.map((item) => {
+                if (item.uid === currentUser.uid) {
+                    return (
+                        <>
+                            <People userP={item} />
+                        </>
+                    )
+                }
+            })}
         </div>
     )
 }

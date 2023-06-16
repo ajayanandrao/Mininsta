@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import "./UserProfileThree.scss";
-import { AuthContext } from "./../../AuthContaxt";
-import UserPost from '../Tab/UserPost';
+import ProfilePhotos from './ProfileTab/ProfilePhotos';
+import ProfileFriends from './ProfileTab/ProfileFriends';
+import ProfilePosts from './ProfileTab/ProfilePosts';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../Firebase';
-import UserPhoto from '../Tab/UserPhoto';
-import Friends from '../Tab/Friends ';
+import { AuthContext } from '../../AuthContaxt';
 
-const ProfileThree = () => {
+const ProfilePageThree = ({ user }) => {
+
     const { currentUser } = useContext(AuthContext);
-
 
     function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
@@ -44,30 +43,6 @@ const ProfileThree = () => {
         };
     }, []);
 
-
-    const [userPhoto, setUserPhoto] = useState([]);
-    useEffect(() => {
-        const colRef = collection(db, 'UserPostPhoto');
-        const q = query(colRef, orderBy('bytime', 'desc'));
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const fetchedPosts = snapshot.docs.map((doc) => {
-                const { name, img, postText, displayName, photoURL, bytime, uid } = doc.data();
-                return { id: doc.id, name, img, postText, displayName, photoURL, bytime, uid };
-            });
-
-            setUserPhoto(fetchedPosts);
-        });
-
-        return () => {
-            unsubscribe();
-        };
-    }, []);
-    const currentuser = {
-        uid: 'currentUserId',
-        // Other currentUser properties
-    };
-
     return (
         <>
             <div className="profileThree-container">
@@ -86,10 +61,10 @@ const ProfileThree = () => {
 
                         {
                             api.map((item) => {
-                                if (currentUser && currentUser.uid === item.uid) {
+                                if (user.uid === item.uid) {
                                     return (
                                         <div key={item.id}>
-                                            <UserPost post={item} />
+                                            <ProfilePosts user={user} post={item} />
                                         </div>
                                     );
                                 }
@@ -105,19 +80,11 @@ const ProfileThree = () => {
                     </div>
 
                     <div id="Friend" style={{ display: "none" }} className="tabcontent w3-animate-opacity">
-                        {/* <Friends /> */}
-                        <Friends currentuser={currentuser}/>
+                        <ProfileFriends user={user} />
                     </div>
 
                     <div id="Photo" style={{ display: "none" }} className="tabcontent w3-animate-opacity">
-
-                        <UserPhoto />
-                        {/* <div className='photo-grid-center'>
-                            <div className='photo-grid'>
-
-
-                            </div>
-                        </div> */}
+                        <ProfilePhotos user={user} />
                     </div>
                 </div>
             </div>
@@ -125,4 +92,4 @@ const ProfileThree = () => {
     )
 }
 
-export default ProfileThree
+export default ProfilePageThree

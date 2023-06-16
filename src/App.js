@@ -17,6 +17,8 @@ import { useEffect } from 'react';
 import ScrollToTop from './ScrollTop';
 import People from './People/People';
 import PeopleProps from './People/PeopleProps';
+import UsersProfilePage from './Params/UsersProfilePage';
+import Messages from './Message/Messages/Messages';
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
 
           <Route path='users' element={<Users />} />
           <Route path='users/:id' element={<UsersDetails />} />
+          <Route path='users/:id/message' element={<Messages />} />
+          <Route path='users/:id/profile' element={<UsersProfilePage />} />
 
           <Route path='profile' element={<UserProfile />} />
 

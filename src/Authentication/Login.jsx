@@ -44,7 +44,6 @@ const Login = () => {
                 });
 
 
-
                 const PresenceRefOnline = doc(db, "OnlyOnline", user.uid);
 
                 const userData = {

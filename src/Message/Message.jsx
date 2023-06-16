@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import "./Message.scss";
 // import "./../Styles/flickity.scss";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Flickity from 'react-flickity-component';
 import natur from "./nature.json";
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { styled, keyframes } from '@mui/system';
@@ -111,7 +111,7 @@ const Message = () => {
 
     useEffect(() => {
 
-        const colRef = collection(db, 'friendRequests')
+        const colRef = collection(db, 'NewFriendRequests')
         const userlist = () => {
             onSnapshot(colRef, (snapshot) => {
                 let newbooks = []
@@ -126,9 +126,88 @@ const Message = () => {
 
 
     const DeleteRequest = async (id) => {
-        const RequestRef = doc(db, 'friendRequests', id);
+        const RequestRef = doc(db, 'NewFriendRequests', id);
         await deleteDoc(RequestRef);
     };
+
+
+    const acceptFriendRequest = async (requestId, senderId, receiverUid,
+        senderName, senderPhotoUrl, receiverName, receiverPhotoUrl) => {
+        try {
+            const requestRef = doc(db, 'NewFriendRequests', requestId);
+            const requestDoc = await getDoc(requestRef);
+
+            if (requestDoc.exists()) {
+                await updateDoc(requestRef, { status: 'accepted' });
+                console.log('Friend request accepted!');
+
+                // Add sender to receiver's friends list
+                await addDoc(collection(db, `allFriends/${receiverUid}/Friends`), {
+                    userId: senderId,
+                    name: senderName,
+                    photoUrl: senderPhotoUrl,
+                    status: 'accepted',
+                });
+
+                // Add receiver to sender's friends list
+                await addDoc(collection(db, `allFriends/${senderId}/Friends`), {
+                    userId: receiverUid,
+                    name: receiverName,
+                    photoUrl: receiverPhotoUrl,
+                    status: 'accepted',
+                });
+            } else {
+                console.error('Friend request not found.');
+            }
+        } catch (error) {
+            console.error('Error accepting friend request:', error);
+        }
+    };
+
+
+    const [friendsList, setFriendsList] = useState([]);
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const friendsQuery = query(collection(db, `allFriends/${currentUser.uid}/Friends`));
+                const friendsSnapshot = await getDocs(friendsQuery);
+                const friendsData = friendsSnapshot.docs.map(doc => doc.data());
+                setFriendsList(friendsData);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        };
+
+        fetchFriends();
+    }, [currentUser]);
+
+
+    const [messages, setMessages] = useState([]);
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const friendsQuery = query(
+                    collection(db, `allFriends/${currentUser.uid}/Message`),
+                    orderBy('time', 'asc')
+                );
+
+                const unsubscribe = onSnapshot(friendsQuery, (friendsSnapshot) => {
+                    const friendsData = friendsSnapshot.docs.map((doc) => doc.data());
+                    setMessages(friendsData);
+                });
+
+                // Return the unsubscribe function to stop listening to updates when the component unmounts
+                return () => unsubscribe();
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        };
+
+        fetchFriends();
+    }, [currentUser]);
+
+
+    
 
     return (
         <>
@@ -154,15 +233,62 @@ const Message = () => {
 
 
                 <div id="Message" className=" w3-animate-left city">
-                    <h2 className='tab-title'>Sorry</h2>
-                    <p>Developers are working on this page.</p>
+
+
+                    {messages.map((sms, index) => (
+                        <div key={index}>
+                            {index === 0 || sms.userId !== messages[index - 1].userId ? (
+                                <div className='message-profile-div'>
+                                    <Link style={{textDecoration:"none"}} to={`/users/${sms.userId}/message`}>
+                                        <img src={sms.photoUrl} className='message-user-img' alt="" />
+                                        <span className='message-user-name'>{sms.name}</span>
+                                    </Link>
+                                </div>
+                            ) : null}
+                            {/* Render the rest of the message content */}
+                            <div>{sms.messageContent}</div>
+                        </div>
+                    ))}
+
+
+
                 </div>
 
                 <div id="Online" className=" w3-animate-bottom city" style={{ display: "none" }}>
 
-                    {onlineUsers.length === 0 ? (<div style={{ color: "black" }}>No users are currently online</div>) :
+
+
+                    {onlineUsers.length >= 0 ? (
+                        onlineUsers.map((online) => {
+                            const isFriendOnline = friendsList.some((friend) => friend.userId === online.uid);
+                            if (isFriendOnline) {
+                                return (
+                                    <div key={online.id} className="online-user-div">
+                                        <span>
+                                            <StyledBadge
+                                                overlap="circular"
+                                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                                variant="dot"
+                                            >
+                                                <Avatar alt="Remy Sharp" className='avt' src={online.photoUrl} />
+                                            </StyledBadge>
+                                        </span>
+                                        <span className="online-user-name">{online.presenceName}</span>
+                                    </div>
+                                );
+                            } else {
+                                return null;
+                            }
+                        })
+                    ) : (
+                        <div>No users currently online.</div>
+                    )}
+
+                    {/* {onlineUsers.length === 0 ? (<div style={{ color: "black" }}>No users are currently online</div>) :
                         (onlineUsers.map((item) => {
                             if (item.uid !== currentUser.uid) {
+
+
 
                                 return (
                                     <div key={item.id} className="online-user-div">
@@ -184,7 +310,7 @@ const Message = () => {
                             }
                         })
                         )
-                    }
+                    } */}
 
                 </div>
 
@@ -208,7 +334,10 @@ const Message = () => {
                                                 <div className='request-name'>{item.senderName}</div>
 
                                                 <div className="request-btn-div"    >
-                                                    <div className="btn-success-custom">Accept</div>
+                                                    <div className="btn-success-custom"
+                                                        onClick={() => acceptFriendRequest
+                                                            (item.id, item.senderId, item.receiverUid, item.senderName, item.senderPhotoUrl,
+                                                                item.receiverName, item.receiverPhotoUrl)}>Accept</div>
                                                     <div className="btn-D-custom ms-4"
                                                         onClick={() => DeleteRequest(item.id)}
                                                     >Remove</div>
@@ -224,6 +353,8 @@ const Message = () => {
                             }
                         })
                     )}
+
+
 
 
 
