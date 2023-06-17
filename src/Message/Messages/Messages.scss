@@ -35,7 +35,7 @@
         }
 
         .message-profile-name {
-            margin-left: 1rem;
+            margin-left: 0.5rem;
         }
 
     }
@@ -56,7 +56,8 @@
     }
 
     .message-camera {
-        font-size: 35px;
+        font-size: 26px;
+        color: #262626;
     }
 
     .message-input-container {
@@ -106,7 +107,6 @@
 
             .message-input {
                 font-size: 16px;
-                font-weight: 600;
                 padding-inline-start: 10px;
                 border: none;
                 outline: none;
@@ -115,11 +115,13 @@
             }
 
             .message-send-btn {
-                font-size: 30px;
+                font-size: 25px;
+                color: #262626;
             }
 
             .message-thumb {
-                font-size: 25px;
+                font-size: 23px;
+                color: #262626;
             }
         }
     }
@@ -164,8 +166,6 @@
     /* Update the gradient colors */
     // color: #333;
     color: white;
-    font-weight: 600;
-
     // box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
@@ -178,7 +178,6 @@
     /* Update the gradient colors */
     // color: #333;
     color: black;
-    font-weight: 600;
     padding: 0.3rem;
     padding-right: 1rem;
 

@@ -36,8 +36,9 @@
             margin-left: 1.5rem;
 
             .mobile-nav-icon {
-                font-size: 24px;
+                font-size: 22px;
                 cursor: pointer;
+                color: #262626;
             }
         }
     }
@@ -62,18 +63,18 @@
     }
 
     .mobile-nav-bottom-icon {
-        font-size: 28px;
-        color: black;
+        font-size: 24px;
+        color: #262626;
     }
 
     .bi-messenger {
-        color: black;
-        font-size: 24px;
+        color: #262626;
+        font-size: 22px;
     }
 
     .mobile-nav-bottom-photo {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         object-fit: cover;
         object-position: center;
         border-radius: 50%;

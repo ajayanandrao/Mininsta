@@ -8,7 +8,7 @@ import { db } from '../Firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import FlipMove from 'react-flip-move';
 import { Height } from '@mui/icons-material';
-
+import { AiOutlineArrowUp } from "react-icons/ai";
 const Home = () => {
 
     const [api, setApiData] = useState([]);
@@ -46,8 +46,19 @@ const Home = () => {
         );
     });
 
+
+    const handleScrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
+
     return (
         <>
+            <div className="btn" onClick={handleScrollToTop} id="scrollTopBtn" >
+                <AiOutlineArrowUp className="top-arrow" />
+            </div>
             <Post />
             <FlipMove>{newData}</FlipMove>
             <div className='height' ></div>

@@ -18,15 +18,18 @@
             padding-right: 1rem;
             padding-bottom: 1rem;
             line-height: 19px;
+            margin-top: 1rem;
         }
         .userPost-text{
             display: flex;
+            
         }
 
         .feed-profile-div {
             display: flex;
             align-items: center;
-            padding: 1rem;
+            padding: 0rem 1rem;
+            padding-top: 0.5rem;
 
             .feed-img {
                 width: 40px;

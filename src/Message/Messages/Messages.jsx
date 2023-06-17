@@ -175,6 +175,22 @@ const Messages = () => {
         setMessageInput("");
     };
 
+    const SendLike = async (uid, name, recipientImg) => {
+        if (senderId) {
+            const messagesRef = collection(db, 'messages');
+            const content = replyInput || messageInput;
+            // Create a new document using `addDoc` function
+            await addDoc(messagesRef, {
+                sender: currentUser.uid, // Set the sender's ID
+                senderImg: currentUser.photoURL,
+
+                recipient: uid, // Set the recipient's ID
+                recipientImg: recipientImg,
+                message:"👍",
+                timestamp: serverTimestamp(), // Set the timestamp (server-side)
+            });
+        }
+    }
 
 
     return (
@@ -282,6 +298,7 @@ const Messages = () => {
                             value={messageInput}
                             className="message-input"
                             placeholder="Type..."
+                            autoFocus
                         />
 
                         <MdSend
@@ -295,7 +312,7 @@ const Messages = () => {
                                 }
                             }}
                         />
-                        <FaThumbsUp className='message-thumb' />
+                        <FaThumbsUp className='message-thumb' onClick={() => SendLike(user.uid, user.name, user.userPhoto)} />
                     </div>
                 </div>
             </div>

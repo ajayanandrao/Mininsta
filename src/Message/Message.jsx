@@ -207,7 +207,17 @@ const Message = () => {
     }, [currentUser]);
 
 
-    
+    const [uniqueUserIds, setUniqueUserIds] = useState([]);
+
+    useEffect(() => {
+        const uniqueIds = messages.reduce((ids, message) => {
+            if (!ids.includes(message.userId)) {
+                return [...ids, message.userId];
+            }
+            return ids;
+        }, []);
+        setUniqueUserIds(uniqueIds);
+    }, [messages]);
 
     return (
         <>
@@ -235,20 +245,24 @@ const Message = () => {
                 <div id="Message" className=" w3-animate-left city">
 
 
-                    {messages.map((sms, index) => (
-                        <div key={index}>
-                            {index === 0 || sms.userId !== messages[index - 1].userId ? (
+                    {uniqueUserIds.map((userId) => {
+                        const userMessages = messages.filter((message) => message.userId === userId);
+                        const user = userMessages[0]; // Assuming the first message represents the user's details
+
+                        return (
+                            <div key={userId}>
                                 <div className='message-profile-div'>
-                                    <Link style={{textDecoration:"none"}} to={`/users/${sms.userId}/message`}>
-                                        <img src={sms.photoUrl} className='message-user-img' alt="" />
-                                        <span className='message-user-name'>{sms.name}</span>
+                                    <Link style={{ textDecoration: "none" }} to={`/users/${user.userId}/message`}>
+                                        <img src={user.photoUrl} className='message-user-img' alt='' />
+                                        <span className='message-user-name'>{user.name}</span>
                                     </Link>
                                 </div>
-                            ) : null}
-                            {/* Render the rest of the message content */}
-                            <div>{sms.messageContent}</div>
-                        </div>
-                    ))}
+                                {userMessages.map((message, index) => (
+                                    <div key={index}>{message.messageContent}</div>
+                                ))}
+                            </div>
+                        );
+                    })}
 
 
 
@@ -256,24 +270,24 @@ const Message = () => {
 
                 <div id="Online" className=" w3-animate-bottom city" style={{ display: "none" }}>
 
-
-
                     {onlineUsers.length >= 0 ? (
                         onlineUsers.map((online) => {
                             const isFriendOnline = friendsList.some((friend) => friend.userId === online.uid);
                             if (isFriendOnline) {
                                 return (
                                     <div key={online.id} className="online-user-div">
-                                        <span>
-                                            <StyledBadge
-                                                overlap="circular"
-                                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                                variant="dot"
-                                            >
-                                                <Avatar alt="Remy Sharp" className='avt' src={online.photoUrl} />
-                                            </StyledBadge>
-                                        </span>
-                                        <span className="online-user-name">{online.presenceName}</span>
+                                        <Link to={`/users/${online.id}/message`}>
+                                            <span>
+                                                <StyledBadge
+                                                    overlap="circular"
+                                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                                    variant="dot"
+                                                >
+                                                    <Avatar alt="Remy Sharp" className='avt' src={online.photoUrl} />
+                                                </StyledBadge>
+                                            </span>
+                                            <span className="online-user-name">{online.presenceName}</span>
+                                        </Link>
                                     </div>
                                 );
                             } else {
@@ -284,39 +298,9 @@ const Message = () => {
                         <div>No users currently online.</div>
                     )}
 
-                    {/* {onlineUsers.length === 0 ? (<div style={{ color: "black" }}>No users are currently online</div>) :
-                        (onlineUsers.map((item) => {
-                            if (item.uid !== currentUser.uid) {
-
-
-
-                                return (
-                                    <div key={item.id} className="online-user-div">
-                                        <span>
-                                            <StyledBadge
-                                                overlap="circular"
-                                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                                variant="dot"
-                                            >
-                                                <Avatar alt="Remy Sharp" src={item.photoUrl} />
-                                            </StyledBadge>
-
-                                        </span>
-
-                                        <span className="online-user-name">{item.presenceName}</span>
-                                    </div>
-                                )
-
-                            }
-                        })
-                        )
-                    } */}
-
                 </div>
 
                 <div id="Request" className=" w3-animate-right city" style={{ display: "none" }}>
-
-
 
                     {friendRequests.length === 0 ? (
                         <div style={{ textAlign: "center" }} className='num-requ' >You have no request</div>
@@ -354,15 +338,9 @@ const Message = () => {
                         })
                     )}
 
-
-
-
-
                 </div>
 
-
             </div >
-
             <div className="Message-user-bottom"></div>
         </>
     )
