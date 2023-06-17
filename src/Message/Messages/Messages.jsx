@@ -219,7 +219,8 @@ const Messages = () => {
                                             }`}
                                     >
                                         {isSender && (
-                                            <img className='message-img' src={currentUser.photoURL} alt="Sender" />
+                                            <></>
+                                            // <img className='message-img' src={currentUser.photoURL} alt="Sender" />
                                         )}
                                         {!isSender && (
                                             <img className='message-img' src={user.userPhoto} alt="Sender" />

@@ -52,6 +52,7 @@
         justify-content: end;
         padding: 1rem;
         padding-bottom: 4.5rem;
+        padding-top: 4.5rem;
     }
 
     .message-camera {
@@ -148,21 +149,23 @@
 .message-bubble {
     display: inline-block;
     max-width: 80%;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 5px;
+    border-radius: 50px;
+    padding: 6px 20px;
+    // padding-right: 1rem;
+    // padding-left: 0.5rem;
+    // margin-bottom: 5px;
 }
 
 .message-sender {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to right,  #d7e8f7,  #f0f8ff);
+    background: #2E9AFE;
     /* Update the gradient colors */
-    color: #333;
-    // color: white;
+    // color: #333;
+    color: white;
     font-weight: 600;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
     // box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
@@ -170,13 +173,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(140deg,#3adae4, #0a74c0 );
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    // background: linear-gradient(140deg, #3adae4, #0a74c0);
     /* Update the gradient colors */
     // color: #333;
-    color: white;
+    color: black;
     font-weight: 600;
-    // padding: 0.2rem 0.5rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    padding: 0.3rem;
+    padding-right: 1rem;
+
 
     // box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
