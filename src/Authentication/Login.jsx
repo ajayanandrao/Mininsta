@@ -95,9 +95,8 @@ const Login = () => {
                     <h3 className='login-title'>Mininsta</h3>
 
 
-
                     <div className="form-inner-div">
-                        <input className="login-input mt-3" type="text"
+                        <input className="login-input mt-3" type="email"
                             placeholder="Email"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
@@ -111,7 +110,10 @@ const Login = () => {
                         <div class="" id="error-alert"></div>
 
                         <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
-                        <span className='forgot-text'>Forgotten password?</span>
+
+                        {/* <span className='forgot-text'>Forgotten password?</span> */}
+                        <Link to="/forgotPassword" className='forgot-text'>Forgotten password?</Link>
+                        
                         <Link to="signUp/" className='link'>
                             <button className="btn-success-outline my-4">Create New Account</button>
                         </Link>

@@ -171,7 +171,7 @@ const SignUp = () => {
 
                 </div>
             </div>
-                <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
+                <div className='singup-footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
 
         </>
     )

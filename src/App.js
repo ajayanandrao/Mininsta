@@ -19,6 +19,7 @@ import People from './People/People';
 import PeopleProps from './People/PeopleProps';
 import UsersProfilePage from './Params/UsersProfilePage';
 import Messages from './Message/Messages/Messages';
+import ForgotPassword from './Authentication/ForgotPassword';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route exact path="/" element={<Login />} />
+          <Route exact path="forgotPassword" element={<ForgotPassword />} />
           <Route path="home" element={<Home />} />
           <Route path="signUp" element={<SignUp />} />
           <Route path="option" element={<Option />} />
