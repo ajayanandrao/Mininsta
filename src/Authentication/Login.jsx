@@ -66,20 +66,20 @@ const Login = () => {
                 const errorMessage = error.message;
                 console.log(errorCode);
                 if (errorCode == "auth/wrong-password") {
-                    document.getElementById("error").style.display = "flex";
-                    document.getElementById("error").innerHTML = "Wrong Password";
+                    document.getElementById("error-alert").style.display = "flex";
+                    document.getElementById("error-alert").innerHTML = "Wrong Password";
                 }
                 if (errorCode == "auth/user-not-found") {
                     function alert() {
 
-                        document.getElementById("error").style.display = "flex";
-                        document.getElementById("error").innerHTML = "User not found";
+                        document.getElementById("error-alert").style.display = "flex";
+                        document.getElementById("error-alert").innerHTML = "User not found";
                     }
                     alert();
                 }
                 if (errorCode == "auth/invalid-email") {
-                    document.getElementById("error").style.display = "flex";
-                    document.getElementById("error").innerHTML = "invalid email address";
+                    document.getElementById("error-alert").style.display = "flex";
+                    document.getElementById("error-alert").innerHTML = "invalid email address";
                 }
             });
 
@@ -87,11 +87,15 @@ const Login = () => {
         setPass("");
     };
 
+
     return (
         <>
             <div className='login-form-container'>
                 <div className="login-form-container w3-animate-left w3-animate-opacity">
                     <h3 className='login-title'>Mininsta</h3>
+
+
+
                     <div className="form-inner-div">
                         <input className="login-input mt-3" type="text"
                             placeholder="Email"
@@ -103,6 +107,9 @@ const Login = () => {
                             onChange={(e) => setPass(e.target.value)}
                             value={password}
                         />
+                        
+                        <div class="" id="error-alert"></div>
+
                         <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
                         <span className='forgot-text'>Forgotten password?</span>
                         <Link to="signUp/" className='link'>
