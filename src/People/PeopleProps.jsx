@@ -23,9 +23,9 @@ const PeopleProps = () => {
             {api.map((item) => {
                 if (item.uid === currentUser.uid) {
                     return (
-                        <>
+                        <div key={item.id}>
                             <People userP={item} />
-                        </>
+                        </div>
                     )
                 }
             })}

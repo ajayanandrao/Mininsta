@@ -26,8 +26,21 @@ const ProfilePageOne = ({ user }) => {
         return unsubscribe;
     }, []);
 
+    function on() {
+        document.getElementById("ProfileOneImg").style.display = "block";
+    }
+
+    function off() {
+        document.getElementById("ProfileOneImg").style.display = "none";
+    }
+
     return (
         <>
+            <div id="ProfileOneImg" onClick={off}>
+                <div id="ProfileOneImg-text">
+                    <img src={user.userPhoto} className='ProfileOneImg-photo' alt="" />
+                </div>
+            </div>
             {coverImg.map((item) => {
                 if (item.uid === user.uid) {
                     return (
@@ -41,7 +54,7 @@ const ProfilePageOne = ({ user }) => {
                                         <BsFillCameraFill className='profile-cover-camera-btn' />
                                     </div>
                                     <div className="profile-pic-bg-div">
-                                        <div className="profile-pic-div" style={{ backgroundImage: `url(${user && user.userPhoto})` }}></div>
+                                        <div className="profile-pic-div" style={{ backgroundImage: `url(${user && user.userPhoto})` }} onClick={on}></div>
                                     </div>
                                 </div>
                             </div>

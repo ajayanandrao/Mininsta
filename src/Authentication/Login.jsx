@@ -89,43 +89,30 @@ const Login = () => {
 
     return (
         <>
-
-            <div className="login-form-container">
-                <h3 className='login-title'>Mininsta</h3>
-                <div className="form-inner-div">
-                    <input className="login-input mt-3" type="text"
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                    />
-                    <input className="login-input my-3" type="password"
-                        placeholder="Password"
-                        onChange={(e) => setPass(e.target.value)}
-                        value={password}
-                    />
-                    <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
-                    <span className='forgot-text'>Forgotten password?</span>
-                    <Link to="signUp/" className='link'>
-                        <button className="btn-success-outline my-4">Create New Account</button>
-                    </Link>
+            <div className='login-form-container'>
+                <div className="login-form-container w3-animate-left w3-animate-opacity">
+                    <h3 className='login-title'>Mininsta</h3>
+                    <div className="form-inner-div">
+                        <input className="login-input mt-3" type="text"
+                            placeholder="Email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                        />
+                        <input className="login-input my-3" type="password"
+                            placeholder="Password"
+                            onChange={(e) => setPass(e.target.value)}
+                            value={password}
+                        />
+                        <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
+                        <span className='forgot-text'>Forgotten password?</span>
+                        <Link to="signUp/" className='link'>
+                            <button className="btn-success-outline my-4">Create New Account</button>
+                        </Link>
+                    </div>
+                    <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
                 </div>
-                <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
             </div>
 
-
-
-
-
-
-
-            {/* <div className="form-background-container">
-                <div className="form-div">
-                    <div className='form-title'><h3>Login</h3></div>
-
-                    <div></div>
-
-                </div>
-            </div> */}
         </>
     )
 }

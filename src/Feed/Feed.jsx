@@ -3,7 +3,7 @@ import "./Feed.scss"
 import { BsFillChatDotsFill, BsFillHeartFill, BsThreeDotsVertical } from "react-icons/bs"
 import { FaPlay, FaShare } from "react-icons/fa"
 import ReactTimeago from 'react-timeago';
-import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../Firebase';
 import { AuthContext } from '../AuthContaxt';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
@@ -15,6 +15,7 @@ import Picker from '@emoji-mart/react';
 import "./FeedOverlay.scss";
 import photo from "./../Image/img/photo.png";
 import { LinearProgress } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Feed = ({ post }) => {
     const { currentUser } = useContext(AuthContext);
@@ -297,7 +298,21 @@ const Feed = ({ post }) => {
         document.getElementById(`FeedOverlay-${id}`).style.display = "block";
     }
 
+    const [friendsList, setFriendsList] = useState([]);
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const friendsQuery = query(collection(db, `allFriends/${currentUser.uid}/Friends`));
+                const friendsSnapshot = await getDocs(friendsQuery);
+                const friendsData = friendsSnapshot.docs.map(doc => doc.data());
+                setFriendsList(friendsData);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        };
 
+        fetchFriends();
+    }, [currentUser]);
 
     return (
         <>
@@ -381,7 +396,15 @@ const Feed = ({ post }) => {
                                     id={`del-${post.id}`}
                                     onClick={() => deletePost(post.id)} >Delete</div>
 
-                                <div className='feed-option-delete' id={`profileView-${post.id}`}>View Profiel</div>
+
+
+                                <Link to={`/users/${post.uid}/profile`}>
+                                    <div className='feed-option-delete' id={`profileView-${post.id}`}>View Profiel</div>
+                                </Link>
+
+
+
+
                             </div>
                         </div>
                     </div>

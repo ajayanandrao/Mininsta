@@ -147,7 +147,6 @@ const ProfileOne = () => {
         <>
             <div>
 
-
                 {coverImg.map((item) => {
                     if (item.uid === currentUser.uid) {
                         return (

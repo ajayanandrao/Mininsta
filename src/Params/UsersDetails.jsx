@@ -36,8 +36,6 @@ const UsersDetails = () => {
 
 
 
-
-
     if (!user) {
         return <>
             <div className='skeleton-center'>

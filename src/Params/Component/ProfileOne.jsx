@@ -41,12 +41,27 @@ const ProfileOne = ({ user }) => {
 
     const [im, setIm] = useState(null)
 
+    function on() {
+        document.getElementById("ProfileOneImg").style.display = "block";
+    }
+
+    function off() {
+        document.getElementById("ProfileOneImg").style.display = "none";
+    }
+
     return (
         <>
-            <div>
 
+            <div id="ProfileOneImg" onClick={off}>
+                <div id="ProfileOneImg-text">
+                    <img src={user.userPhoto} className='ProfileOneImg-photo' alt="" />
+                </div>
+            </div>
+
+            <div>
                 {coverImg.map((item) => {
                     if (item.uid === user.uid) {
+
                         return (
                             <>
                                 <div className="profile-cover-photo-div"
@@ -56,7 +71,7 @@ const ProfileOne = ({ user }) => {
                                         <BsFillCameraFill className='profile-cover-camera-btn' />
                                     </div>
                                     <div className="profile-pic-bg-div">
-                                        <div className="profile-pic-div" style={{ backgroundImage: `url(${user && user.userPhoto})` }}></div>
+                                        <div className="profile-pic-div" style={{ backgroundImage: `url(${user && user.userPhoto})` }} onClick={on}></div>
                                     </div>
                                 </div>
 
@@ -66,16 +81,6 @@ const ProfileOne = ({ user }) => {
 
                 })}
 
-                {/* <div className="profile-cover-photo-div"
-                    style={{ backgroundImage: `url(${imageUrl ? imageUrl : 'https://images.unsplash.com/photo-1549247796-5d8f09e9034b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1158&q=80'})` }}
-                >
-                    <div className="profile-cover-camera-btn-div-main">
-                        <BsFillCameraFill className='profile-cover-camera-btn' />
-                    </div>
-                    <div className="profile-pic-bg-div">
-                        <div className="profile-pic-div" style={{ backgroundImage: `url(${user && user.userPhoto})` }}></div>
-                    </div>
-                </div> */}
 
             </div>
         </>

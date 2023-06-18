@@ -123,7 +123,7 @@ const SignUp = () => {
         <>
 
 
-            <div className="Signup-form-container signup-div">
+            <div className="Signup-form-container signup-div w3-animate-right">
                 <h3 className='login-title'>Mininsta</h3>
 
                 <label htmlFor="photo" >
@@ -171,47 +171,8 @@ const SignUp = () => {
 
                 </div>
             </div>
+                <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
 
-
-            {/* <div className="form-background-container">
-
-                <div className="form-div">
-                    <div className='form-title'><h3>SignUP</h3></div>
-
-                    <div className="form-inner-div">
-
-                        <label htmlFor="photo" >
-                            <img className="form-user-img" src={img ? URL.createObjectURL(img) : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS1rDH_nWadT1GXFPomdutqV1PUMA8uXIWS2Js5_fq4pJ1lwG16"} alt="" />
-
-                            <input type="file" className="photoinput" id="photo" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
-                        </label>
-
-                        <input type="text" className='from-control form-width ' placeholder='Name'
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                        />
-
-                        <input type="email" className='from-control my-4 form-width ' placeholder='Email'
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                        />
-
-                        <input type="password" className='from-control  form-width ' placeholder='Password'
-                            onChange={(e) => setPass(e.target.value)}
-                            value={password}
-                        />
-
-                        <button type="button" class=" w-100 mt-5 btn-success-custom form-width" onClick={submit}>SignUP</button>
-
-                        <span className='mt-4 forgotten'>Forgotten password?</span>
-
-                        <hr className='w-100 form-width' />
-                        <Link to="/" className='link'>
-                            <div className='create-new-a'> Already have an account ?</div>
-                        </Link>
-                    </div>
-                </div>
-            </div> */}
         </>
     )
 }
