@@ -51,23 +51,26 @@ const Option = () => {
                         <span className='option-profile-text'>{currentUser && currentUser.displayName}</span>
                     </div>
 
-                    <div className="option-mainu">
+                    {/* <div className="option-mainu">
                         <div className="option-mainu-icon">
                             <i className="bi bi-moon-fill"></i>
                         </div>
                         <div className="option-mainu-name">
                             Dark Mode
                         </div>
-                    </div>
+                    </div> */}
+                    <Link to="/setting/">
+                        <div className="option-mainu">
 
-                    <div className="option-mainu">
-                        <div className="option-mainu-icon">
-                            <i className="bi bi-gear-fill"></i>
+                            <div className="option-mainu-icon">
+                                <i className="bi bi-gear-fill"></i>
+                            </div>
+                            <div className="option-mainu-name">
+                                Setting
+                            </div>
+
                         </div>
-                        <div className="option-mainu-name">
-                            Setting
-                        </div>
-                    </div>
+                    </Link>
 
                     <div className="option-mainu">
                         <div className="option-mainu-icon">

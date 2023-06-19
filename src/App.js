@@ -20,6 +20,7 @@ import PeopleProps from './People/PeopleProps';
 import UsersProfilePage from './Params/UsersProfilePage';
 import Messages from './Message/Messages/Messages';
 import ForgotPassword from './Authentication/ForgotPassword';
+import Setting from './Setting/Setting';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="signUp" element={<SignUp />} />
           <Route path="option" element={<Option />} />
+          <Route path="setting" element={<Setting />} />
           <Route path="search" element={<SearchUser />} />
           <Route path="message" element={<Message />} />
           <Route path="find_friend" element={<PeopleProps />} />

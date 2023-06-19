@@ -81,6 +81,10 @@ const Login = () => {
                     document.getElementById("error-alert").style.display = "flex";
                     document.getElementById("error-alert").innerHTML = "invalid email address";
                 }
+                if (errorCode == "auth/network-request-failed") {
+                    document.getElementById("error-alert").style.display = "flex";
+                    document.getElementById("error-alert").innerHTML = "Check your internet connection";
+                }
             });
 
         setEmail("");
