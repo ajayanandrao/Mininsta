@@ -46,7 +46,8 @@ const ViewStory = ({ post }) => {
     const [liked, setLiked] = useState(false);
     const [like, setLike] = useState([]);
     const [isliked, setIsliked] = useState([]);
-
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoRef = useRef(null);
 
     useEffect(() => {
         const storiesCollection = collection(db, 'stories');
@@ -146,7 +147,7 @@ const ViewStory = ({ post }) => {
                 await deleteDoc(likeRef);
             } else {
                 await setDoc(likeRef, {
-                    storyUid:  user.uid,
+                    storyUid: user.uid,
                     userId: currentUser.uid,
                     name: currentUser.displayName
                 });
@@ -205,7 +206,18 @@ const ViewStory = ({ post }) => {
         );
     }
 
+   
 
+    const handleClick = () => {
+        const video = videoRef.current;
+        if (video.paused) {
+            video.play();
+            setIsPlaying(true);
+        } else {
+            video.pause();
+            setIsPlaying(false);
+        }
+    };
 
     return (
         <>
@@ -223,7 +235,7 @@ const ViewStory = ({ post }) => {
                             <div key={story.id} >
                                 {story.image && story.image.includes('.mp4') ? (
                                     <div className="view-video-container">
-                                        <video className="view-video" id="video" autoPlay >
+                                        <video ref={videoRef} onClick={handleClick} className="view-video" id="video" autoPlay  >
                                             <source src={story.image} type="video/mp4" />
                                         </video>
                                         <BorderLinearProgress
