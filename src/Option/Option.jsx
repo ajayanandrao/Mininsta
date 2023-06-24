@@ -72,6 +72,17 @@ const Option = () => {
                         </div>
                     </Link>
 
+                    <Link to="/movies/">
+                        <div className="option-mainu">
+                            <div className="option-mainu-icon">
+                                <i className="bi bi-door-open-fill" onClick={LogOut}></i>
+                            </div>
+                            <div className="option-mainu-name" >
+                                Movies
+                            </div>
+                        </div>
+                    </Link>
+
                     <div className="option-mainu">
                         <div className="option-mainu-icon">
                             <i className="bi bi-door-open-fill" onClick={LogOut}></i>
@@ -80,6 +91,8 @@ const Option = () => {
                             Log Out
                         </div>
                     </div>
+
+
 
                 </div>
             </div>

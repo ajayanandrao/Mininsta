@@ -9,6 +9,8 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import FlipMove from 'react-flip-move';
 import { Height } from '@mui/icons-material';
 import { AiOutlineArrowUp } from "react-icons/ai";
+import StoryForm from '../Story/StoryForm';
+import PeopleFlickity from '../People/PeopleFlickity/PeopleFlickity';
 const Home = () => {
 
     const [api, setApiData] = useState([]);
@@ -59,7 +61,9 @@ const Home = () => {
             <div className="btn" onClick={handleScrollToTop} id="scrollTopBtn" >
                 <AiOutlineArrowUp className="top-arrow" />
             </div>
+            <StoryForm />
             <Post />
+            {/* <PeopleFlickity /> */}
             <FlipMove>{newData}</FlipMove>
             <div className='height' ></div>
         </>

@@ -21,6 +21,13 @@ import UsersProfilePage from './Params/UsersProfilePage';
 import Messages from './Message/Messages/Messages';
 import ForgotPassword from './Authentication/ForgotPassword';
 import Setting from './Setting/Setting';
+import StoryForm from './Story/StoryForm';
+import CreateStorey from './Story/createStory/CreateStorey';
+import ViewStory from './Story/createStory/ViewStory/ViewStory';
+import ViewStoryProps from './Story/createStory/ViewStory/ViewStoryProps';
+import Demo from './Demo';
+import Movies from './Movies/Movies';
+import CategoryParam from './Movies/CategoryParam/CategoryParam';
 
 function App() {
 
@@ -33,6 +40,11 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route exact path="forgotPassword" element={<ForgotPassword />} />
           <Route path="home" element={<Home />} />
+
+          <Route path="story" element={<StoryForm />} />
+          <Route path="createStory" element={<CreateStorey />} />
+          <Route path="users/:id/story" element={<ViewStoryProps />} />
+
           <Route path="signUp" element={<SignUp />} />
           <Route path="option" element={<Option />} />
           <Route path="setting" element={<Setting />} />
@@ -45,7 +57,11 @@ function App() {
           <Route path='users/:id/message' element={<Messages />} />
           <Route path='users/:id/profile' element={<UsersProfilePage />} />
 
+          <Route path='movie/:id' element={<CategoryParam />} />
+
           <Route path='profile' element={<UserProfile />} />
+          <Route path='demo' element={<Demo />} />
+          <Route path='movies' element={<Movies />} />
 
         </Routes>
       </Router>
