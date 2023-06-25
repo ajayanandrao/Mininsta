@@ -206,7 +206,7 @@ const ViewStory = ({ post }) => {
         );
     }
 
-   
+
 
     const handleClick = () => {
         const video = videoRef.current;
@@ -292,7 +292,7 @@ const ViewStory = ({ post }) => {
                                         <div className="view-profile-div">
                                             <img src={user.userPhoto} className="view-profile-img" alt="" />
                                             <div className="view-profile-name">{user.name}</div>
-
+                                            
                                             <div className="view-profile-close-div">
                                                 <MdClose className="view-close-btn" onClick={goBack} />
                                             </div>
