@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../../../AuthContaxt';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../Firebase';
+import { MdDelete } from 'react-icons/md';
+import { FiMaximize } from 'react-icons/fi';
+import "./ProfilePhotos.scss";
 
 const ProfilePhotos = ({ user }) => {
 
@@ -37,14 +40,45 @@ const ProfilePhotos = ({ user }) => {
         return imageExtensions.includes(extension);
     };
 
+
+    const closeViewPhoto = (id) => {
+        const x = document.getElementById(`ViewImg${id}`);
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+        } else {
+            x.style.display = 'none';
+        }
+    };
+
+    const ViewPhotoDiv = (id) => {
+
+        const x = document.getElementById(`ViewImg${id}`);
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+        } else {
+            x.style.display = 'none';
+        }
+
+    }
+
     const newData = userPhoto.map((post) => {
         if (post.uid === user.uid) {
 
             return (
                 <>
+
+                    <div id={`ViewImg${post.id}`} style={{ display: "none" }} className='ViewImg' onClick={() => closeViewPhoto(post.id)}>
+                        <div className="ViewImg-center">
+                            <img src={post.img} className='View-Img' alt="" />
+                        </div>
+                    </div>
                     {post.img && isImage(post.name) &&
                         (
-                            <div className='photo-card' style={{ backgroundImage: `url(${post.img})` }}></div>
+                            <div className='photo-card' onClick={() => ViewPhotoDiv(post.id)} style={{ backgroundImage: `url(${post.img})` }}>
+
+                            </div>
                         )
                     }
                 </>

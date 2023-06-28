@@ -22,6 +22,31 @@ const Feed = ({ post }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const video = videoRef.current;
+            const rect = video.getBoundingClientRect();
+            const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
+            if (isInViewport) {
+                if (video.paused) {
+                    video.play();
+                    setIsPlaying(true);
+                }
+            } else {
+                if (!video.paused) {
+                    video.pause();
+                    setIsPlaying(false);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     const handleVideoBtnClick = () => {
         const video = videoRef.current;
         if (video.paused) {
@@ -34,7 +59,6 @@ const Feed = ({ post }) => {
     };
 
     // Like Post 
-
     const [like, setLike] = useState([]);
     const [liked, setLiked] = useState(false);
     const [isliked, setIsliked] = useState([]);
@@ -402,9 +426,6 @@ const Feed = ({ post }) => {
                                     <div className='feed-option-delete' id={`profileView-${post.id}`}>View Profiel</div>
                                 </Link>
 
-
-
-
                             </div>
                         </div>
                     </div>
@@ -424,7 +445,7 @@ const Feed = ({ post }) => {
                         ) : post.img ? (
 
                             <div className="video-container">
-                                <video ref={videoRef} className="video" onClick={handleVideoBtnClick}>
+                                <video ref={videoRef} className="post-video" onClick={handleVideoBtnClick}>
                                     <source src={post.img} type="video/mp4" />
                                 </video>
                                 {!isPlaying && (
@@ -522,7 +543,7 @@ const Feed = ({ post }) => {
                         </div>
 
                         {showEmoji && (<div>
-                            <div className='emoji mb-3'>
+                            <div className='emoji '>
                                 <Picker emojiSize={18} emojiButtonSize={30} onEmojiSelect={addEmoji} />
                             </div>
                         </div>)}

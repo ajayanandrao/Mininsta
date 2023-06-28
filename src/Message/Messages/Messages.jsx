@@ -9,6 +9,8 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { BsFillCameraFill } from 'react-icons/bs';
 import { AuthContext } from '../../AuthContaxt';
 import { FaDeleteLeft } from "react-icons/fa"
+import { IoIosCall } from "react-icons/io"
+import TwilioVideo from 'twilio-video';
 
 const Messages = () => {
 
@@ -186,11 +188,31 @@ const Messages = () => {
 
                 recipient: uid, // Set the recipient's ID
                 recipientImg: recipientImg,
-                message:"👍",
+                message: "👍",
                 timestamp: serverTimestamp(), // Set the timestamp (server-side)
             });
         }
     }
+
+    // e.preventDefault();
+
+    const callFriend = async () => {
+        try {
+            // Initialize Twilio Video token and room details
+            const response = await fetch('/api/twilio/token'); // Replace with your server endpoint to generate Twilio token
+            const { token, room } = await response.json();
+
+            // Join the video call room using Twilio Video library
+            await TwilioVideo.connect(token, {
+                roomName: room,
+                audio: true,
+                video: true,
+            });
+        } catch (error) {
+            console.error('Error calling friend:', error);
+        }
+    };
+
 
 
     return (
@@ -200,6 +222,12 @@ const Messages = () => {
                     <i onClick={goBack} className="bi bi-arrow-left message-arrow "></i>
                     <img className='message-profile-img' src={user.userPhoto} alt="" />
                     <span className='message-profile-name'>{user.name}</span>
+                    <div className="call-div">
+                        {/* <IoIosCall style={{ fontSize: "24px" }} onClick={callFriend} /> */}
+                        {/* <IoIosCall style={{ fontSize: "24px" }}  /> */}
+                        <i className="bi bi-camera-video-fill" style={{ fontSize: "24px" }} onClick={callFriend}></i>
+
+                    </div>
                 </div>
 
                 <div className="message-list-container">

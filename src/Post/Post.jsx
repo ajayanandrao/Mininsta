@@ -264,7 +264,7 @@ const Post = () => {
             </div>
 
             {showEmoji && (<div>
-              <div className='emoji'>
+              <div className='post-emoji'>
                 <Picker dynamicWidth={false} emojiSize={18} emojiButtonSize={30} onEmojiSelect={addEmoji} />
               </div>
             </div>)}

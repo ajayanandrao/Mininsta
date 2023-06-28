@@ -21,6 +21,11 @@
         top: 0;
         z-index: 1;
 
+        .call-div{
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
         .message-arrow {
             margin: 0 0.5rem;
             margin-right: 1rem;

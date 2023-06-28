@@ -124,21 +124,19 @@
             }
         }
 
-        .emoji {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 25px;
-            display: flex;
-            justify-content: center;
-            z-index: 9999;
-            padding: 1rem 0;
-            // background: red;
-        }
+
 
     }
 }
 
+.post-emoji {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+
+}
 
 // Video Player
 

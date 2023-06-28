@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import "./UserPhoto.scss";
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import { AuthContext } from '../../AuthContaxt';
+import { FiMaximize } from "react-icons/fi"
+import { MdDelete } from "react-icons/md"
 
 const UserPhoto = () => {
 
@@ -37,14 +39,64 @@ const UserPhoto = () => {
         return imageExtensions.includes(extension);
     };
 
+    const ViewPhoto = (id) => {
+        const x = document.getElementById(`ViewImg${id}`);
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+    const closeViewPhoto = (id) => {
+        const x = document.getElementById(`ViewImg${id}`);
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+        } else {
+            x.style.display = 'none';
+        }
+    };
+
+    const ViewPhotoDiv = (id) => {
+        const x = document.getElementById(`viewPhotoDiv-${id}`);
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+        } else {
+            x.style.display = 'none';
+        }
+
+    }
+
+    const deletePhoto = async (id) => {
+        const colRef = doc(db, 'UserPostPhoto', id);
+        await deleteDoc(colRef);
+    }
+
     const newData = userPhoto.map((post) => {
         if (post.uid === currentUser.uid) {
 
             return (
                 <>
+
+                    <div id={`ViewImg${post.id}`} style={{ display: "none" }} className='ViewImg' onClick={() => closeViewPhoto(post.id)}>
+                        <div className="ViewImg-center">
+                            <img src={post.img} className='View-Img' alt="" />
+                        </div>
+                    </div>
+
                     {post.img && isImage(post.name) &&
                         (
-                            <div className='photo-card' style={{ backgroundImage: `url(${post.img})` }}></div>
+                            <div key={post.id} onClick={() => ViewPhotoDiv(post.id)} className='photo-card' style={{ backgroundImage: `url(${post.img})` }}
+
+                            >
+                                <div className="photo-card-icon-div" style={{ display: "none" }} id={`viewPhotoDiv-${post.id}`}>
+                                    <FiMaximize className="photo-card-icon" onClick={() => ViewPhoto(post.id)} />
+                                    <MdDelete className="photo-card-icon" onClick={() => deletePhoto(post.id)} />
+                                </div>
+
+                            </div >
                         )
                     }
                 </>
@@ -96,6 +148,9 @@ const UserPhoto = () => {
 
     return (
         <>
+
+
+
             <div class="grid-parent-container">
                 <div className="grid-container" >
                     {newData}
@@ -112,4 +167,4 @@ const UserPhoto = () => {
 
 
 export default UserPhoto
-{/* <div className='photo-card' style={{ backgroundImage: `url(${post.img})` }}></div> */ }
+{/* <div className='photo-card' style={{ backgroundImage: `url(${ post.img })` }}></div> */ }

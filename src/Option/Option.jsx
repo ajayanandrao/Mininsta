@@ -6,6 +6,8 @@ import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../Firebase';
 import { signOut } from 'firebase/auth';
 import { AuthContext } from '../AuthContaxt';
+import { MdMovie } from "react-icons/md";
+import { FcFilmReel } from "react-icons/fc";
 
 const Option = () => {
     const { currentUser } = useContext(AuthContext);
@@ -75,10 +77,20 @@ const Option = () => {
                     <Link to="/movies/">
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
-                                <i className="bi bi-door-open-fill" onClick={LogOut}></i>
+                                <MdMovie />
                             </div>
                             <div className="option-mainu-name" >
                                 Movies
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/reals/">
+                        <div className="option-mainu">
+                            <div className="option-mainu-icon">
+                                <FcFilmReel />
+                            </div>
+                            <div className="option-mainu-name" >
+                                Reals
                             </div>
                         </div>
                     </Link>
