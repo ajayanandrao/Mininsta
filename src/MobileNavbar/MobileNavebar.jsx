@@ -9,7 +9,8 @@ import { auth, db } from '../Firebase';
 import { AuthContext } from '../AuthContaxt';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { MdMovieFilter } from "react-icons/md"
+import { MdMovieFilter } from "react-icons/md";
+import v from "./../Image/img/vl.png";
 
 const MobileNavebar = () => {
 
@@ -42,18 +43,25 @@ const MobileNavebar = () => {
     return (
         <>
             <div className="mobile-nav-container" id='navIdB'>
-                <Link to="home/" style={{ textDecoration: 'none' }}> <div className='mobile-nav-title'>Mininsta</div></Link>
+                <Link to="home/" style={{ textDecoration: 'none' }}> <div className='mobile-nav-title'>
+                    <img src={v} className='logo' alt="" />
+                </div></Link>
+
                 <div className='mobile-item-div'>
 
                     <span className='mobile-nav-mainu'>
                         <Link to="find_friend/" className='link'>
-                            <BsFillPeopleFill className='mobile-nav-icon' />
+                            <div className="home">
+                                <BsFillPeopleFill className='mobile-nav-icon' />
+                            </div>
                         </Link>
                     </span>
 
                     <span className='mobile-nav-mainu'>
                         <Link to="search/" className='link'>
-                            <RiSearchLine className='mobile-nav-icon' />
+                            <div className="home">
+                                <RiSearchLine className='mobile-nav-icon' />
+                            </div>
                         </Link>
                     </span>
 
@@ -67,17 +75,30 @@ const MobileNavebar = () => {
                 </div>
             </div>
 
-            <div className="mobile-nav-bottom-container" id='navId'>
+            <div className="mobile-nav-bottom-container " id='navId'>
                 <Link to={"home/"}>
                     <AiFillHome className='mobile-nav-bottom-icon' />
                 </Link>
-                <AiFillHeart className='mobile-nav-bottom-icon' />
-                <Link to="message/"> <i className="bi bi-messenger"></i></Link>
+                <div >
+                    <AiFillHeart className='mobile-nav-bottom-icon' />
+                </div>
 
-                <Link to="reels">  <MdMovieFilter className='mobile-nav-bottom-icon' />
+                <Link to="message/">
+                    <div >
+                        <i className="bi bi-messenger"></i>
+                    </div>
                 </Link>
-                
-                <Link to={"profile/"}> <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />
+
+                <Link to="reels">
+                    <div >
+                        <MdMovieFilter className='mobile-nav-bottom-icon' />
+                    </div>
+                </Link>
+
+                <Link to={"profile/"}>
+                    <div >
+                        <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />
+                    </div>
                 </Link>
                 {/* <AiFillHeart className='mobile-nav-bottom-icon' /> */}
             </div>

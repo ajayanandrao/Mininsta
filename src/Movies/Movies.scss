@@ -1,14 +1,44 @@
-.movie-main-container{
+.movie-main-container {
     width: 100%;
     height: auto;
     margin-bottom: 100px;
 }
+
 .mover-trailer-card {
     width: 350px;
-    height: 150px;
-    background: blue;
+    height: 200px;
     margin: 0.5rem;
     border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    
+
+    .trailer-data-div {
+        background: linear-gradient(#0a192909 30%, #061320fd);
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: end;
+        padding: 1rem;
+        line-height: 18px;
+        
+
+        .trailer-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            text-transform: capitalize;
+        }
+
+        .sub {
+            font-size: 14px;
+            color: rgb(170, 170, 170);
+        }
+    }
+
 }
 
 .category-div {
@@ -18,12 +48,15 @@
     background: rgb(122, 122, 122);
     display: flex;
     align-items: center;
-    .see-more{
+    color: white;
+    font-weight: 600;
+
+    .see-more {
         flex: 1;
         display: flex;
         justify-content: end;
         align-items: center;
-        
+
     }
 }
 
@@ -32,6 +65,7 @@
     justify-content: center;
     width: 100%;
     margin-top: 0.5rem;
+
     .categaory-container {
         width: 100%;
         padding: 0.5rem;
@@ -40,18 +74,30 @@
         gap: 0.5rem;
 
         .category-card {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: start;
+            align-items: end;
+            font-size: 18px;
             max-width: 200px;
             height: 100px;
-            background: rgb(36, 36, 36);
             border-radius: 5px;
+            padding: 0.5rem;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
         }
     }
 }
 
-.hollywood-card{
+.hollywood-card {
     width: 200px;
     height: 130px;
     border-radius: 5px;
-    background-color: #0a1929;
     margin: 0.3rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

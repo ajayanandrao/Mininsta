@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Avatar",
+    "subname": "The way of water",
+    "img": "https://media.socastsrm.com/wordpress/wp-content/blogs.dir/460/files/2022/12/banner-avatar2.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Black Panther",
+    "subname": "Wakanda Forever",
+    "img": "https://images.ottplay.com/images/detail-from-the-poster-for-black-panther-wakanda-forever-766.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Frozen 2",
+    "subname": "",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH9FBqEewVbbkQsaHu1L71XvD0vWGHFaWBbuObIQZZCynFK-7zxDwfB1uFswDymSe9Q4A&usqp=CAU"
+  },
+  {
+    "id": 4,
+    "name": "parets of the caribbean",
+    "subname": "salazar's revenge",
+    "img": "https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/1136/1371136-i-9654229f4d23"
+  },
+  {
+    "id": 5,
+    "name": "captain america",
+    "subname": "the first avenger",
+    "img": "https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/7955/1407955-i-267ffcf8a080"
+  }
+]

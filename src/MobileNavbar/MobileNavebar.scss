@@ -24,6 +24,7 @@
         // background: red;
         // font-family: 'Kalam', cursive;
         color: blue;
+
     }
 
     .mobile-item-div {
@@ -85,10 +86,36 @@
     border: none;
     text-decoration: none;
     box-shadow: none;
-    &:focus{
+
+    &:focus {
         box-shadow: none;
         outline: none;
         border: none;
         text-decoration: none;
     }
+}
+
+
+.logo {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.home {
+    background-color: #f0f2f5;
+    border: 1px solid #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.home-logo {
+    width: 25px;
+    height: 25px;
 }

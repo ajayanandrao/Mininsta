@@ -1,44 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Movies.scss";
 import Flickity from 'react-flickity-component';
 import mapi from "./m.json";
+import trailer from "./trailer.json";
+import holly from "./hollywood.json";
+import bolly from "./bollywood.json";
 import { Link } from 'react-router-dom';
 
 const Movies = () => {
     var flickityOptions = {
-        initialIndex: 2,
+        initialIndex: 0,
         wrapAround: true,
-        autoPlay: 1500
+        autoPlay: 2000
     }
     var hollywood = {
         initialIndex: 1,
         wrapAround: true,
-        autoPlay: 2000
+        autoPlay: 2500
     }
     var bollywood = {
         initialIndex: 1,
         wrapAround: true,
-        autoPlay: 2500
+        autoPlay: 2000
     }
+
+
 
     return (
         <>
+
             <div className='movie-main-container'>
                 <Flickity
                     className='carouse'
                     elementType={'div'}
                     options={flickityOptions}
                     disableImagesLoaded={false}>
+                    {trailer.map((trailer) => {
+                        return (
+                            <>
+                                <div style={{ backgroundImage: `url(${trailer.img})` }} className="mover-trailer-card">
 
-                    <div className="mover-trailer-card">1</div>
-                    <div className="mover-trailer-card">2</div>
-                    <div className="mover-trailer-card">3</div>
-                    <div className="mover-trailer-card">4</div>
-                    <div className="mover-trailer-card">5</div>
+                                    <div className="trailer-data-div">
+                                        <div className='trailer-name'>{trailer.name}</div>
+                                        <div className='trailer-name sub'>{trailer.subname}</div>
+                                    </div>
+
+                                </div>
+                            </>
+                        )
+                    })}
 
                 </Flickity>
 
-                <div className="category-div">Categary</div>
 
                 <div className="category-grid-center">
                     <div className="categaory-container">
@@ -48,8 +61,9 @@ const Movies = () => {
                                 <>
                                     <Link to={`/movie/${movie.id}`}>
                                         <div className="category-card-div" key={movie.id}>
-                                            <div className="category-card">{movie.id}</div>
-                                            <div className="category-name">{movie.name}</div>
+                                            <div style={{ backgroundImage: `url(${movie.img})` }} className="category-card">
+                                                {movie.name}
+                                            </div>
                                         </div>
                                     </Link>
                                 </>
@@ -67,13 +81,15 @@ const Movies = () => {
                     options={hollywood}
                     disableImagesLoaded={false}>
 
-                    <div className="hollywood-card">1</div>
-                    <div className="hollywood-card">2</div>
-                    <div className="hollywood-card">3</div>
-                    <div className="hollywood-card">4</div>
-                    <div className="hollywood-card">6</div>
-                    <div className="hollywood-card">7</div>
-                    <div className="hollywood-card">8</div>
+                    {holly.map((holly) => {
+                        return (
+                            <>
+                                <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+
+                                </div>
+                            </>
+                        )
+                    })}
 
                 </Flickity>
 
@@ -85,13 +101,15 @@ const Movies = () => {
                     options={bollywood}
                     disableImagesLoaded={false}>
 
-                    <div className="hollywood-card">1</div>
-                    <div className="hollywood-card">2</div>
-                    <div className="hollywood-card">3</div>
-                    <div className="hollywood-card">4</div>
-                    <div className="hollywood-card">6</div>
-                    <div className="hollywood-card">7</div>
-                    <div className="hollywood-card">8</div>
+                    {bolly.map((holly) => {
+                        return (
+                            <>
+                                <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+
+                                </div>
+                            </>
+                        )
+                    })}
 
                 </Flickity>
             </div>
