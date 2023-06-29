@@ -9,7 +9,7 @@ import { auth, db } from '../Firebase';
 import { AuthContext } from '../AuthContaxt';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { collection, onSnapshot } from 'firebase/firestore';
-
+import { MdMovieFilter } from "react-icons/md"
 
 const MobileNavebar = () => {
 
@@ -74,6 +74,9 @@ const MobileNavebar = () => {
                 <AiFillHeart className='mobile-nav-bottom-icon' />
                 <Link to="message/"> <i className="bi bi-messenger"></i></Link>
 
+                <Link to="reels">  <MdMovieFilter className='mobile-nav-bottom-icon' />
+                </Link>
+                
                 <Link to={"profile/"}> <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />
                 </Link>
                 {/* <AiFillHeart className='mobile-nav-bottom-icon' /> */}

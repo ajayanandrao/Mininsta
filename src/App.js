@@ -29,6 +29,7 @@ import Demo from './Demo';
 import Movies from './Movies/Movies';
 import CategoryParam from './Movies/CategoryParam/CategoryParam';
 import Reals from './Reals/Reals';
+import ReelsProps from './Reals/ReelsProps';
 
 function App() {
 
@@ -63,7 +64,7 @@ function App() {
           <Route path='profile' element={<UserProfile />} />
           <Route path='demo' element={<Demo />} />
           <Route path='movies' element={<Movies />} />
-          <Route path='reals' element={<Reals />} />
+          <Route path='reels' element={<ReelsProps />} />
 
         </Routes>
       </Router>
