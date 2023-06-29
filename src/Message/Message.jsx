@@ -221,127 +221,125 @@ const Message = () => {
 
     return (
         <>
-            <div className="Message-container">
-                <div className="Message-back-div">
-                    <i onClick={goBack} className="bi bi-arrow-left "></i>
-                    <input type="text" className='Message-User-input'
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search} placeholder='Message-User' />
+            <div className="message-wrapper">
+                <div className="message-wrapper-inner">
+                    <div className="wrapper-container">
+                        <div className="Message-back-div">
+                            <i onClick={goBack} className="bi bi-arrow-left "></i>
+                            <input type="text" className='Message-User-input'
+                                onChange={(e) => setSearch(e.target.value)}
+                                value={search} placeholder='Message-User' />
+                        </div>
+
+                        <div className="Message-user-List">
+
+                            <div className="tab-block">
+                                <button className="w3-bar-item w3-button" onClick={() => openCity('Message')}>Message</button>
+                                <button className="w3-bar-item w3-button" onClick={() => openCity('Online')}>Online</button>
+
+                                <button className="w3-bar-item w3-button" onClick={() => openCity('Request')}>Request</button >
+
+                            </div >
+
+                            <div id="Message" className=" w3-animate-left city">
+
+                                {uniqueUserIds.map((userId) => {
+                                    const userMessages = messages.filter((message) => message.userId === userId);
+                                    const user = userMessages[0]; // Assuming the first message represents the user's details
+
+                                    return (
+                                        <div key={userId}>
+                                            <div className='message-profile-div'>
+                                                <Link style={{ textDecoration: "none" }} to={`/users/${user.userId}/message`}>
+                                                    <img src={user.photoUrl} className='message-user-img' alt='' />
+                                                    <span className='message-user-name'>{user.name}</span>
+                                                </Link>
+                                            </div>
+                                            {userMessages.map((message, index) => (
+                                                <div key={index}>{message.messageContent}</div>
+                                            ))}
+                                        </div>
+                                    );
+                                })}
+
+                            </div>
+
+                            <div id="Online" className=" w3-animate-bottom city" style={{ display: "none" }}>
+
+                                {onlineUsers.length >= 0 ? (
+                                    onlineUsers.map((online) => {
+                                        const isFriendOnline = friendsList.some((friend) => friend.userId === online.uid);
+                                        if (isFriendOnline) {
+                                            return (
+                                                <div key={online.id} className="online-user-div">
+                                                    <Link to={`/users/${online.id}/message`}>
+                                                        <span>
+                                                            <StyledBadge
+                                                                overlap="circular"
+                                                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                                                variant="dot"
+                                                            >
+                                                                <Avatar alt="Remy Sharp" className='avt' src={online.photoUrl} />
+                                                            </StyledBadge>
+                                                        </span>
+                                                        <span className="online-user-name">{online.presenceName}</span>
+                                                    </Link>
+                                                </div>
+                                            );
+                                        } else {
+                                            return null;
+                                        }
+                                    })
+                                ) : (
+                                    <div>No users currently online.</div>
+                                )}
+
+                            </div>
+
+                            <div id="Request" className=" w3-animate-right city" style={{ display: "none" }}>
+
+                                {friendRequests.length === 0 ? (
+                                    <div style={{ textAlign: "center" }} className='num-requ' >You have no request</div>
+                                ) : (
+                                    friendRequests.map((item) => {
+                                        if (item.receiverUid === currentUser.uid && item.status !== 'accepted') {
+                                            return (
+                                                <div key={item.id}>
+                                                    <div className="request-container">
+                                                        <div>
+                                                            <img src={item.senderPhotoUrl} className='request-img' alt="" />
+                                                        </div>
+
+                                                        <div className='request-inne-container'>
+                                                            <div className='request-name'>{item.senderName}</div>
+
+                                                            <div className="request-btn-div"    >
+                                                                <div className="btn-success-custom"
+                                                                    onClick={() => acceptFriendRequest
+                                                                        (item.id, item.senderId, item.receiverUid, item.senderName, item.senderPhotoUrl,
+                                                                            item.receiverName, item.receiverPhotoUrl)}>Accept</div>
+                                                                <div className="btn-D-custom ms-4"
+                                                                    onClick={() => DeleteRequest(item.id)}
+                                                                >Remove</div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            );
+                                        } else {
+                                            return null;
+                                        }
+                                    })
+                                )}
+
+                            </div>
+
+                        </div >
+                    </div>
                 </div>
             </div>
-
-            <div className="Message-user-List">
-
-
-                <div className="tab-block">
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('Message')}>Message</button>
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('Online')}>Online</button>
-
-                    <button className="w3-bar-item w3-button" onClick={() => openCity('Request')}>Request</button >
-
-                </div >
-
-
-                <div id="Message" className=" w3-animate-left city">
-
-
-                    {uniqueUserIds.map((userId) => {
-                        const userMessages = messages.filter((message) => message.userId === userId);
-                        const user = userMessages[0]; // Assuming the first message represents the user's details
-
-                        return (
-                            <div key={userId}>
-                                <div className='message-profile-div'>
-                                    <Link style={{ textDecoration: "none" }} to={`/users/${user.userId}/message`}>
-                                        <img src={user.photoUrl} className='message-user-img' alt='' />
-                                        <span className='message-user-name'>{user.name}</span>
-                                    </Link>
-                                </div>
-                                {userMessages.map((message, index) => (
-                                    <div key={index}>{message.messageContent}</div>
-                                ))}
-                            </div>
-                        );
-                    })}
-
-
-
-                </div>
-
-                <div id="Online" className=" w3-animate-bottom city" style={{ display: "none" }}>
-
-                    {onlineUsers.length >= 0 ? (
-                        onlineUsers.map((online) => {
-                            const isFriendOnline = friendsList.some((friend) => friend.userId === online.uid);
-                            if (isFriendOnline) {
-                                return (
-                                    <div key={online.id} className="online-user-div">
-                                        <Link to={`/users/${online.id}/message`}>
-                                            <span>
-                                                <StyledBadge
-                                                    overlap="circular"
-                                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                                    variant="dot"
-                                                >
-                                                    <Avatar alt="Remy Sharp" className='avt' src={online.photoUrl} />
-                                                </StyledBadge>
-                                            </span>
-                                            <span className="online-user-name">{online.presenceName}</span>
-                                        </Link>
-                                    </div>
-                                );
-                            } else {
-                                return null;
-                            }
-                        })
-                    ) : (
-                        <div>No users currently online.</div>
-                    )}
-
-                </div>
-
-                <div id="Request" className=" w3-animate-right city" style={{ display: "none" }}>
-
-                    {friendRequests.length === 0 ? (
-                        <div style={{ textAlign: "center" }} className='num-requ' >You have no request</div>
-                    ) : (
-                        friendRequests.map((item) => {
-                            if (item.receiverUid === currentUser.uid && item.status !== 'accepted') {
-                                return (
-                                    <div key={item.id}>
-                                        <div className="request-container">
-                                            <div>
-                                                <img src={item.senderPhotoUrl} className='request-img' alt="" />
-                                            </div>
-
-                                            <div className='request-inne-container'>
-                                                <div className='request-name'>{item.senderName}</div>
-
-                                                <div className="request-btn-div"    >
-                                                    <div className="btn-success-custom"
-                                                        onClick={() => acceptFriendRequest
-                                                            (item.id, item.senderId, item.receiverUid, item.senderName, item.senderPhotoUrl,
-                                                                item.receiverName, item.receiverPhotoUrl)}>Accept</div>
-                                                    <div className="btn-D-custom ms-4"
-                                                        onClick={() => DeleteRequest(item.id)}
-                                                    >Remove</div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                );
-                            } else {
-                                return null;
-                            }
-                        })
-                    )}
-
-                </div>
-
-            </div >
-            <div className="Message-user-bottom"></div>
         </>
     )
 }

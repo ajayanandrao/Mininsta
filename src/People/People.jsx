@@ -123,97 +123,99 @@ const People = ({ userP }) => {
 
     return (
         <>
-            <div className="People-container ">
-                <div className="People-back-div">
-                    <i onClick={goBack} className="bi bi-arrow-left "></i>
-                    <input type="text"
-                        className='People-User-input'
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        placeholder='Search friends' />
-                </div>
-            </div>
+            <div className="people-wrapper">
+                <div className="people-wrapper-inner">
+                    <div className="People-back-div">
+                        <i onClick={goBack} className="bi bi-arrow-left "></i>
+                        <input type="text"
+                            className='People-User-input'
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            placeholder='Search friends' />
+                    </div>
 
-            <div className="People-user-List">
-                {api
-                    .filter((value) => {
-                        if (search === "") {
-                            return value;
-                        } else if (value.name.toLowerCase().includes(search.toLowerCase())) {
-                            return value;
-                        }
-                    })
-                    .map((item) => {
-                        if (item.uid !== currentUser.uid) {
-                            const friendRequest = check.find(
-                                (request) =>
-                                    request.senderId === currentUser.uid &&
-                                    request.receiverUid === item.uid &&
-                                    request.status === 'pending'
-                            );
+                    <div className="People-user-List">
+                        {api
+                            .filter((value) => {
+                                if (search === "") {
+                                    return value;
+                                } else if (value.name.toLowerCase().includes(search.toLowerCase())) {
+                                    return value;
+                                }
+                            })
+                            .map((item) => {
+                                if (item.uid !== currentUser.uid) {
+                                    const friendRequest = check.find(
+                                        (request) =>
+                                            request.senderId === currentUser.uid &&
+                                            request.receiverUid === item.uid &&
+                                            request.status === 'pending'
+                                    );
 
-                            const isFriendRequestAccepted = friendsList.some(
-                                (friend) =>
-                                    friend.userId === item.uid &&
-                                    friend.status === 'accepted'
-                            );
+                                    const isFriendRequestAccepted = friendsList.some(
+                                        (friend) =>
+                                            friend.userId === item.uid &&
+                                            friend.status === 'accepted'
+                                    );
 
-                            return (
-                                <div key={item.id}>
-                                    <div className="people-container">
-                                        <Link to={`/users/${item.uid}`}>
-                                            <div>
-                                                <img src={item.PhotoUrl} className="people-img" alt="" />
-                                            </div>
-                                        </Link>
-                                        <div className="people-name-div">
-                                            <div className="people-name">{item.name}</div>
-                                            <div className="people-btn-div">
-                                                {friendRequest ? (
-                                                    <div
-                                                        id={`cancel-${item.id}`}
-                                                        className="btn-dengar-custom ms-2"
-                                                        onClick={() =>
-                                                            cancelFriendRequest(
-                                                                item.id,
-                                                                currentUser.uid,
-                                                                item.uid
-                                                            )
-                                                        }
-                                                    >
-                                                        Cancel Request
+                                    return (
+                                        <div key={item.id}>
+                                            <div className="people-container">
+                                                <Link to={`/users/${item.uid}`}>
+                                                    <div>
+                                                        <img src={item.PhotoUrl} className="people-img" alt="" />
                                                     </div>
-                                                ) : isFriendRequestAccepted ? (
-                                                    <div className="friend-request-accepted">Friend Request Accepted</div>
-                                                ) : isFriend(item.uid) ? (
-                                                    <div className="friend-request-accepted">Friend</div>
-                                                ) : (
-                                                    <div
-                                                        id={`add-${item.id}`}
-                                                        className="btn-primary-custom"
-                                                        onClick={() =>
-                                                            sendFriendRequest(
-                                                                item.id,
-                                                                item.uid,
-                                                                item.name,
-                                                                item.PhotoUrl
-                                                            )
-                                                        }
-                                                    >
-                                                        Add a friend
+                                                </Link>
+                                                <div className="people-name-div">
+                                                    <div className="people-name">{item.name}</div>
+                                                    <div className="people-btn-div">
+                                                        {friendRequest ? (
+                                                            <div
+                                                                id={`cancel-${item.id}`}
+                                                                className="btn-dengar-custom ms-2"
+                                                                onClick={() =>
+                                                                    cancelFriendRequest(
+                                                                        item.id,
+                                                                        currentUser.uid,
+                                                                        item.uid
+                                                                    )
+                                                                }
+                                                            >
+                                                                Cancel Request
+                                                            </div>
+                                                        ) : isFriendRequestAccepted ? (
+                                                            <div className="friend-request-accepted">Friend Request Accepted</div>
+                                                        ) : isFriend(item.uid) ? (
+                                                            <div className="friend-request-accepted">Friend</div>
+                                                        ) : (
+                                                            <div
+                                                                id={`add-${item.id}`}
+                                                                className="btn-primary-custom"
+                                                                onClick={() =>
+                                                                    sendFriendRequest(
+                                                                        item.id,
+                                                                        item.uid,
+                                                                        item.name,
+                                                                        item.PhotoUrl
+                                                                    )
+                                                                }
+                                                            >
+                                                                Add a friend
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                )}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            );
-                        }
-                    })}
-            </div>
+                                    );
+                                }
+                            })}
+                    </div>
 
-            <div className="People-user-bottom">
+                    <div className="People-user-bottom">
 
+                    </div>
+                </div>
             </div>
         </>
     )

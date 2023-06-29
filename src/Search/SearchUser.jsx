@@ -29,54 +29,59 @@ const SearchUser = () => {
 
     return (
         <>
-            <div className="Search-container">
-                <div className="Search-back-div">
-                    <i onClick={goBack} className="bi bi-arrow-left "></i>
-                    <input type="text"
-                        className='Seatch-User-input'
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        placeholder='Search friends' />
+            <div className='search-wrapper'>
+                <div className="search-container-inner">
+
+                    <div className="Search-container">
+
+                        <i onClick={goBack} className="bi bi-arrow-left "></i>
+                        <input type="text"
+                            className='Seatch-User-input'
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            placeholder='Search friends' />
+
+                    </div>
+
+                    <div className="Search-user-List">
+                        {
+                            api
+                                .filter((value) => {
+                                    if (search === "") {
+                                        return value;
+                                    } else if (
+                                        value.name.toLowerCase().includes(search.toLowerCase())
+                                    ) {
+                                        return value;
+                                    }
+                                })
+                                .map((item) => {
+
+                                    if (item.uid !== currentUser.uid) {
+                                        return (
+                                            <div key={item.id}>
+                                                <div className="Search-user-profile-div">
+                                                    <img
+                                                        src={item.PhotoUrl}
+                                                        className="Search-user-profile-img"
+                                                        alt=""
+                                                    />
+                                                    <Link to={`/users/${item.uid}`}>
+                                                        <div className="Search-user-profile-name">{item.name}</div>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+
+
+                                })
+                        }
+                    </div>
+                    <div className="Search-user-bottom">
+
+                    </div>
                 </div>
-            </div>
-
-            <div className="Search-user-List">
-                {
-                    api
-                        .filter((value) => {
-                            if (search === "") {
-                                return value;
-                            } else if (
-                                value.name.toLowerCase().includes(search.toLowerCase())
-                            ) {
-                                return value;
-                            }
-                        })
-                        .map((item) => {
-
-                            if (item.uid !== currentUser.uid) {
-                                return (
-                                    <div key={item.id}>
-                                        <div className="Search-user-profile-div">
-                                            <img
-                                                src={item.PhotoUrl}
-                                                className="Search-user-profile-img"
-                                                alt=""
-                                            />
-                                            <Link to={`/users/${item.uid}`}>
-                                                <div className="Search-user-profile-name">{item.name}</div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                );
-                            }
-
-
-                        })
-                }
-            </div>
-            <div className="Search-user-bottom">
-
             </div>
         </>
     )
