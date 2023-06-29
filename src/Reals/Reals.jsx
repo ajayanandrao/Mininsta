@@ -25,7 +25,7 @@ const VideoItem = ({ post }) => {
         const handleScroll = () => {
             const video = videoRef.current;
             const rect = video.getBoundingClientRect();
-            const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
+            const isInViewport = rect.top > 0 && rect.bottom < window.innerHeight;
             if (isInViewport) {
                 if (video.paused) {
                     video.play();
