@@ -51,7 +51,7 @@ const MobileNavebar = () => {
 
                     <span className='mobile-nav-mainu'>
                         <Link to="find_friend/" className='link'>
-                            <div className="home">
+                            <div >
                                 <BsFillPeopleFill className='mobile-nav-icon' />
                             </div>
                         </Link>
@@ -59,7 +59,7 @@ const MobileNavebar = () => {
 
                     <span className='mobile-nav-mainu'>
                         <Link to="search/" className='link'>
-                            <div className="home">
+                            <div >
                                 <RiSearchLine className='mobile-nav-icon' />
                             </div>
                         </Link>
