@@ -5,12 +5,12 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
+    
     color: black;
     padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     z-index: 9999;
-    /* Added box-shadow */
 
     @media (max-width: 576px) {
         padding: 10px 15px;
@@ -21,8 +21,6 @@
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
-        // background: red;
-        // font-family: 'Kalam', cursive;
         color: blue;
 
     }

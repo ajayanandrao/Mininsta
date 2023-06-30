@@ -218,19 +218,135 @@ const Messages = () => {
     return (
         <div>
             <div className="message-container">
-                <div className="message-profile-div">
-                    <i onClick={goBack} className="bi bi-arrow-left message-arrow "></i>
-                    <img className='message-profile-img' src={user.userPhoto} alt="" />
-                    <span className='message-profile-name'>{user.name}</span>
-                    <div className="call-div">
-                        {/* <IoIosCall style={{ fontSize: "24px" }} onClick={callFriend} /> */}
-                        {/* <IoIosCall style={{ fontSize: "24px" }}  /> */}
-                        <i className="bi bi-camera-video-fill" style={{ fontSize: "24px" }} onClick={callFriend}></i>
+                <div className='message-container-wrapper'>
+
+                    <div className="message-profile-div">
+                        <i onClick={goBack} className="bi bi-arrow-left message-arrow "></i>
+                        <img className='message-profile-img' src={user.userPhoto} alt="" />
+                        <span className='message-profile-name'>{user.name}</span>
+                    </div>
+
+                    <div className="message-list-container">
+
+                        {messages.map((message, index) => {
+                            if (
+                                (message.sender === currentUser.uid && message.recipient === user.uid) ||
+                                (message.sender === user.uid && message.recipient === currentUser.uid)
+                            ) {
+                                const isSender = message.sender === currentUser.uid;
+                                const messageClass = isSender ? 'sender' : 'user';
+                                const isRecipient = message.recipient === user.uid;
+
+                                return (
+                                    <div key={index} onMouseEnter={() => showReplyButton(message.id)}
+                                        onMouseLeave={hideReplyButton}
+                                        className={`message-item ${messageClass}`}>
+
+                                        {isSender && hoveredMessageId === message.id && (
+                                            <div>
+                                                <div
+                                                    className="delete-button"
+                                                    onClick={() => {
+                                                        deleteMessage(message.id);
+                                                    }}
+                                                >
+                                                    <i class="bi bi-x-circle-fill"></i>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div
+                                            className={`message-bubble ${isSender ? "message-sender" : "message-recipient"
+                                                }`}
+                                        >
+                                            {isSender && (
+                                                <></>
+                                                // <img className='message-img' src={currentUser.photoURL} alt="Sender" />
+                                            )}
+                                            {!isSender && (
+                                                <img className='message-img' src={user.userPhoto} alt="Sender" />
+                                            )}
+                                            <div>
+                                                {message.reply && (
+                                                    <div className="message-reply">{message.reply}</div>
+                                                )}
+                                                <div className="message-content">{message.message}</div>
+                                            </div>
+                                        </div>
+
+                                        {!isSender && hoveredMessageId === message.id && (
+                                            <div>
+                                                <div
+                                                    className="reply-button"
+                                                    onClick={() => {
+                                                        setSelectedMessageId(message.id);
+                                                        setViewMessageInput(message.message)
+                                                    }}
+                                                >
+                                                    <MdOutlineReply />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            }
+
+                            return null;
+                        })}
+
+                        <div ref={messageListRef} />
 
                     </div>
+
+
+
+
+                    <div className='message-input-wrapper'>
+                        <div className='view-Reply'>
+                            <div className='view-replay-sms'>
+                                <div style={{ fontWeight: "600" }}> {viewMessageInput}</div>
+                            </div>
+                            <div id='view' style={{ display: "none" }}
+                                onClick={() => {
+                                    setSelectedMessageId("");
+                                    setViewMessageInput(""); hideX();
+                                }}
+                                className='view-close-btn m-4'>
+                                <MdClose style={{ fontSize: "16px" }} />
+                            </div>
+                        </div>
+                        <div className='message-input-wrapper-inner'>
+                            <BsFillCameraFill className='message-camera ms-icon' />
+
+                            <input
+                                type="text"
+                                onChange={(e) => setMessageInput(e.target.value)}
+                                value={messageInput}
+                                className="message-input"
+                                placeholder="Type..."
+                                autoFocus
+                            />
+
+                            <MdSend
+                                className="message-send-btn ms-icon"
+                                onClick={() => {
+                                    if (selectedMessageId) {
+                                        sendReply(selectedMessageId);
+
+                                    } else {
+                                        sendMessage(user.uid, user.name, user.userPhoto);
+                                    }
+                                }}
+                            />
+
+                            <FaThumbsUp className='message-thumb ms-icon' onClick={() => SendLike(user.uid, user.name, user.userPhoto)} />
+                        </div>
+                    </div>
+
                 </div>
 
-                <div className="message-list-container">
+
+                {/* <div className="message-list-container">
                     {messages.map((message, index) => {
                         if (
                             (message.sender === currentUser.uid && message.recipient === user.uid) ||
@@ -299,50 +415,36 @@ const Messages = () => {
 
                     <div ref={messageListRef} />
 
-                </div>
+                </div> */}
 
-                <div className="message-input-container">
+                {/* <div className='message-input-wrapper'>
 
-                    <div className='view-Reply'>
-                        <div className='view-replay-sms'>
-                            <div style={{ fontWeight: "600" }}> {viewMessageInput}</div>
-                        </div>
-                        <div id='view' style={{ display: "none" }}
-                            onClick={() => {
-                                setSelectedMessageId("");
-                                setViewMessageInput(""); hideX();
-                            }}
-                            className='view-close-btn m-4'>
-                            <MdClose style={{ fontSize: "16px" }} />
-                        </div>
-                    </div>
+                    <BsFillCameraFill className='message-camera' />
 
-                    <div className="message-wrapper">
-                        <BsFillCameraFill className='message-camera' />
+                    <input
+                        type="text"
+                        onChange={(e) => setMessageInput(e.target.value)}
+                        value={messageInput}
+                        className="message-input"
+                        placeholder="Type..."
+                        autoFocus
+                    />
 
-                        <input
-                            type="text"
-                            onChange={(e) => setMessageInput(e.target.value)}
-                            value={messageInput}
-                            className="message-input"
-                            placeholder="Type..."
-                            autoFocus
-                        />
+                    <MdSend
+                        className="message-send-btn"
+                        onClick={() => {
+                            if (selectedMessageId) {
+                                sendReply(selectedMessageId);
 
-                        <MdSend
-                            className="message-send-btn"
-                            onClick={() => {
-                                if (selectedMessageId) {
-                                    sendReply(selectedMessageId);
+                            } else {
+                                sendMessage(user.uid, user.name, user.userPhoto);
+                            }
+                        }}
+                    />
 
-                                } else {
-                                    sendMessage(user.uid, user.name, user.userPhoto);
-                                }
-                            }}
-                        />
-                        <FaThumbsUp className='message-thumb' onClick={() => SendLike(user.uid, user.name, user.userPhoto)} />
-                    </div>
-                </div>
+                    <FaThumbsUp className='message-thumb' onClick={() => SendLike(user.uid, user.name, user.userPhoto)} />
+
+                </div> */}
             </div>
         </div>
     )

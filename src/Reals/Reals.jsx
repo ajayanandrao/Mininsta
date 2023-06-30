@@ -4,7 +4,7 @@ import { db } from '../Firebase';
 
 import './Reals.scss';
 import { FaPlay, FaCommentAlt } from 'react-icons/fa';
-import { BsFillHeartFill } from 'react-icons/bs';
+import { BsFillArrowDownCircleFill, BsFillArrowUpCircleFill, BsFillHeartFill } from 'react-icons/bs';
 
 const VideoItem = ({ post }) => {
     const videoRef = useRef(null);
@@ -25,7 +25,7 @@ const VideoItem = ({ post }) => {
         const handleScroll = () => {
             const video = videoRef.current;
             const rect = video.getBoundingClientRect();
-            const isInViewport = rect.top > 0 && rect.bottom < window.innerHeight;
+            const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
             if (isInViewport) {
                 if (video.paused) {
                     video.play();
@@ -46,18 +46,40 @@ const VideoItem = ({ post }) => {
         };
     }, []);
 
+
+    const scrollToPreview = (id) => {
+        const element = document.getElementById(`section2-${id}`);
+        if (element && element.previousElementSibling) {
+            element.previousElementSibling.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const scrollToNext = (id) => {
+        const element = document.getElementById(`section2-${id}`);
+        if (element && element.nextElementSibling) {
+            element.nextElementSibling.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+
     return (
-        <div className="reel-video-container" >
+        <div className="reel-video-container" id={`section2-${post.id}`}>
             <video ref={videoRef} className="reel-video" onClick={handleVideoBtnClick}>
                 <source src={post.img} type="video/mp4" />
             </video>
             <div className="reel-side-mainu" onClick={handleVideoBtnClick}>
                 <div className="reel-mainu">
+
+
+
                     <div className="reel-mainu-icon-div">
-                        <BsFillHeartFill className='reel-mainu-icon'/>
+                        <BsFillHeartFill className='reel-mainu-icon' />
                     </div>
                     <div className="reel-mainu-icon-div">
-                        <FaCommentAlt className='reel-mainu-icon'/>
+                        <BsFillArrowUpCircleFill className='reel-mainu-icon' onClick={() => scrollToPreview(post.id)} />
+                    </div>
+                    <div className="reel-mainu-icon-div">
+                        <BsFillArrowDownCircleFill className='reel-mainu-icon' onClick={() => scrollToNext(post.id)} />
                     </div>
                 </div>
             </div>
@@ -104,6 +126,8 @@ const Reals = () => {
         return videoExtensions.includes(extension);
     };
 
+
+
     const VideoData = userPhoto.map((post) => {
         return (
             <React.Fragment key={post.id}>
@@ -112,7 +136,15 @@ const Reals = () => {
         );
     });
 
-    return <div className="reels-container">{VideoData}</div>;
+    return (
+        <>
+            <div className="reel-position-div">
+                <div className="reel-scroll-div">
+                    {VideoData}
+                </div>
+            </div>
+        </>
+    );
 };
 
 {/* {post.img && isVideo(post.name) && <VideoItem post={post} />} */ }

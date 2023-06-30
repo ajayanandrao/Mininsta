@@ -1,7 +1,10 @@
 .reel-video-container {
     position: relative;
+    top: 0;
     max-width: 576px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 0px);
+    z-index: 9999;
+    background: white;
 }
 
 .reel-video {
@@ -46,14 +49,16 @@
     .reel-mainu {
         display: flex;
         flex-direction: column;
-        justify-content: end;
+        justify-content: center;
         align-items: center;
         padding: 0.5rem;
-        .reel-mainu-icon-div{
+
+        .reel-mainu-icon-div {
             margin: 0.5rem 0;
-        .reel-mainu-icon{
-            font-size: 24px;
-        }
+
+            .reel-mainu-icon {
+                font-size: 24px;
+            }
         }
     }
 }
