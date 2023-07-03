@@ -249,7 +249,7 @@ const Message = () => {
 
                                     return (
                                         <div key={userId}>
-                                            <div className='message-profile-div'>
+                                            <div className='message-profile-div-one'>
                                                 <Link style={{ textDecoration: "none" }} to={`/users/${user.userId}/message`}>
                                                     <img src={user.photoUrl} className='message-user-img' alt='' />
                                                     <span className='message-user-name'>{user.name}</span>

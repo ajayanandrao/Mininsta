@@ -263,6 +263,26 @@
             flex-direction: column;
             padding: 0 1rem;
 
+            .message-profile-div-one {
+                display: flex;
+                align-items: center;
+                margin: 1rem 0;
+
+                .message-user-img {
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 50%;
+                }
+
+                .message-user-name {
+                    font-size: 16px;
+                    font-weight: 600 !important;
+                    margin-left: 1rem;
+                }
+            }
+
             .num-requ {
                 font-size: 20px;
                 font-weight: 600;
@@ -312,6 +332,7 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 1rem;
+
                 .w3-button {
                     background: none;
                     border: none;
@@ -329,25 +350,7 @@
 
         }
 
-        .message-profile-div {
-            display: flex;
-            align-items: center;
-            margin: 1rem 0;
 
-            .message-user-img {
-                width: 40px;
-                height: 40px;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 50%;
-            }
-
-            .message-user-name {
-                font-size: 16px;
-                font-weight: 600 !important;
-                margin-left: 1rem;
-            }
-        }
 
 
         .avt {

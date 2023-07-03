@@ -6,6 +6,8 @@ import trailer from "./trailer.json";
 import holly from "./hollywood.json";
 import bolly from "./bollywood.json";
 import { Link } from 'react-router-dom';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from '../Firebase';
 
 const Movies = () => {
     var flickityOptions = {
@@ -24,6 +26,42 @@ const Movies = () => {
         autoPlay: 2000
     }
 
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'MovieCat'));
+                const userList = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setUsers(userList);
+            } catch (error) {
+                console.log('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+
+    const [movieTrailer, setMovieTrailer] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'MovieTrailers'));
+                const userList = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setMovieTrailer(userList);
+            } catch (error) {
+                console.log('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
 
 
     return (
@@ -35,17 +73,18 @@ const Movies = () => {
                     elementType={'div'}
                     options={flickityOptions}
                     disableImagesLoaded={false}>
-                    {trailer.map((trailer) => {
+                    {movieTrailer.map((trailer) => {
                         return (
                             <>
-                                <div style={{ backgroundImage: `url(${trailer.img})` }} className="mover-trailer-card">
+                                <Link to={`/movieTrailer/${trailer.id}`}>
+                                    <div style={{ backgroundImage: `url(${trailer.img})` }} className="mover-trailer-card">
 
-                                    <div className="trailer-data-div">
-                                        <div className='trailer-name'>{trailer.name}</div>
-                                        <div className='trailer-name sub'>{trailer.subname}</div>
+                                        <div className="trailer-data-div">
+                                            <div className='trailer-name'>{trailer.name}</div>
+                                            <div className='trailer-name sub'>{trailer.subname}</div>
+                                        </div>
                                     </div>
-
-                                </div>
+                                </Link>
                             </>
                         )
                     })}
@@ -56,7 +95,7 @@ const Movies = () => {
                 <div className="category-grid-center">
                     <div className="categaory-container">
 
-                        {mapi.map((movie) => {
+                        {users.map((movie) => {
                             return (
                                 <>
                                     <Link to={`/movie/${movie.id}`}>
