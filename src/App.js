@@ -31,6 +31,7 @@ import CategoryParam from './Movies/CategoryParam/CategoryParam';
 import Reals from './Reals/Reals';
 import ReelsProps from './Reals/ReelsProps';
 import MovieTrailer from './Movies/CategoryParam/MovieTrailer';
+import AddHollywood from './Movies/AddHMovie/AddHollywood';
 
 function App() {
 
@@ -60,13 +61,16 @@ function App() {
           <Route path='users/:id/message' element={<Messages />} />
           <Route path='users/:id/profile' element={<UsersProfilePage />} />
 
-          <Route path='movie/:id' element={<CategoryParam />} />
+          {/* <Route path='movie/:id' element={<CategoryParam />} /> */}
           <Route path='movieTrailer/:id' element={<MovieTrailer />} />
 
           <Route path='profile' element={<UserProfile />} />
           <Route path='demo' element={<Demo />} />
           <Route path='movies' element={<Movies />} />
           <Route path='reels' element={<ReelsProps />} />
+
+
+          <Route path='movie/:id' element={<AddHollywood />} />
 
         </Routes>
       </Router>

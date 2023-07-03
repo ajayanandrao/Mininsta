@@ -229,77 +229,77 @@ const Messages = () => {
 
                     {/* <div className="main-wrapper"> */}
 
-                        <div className="message-list-container">
+                    <div className="message-list-container">
 
-                            {messages.map((message, index) => {
-                                if (
-                                    (message.sender === currentUser.uid && message.recipient === user.uid) ||
-                                    (message.sender === user.uid && message.recipient === currentUser.uid)
-                                ) {
-                                    const isSender = message.sender === currentUser.uid;
-                                    const messageClass = isSender ? 'sender' : 'user';
-                                    const isRecipient = message.recipient === user.uid;
+                        {messages.map((message, index) => {
+                            if (
+                                (message.sender === currentUser.uid && message.recipient === user.uid) ||
+                                (message.sender === user.uid && message.recipient === currentUser.uid)
+                            ) {
+                                const isSender = message.sender === currentUser.uid;
+                                const messageClass = isSender ? 'sender' : 'user';
+                                const isRecipient = message.recipient === user.uid;
 
-                                    return (
-                                        <div key={index} onMouseEnter={() => showReplyButton(message.id)}
-                                            onMouseLeave={hideReplyButton}
-                                            className={`message-item ${messageClass}`}>
+                                return (
+                                    <div key={index} onMouseEnter={() => showReplyButton(message.id)}
+                                        onMouseLeave={hideReplyButton}
+                                        className={`message-item ${messageClass}`}>
 
-                                            {isSender && hoveredMessageId === message.id && (
-                                                <div>
-                                                    <div
-                                                        className="delete-button"
-                                                        onClick={() => {
-                                                            deleteMessage(message.id);
-                                                        }}
-                                                    >
-                                                        <i class="bi bi-x-circle-fill"></i>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            <div
-                                                className={`message-bubble ${isSender ? "message-sender" : "message-recipient"
-                                                    }`}
-                                            >
-                                                {isSender && (
-                                                    <></>
-                                                    // <img className='message-img' src={currentUser.photoURL} alt="Sender" />
-                                                )}
-                                                {!isSender && (
-                                                    <img className='message-img' src={user.userPhoto} alt="Sender" />
-                                                )}
-                                                <div>
-                                                    {message.reply && (
-                                                        <div className="message-reply">{message.reply}</div>
-                                                    )}
-                                                    <div className="message-content">{message.message}</div>
+                                        {isSender && hoveredMessageId === message.id && (
+                                            <div>
+                                                <div
+                                                    className="delete-button"
+                                                    onClick={() => {
+                                                        deleteMessage(message.id);
+                                                    }}
+                                                >
+                                                    <i class="bi bi-x-circle-fill"></i>
                                                 </div>
                                             </div>
+                                        )}
 
-                                            {!isSender && hoveredMessageId === message.id && (
-                                                <div>
-                                                    <div
-                                                        className="reply-button"
-                                                        onClick={() => {
-                                                            setSelectedMessageId(message.id);
-                                                            setViewMessageInput(message.message)
-                                                        }}
-                                                    >
-                                                        <MdOutlineReply />
-                                                    </div>
-                                                </div>
+                                        <div
+                                            className={`message-bubble ${isSender ? "message-sender" : "message-recipient"
+                                                }`}
+                                        >
+                                            {isSender && (
+                                                <></>
+                                                // <img className='message-img' src={currentUser.photoURL} alt="Sender" />
                                             )}
+                                            {!isSender && (
+                                                <img className='message-img' src={user.userPhoto} alt="Sender" />
+                                            )}
+                                            <div>
+                                                {message.reply && (
+                                                    <div className="message-reply">{message.reply}</div>
+                                                )}
+                                                <div className="message-content">{message.message}</div>
+                                            </div>
                                         </div>
-                                    );
-                                }
 
-                                return null;
-                            })}
+                                        {!isSender && hoveredMessageId === message.id && (
+                                            <div>
+                                                <div
+                                                    className="reply-button"
+                                                    onClick={() => {
+                                                        setSelectedMessageId(message.id);
+                                                        setViewMessageInput(message.message)
+                                                    }}
+                                                >
+                                                    <MdOutlineReply />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            }
 
-                            <div ref={messageListRef} />
+                            return null;
+                        })}
 
-                        </div>
+                        <div ref={messageListRef} />
+
+                    </div>
                     {/* </div> */}
 
                     <div className='message-input-wrapper'>

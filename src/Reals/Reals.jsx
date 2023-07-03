@@ -4,6 +4,7 @@ import { db } from '../Firebase';
 
 import './Reals.scss';
 import { FaPlay, FaCommentAlt } from 'react-icons/fa';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { BsFillArrowDownCircleFill, BsFillArrowUpCircleFill, BsFillHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../AuthContaxt';
 
@@ -114,8 +115,6 @@ const VideoItem = ({ post }) => {
         if (currentUser && currentUser.uid) {
             const likeRef = doc(db, "UserPostPhoto", id, "likes", currentUser.uid);
             const likeDoc = await getDoc(likeRef);
-            console.log(id);
-            console.log(currentUser.uid);
 
             if (likeDoc.exists()) {
                 await deleteDoc(likeRef);
@@ -165,7 +164,7 @@ const VideoItem = ({ post }) => {
                     <div className="reel-mainu-icon-div">
                         <div className='like-count' onClick={() => ViewLikes(post.id)}>{isliked.length}</div>
                         {liked ? <BsFillHeartFill color='#FF0040' className='reel-mainu-icon' onClick={() => HandleLike(post.id)} /> :
-                            <BsFillHeartFill className='reel-mainu-icon' onClick={() => HandleLike(post.id)} />
+                            < AiOutlineHeart className='reel-mainu-icon' onClick={() => HandleLike(post.id)} />
                         }
                     </div>
                     <div className="reel-mainu-icon-div">

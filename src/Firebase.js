@@ -19,12 +19,12 @@ import "@firebase/firestore";
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDShQgoPAaJAQRttQUhagA1UP1l5ImQImA",
-  authDomain: "projectone-fef60.firebaseapp.com",
-  projectId: "projectone-fef60",
-  storageBucket: "projectone-fef60.appspot.com",
-  messagingSenderId: "866657700029",
-  appId: "1:866657700029:web:bd88f68ecc370a70048fd4"
+  apiKey: "AIzaSyD9i52Ee7zbN22xnXBTKH1iMaJI8G1N1rQ",
+  authDomain: "date3723.firebaseapp.com",
+  projectId: "date3723",
+  storageBucket: "date3723.appspot.com",
+  messagingSenderId: "852728392912",
+  appId: "1:852728392912:web:57ec5576677a3c5a1742d5"
 };
 
 
