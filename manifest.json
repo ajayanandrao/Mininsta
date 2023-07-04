@@ -1,6 +1,7 @@
 {
   "short_name": "Chat App",
-  "name": "Mininsta",
+  "name": "V Chat",
+  "logo":"c.png",
   "icons": [
     {
       "src": "favicon.ico",
