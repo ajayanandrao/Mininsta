@@ -175,6 +175,11 @@ const VideoItem = ({ post }) => {
                     </div>
                 </div>
             </div>
+
+            <div className="reel-profile-div">
+                <img src={post.photoURL} className='reel-profile-img' alt="" />
+                <span className='reel-profile-name'>{post.displayName}</span>
+            </div>
             {!isPlaying && (
                 <a className="intro-banner-vdo-play-btn pinkBg" onClick={() => handleVideoBtnClick(post.id)} target="_blank">
                     <div className="play-button">
