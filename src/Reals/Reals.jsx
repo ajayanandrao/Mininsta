@@ -7,6 +7,7 @@ import { FaPlay, FaCommentAlt } from 'react-icons/fa';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BsFillArrowDownCircleFill, BsFillArrowUpCircleFill, BsFillHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../AuthContaxt';
+import { useNavigate } from 'react-router-dom';
 
 const VideoItem = ({ post }) => {
     const { currentUser } = useContext(AuthContext);
@@ -140,11 +141,20 @@ const VideoItem = ({ post }) => {
         }
     };
 
+    const nav = useNavigate();
+    const goBack = () => {
+        nav(-1);
+    }
+
     return (
         <div className="reel-video-container" id={`section2-${post.id}`}>
             <video ref={videoRef} className="reel-video" onClick={() => handleVideoBtnClick(post.id)}>
                 <source src={post.img} type="video/mp4" />
             </video>
+
+            <div className="reels-back-button">
+                <i onClick={goBack} className="bi bi-arrow-left "></i>
+            </div>
 
             <div className="reel-like-div" style={{ fontSize: "12px", display: "none" }} id={`viewLike-${post.id}`}>
                 {isliked.map((item) => {

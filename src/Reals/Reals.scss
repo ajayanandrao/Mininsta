@@ -42,6 +42,19 @@
     }
 }
 
+.reels-back-button {
+    position: absolute;
+    top: 4%;
+    left: 7%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    z-index: 0;
+    font-size: 30px;
+
+}
+
 .play-button {
     position: absolute;
     top: 50%;

@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import mapi from "./../m.json";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../Firebase';
+import "./cat.scss";
 
 const CategoryParam = () => {
     const { id } = useParams();
-    const [movieCat, MovieCat] = useState(null);
+    const [movieCat, setMovieCat] = useState(null);
+    const [hollywoodcat, setHollywoodCat] = useState([]);
+
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const userDocRef = doc(db, 'MovieCat', id);
                 const userDocSnapshot = await getDoc(userDocRef);
                 if (userDocSnapshot.exists()) {
-                    MovieCat({ id: userDocSnapshot.id, ...userDocSnapshot.data() });
+                    setMovieCat({ id: userDocSnapshot.id, ...userDocSnapshot.data() });
                 } else {
                     console.log('No such document!');
                 }
@@ -26,19 +28,47 @@ const CategoryParam = () => {
         fetchUser();
     }, [id]);
 
+    useEffect(() => {
+        if (movieCat) {
+            const unsubscribe = onSnapshot(
+                query(collection(db, 'MovieCat', movieCat.id, 'Hollywood')),
+                (snap) => {
+                    setHollywoodCat(
+                        snap.docs.map((snap) => ({
+                            id: snap.id,
+                            ...snap.data(),
+                        }))
+                    );
+                }
+            );
+
+            return unsubscribe;
+        }
+    }, [movieCat]);
+
+
     if (!movieCat) {
-        return <>
+        return (
             <div className='skeleton-center'>
                 <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
-            </div >
-        </>;
+            </div>
+        );
     }
+
 
     return (
         <>
-            {movieCat.name}
+            {hollywoodcat && hollywoodcat.map((movie) => (
+                <div key={movie.id}>
+                    <Link to={`/hollywood-movie/${movie.id}`}>
+                        <div className='movie-banner-div'>
+                            <img src={movie.img} className='movie-banner' alt="" />
+                        </div>
+                    </Link>
+                </div>
+            ))}
         </>
-    )
-}
+    );
+};
 
-export default CategoryParam
+export default CategoryParam;

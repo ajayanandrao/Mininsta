@@ -263,7 +263,7 @@ const ViewStory = ({ post }) => {
                                                     onClick={() => handleLike(story.id)}
                                                     className="video-view-send-icon  "
                                                 /> */}
-                                                {liked ? < AiFillHeart className="video-view-send-icon  " onClick={() => handleLike(story.id)} /> :
+                                                {liked ? < AiFillHeart className="video-view-send-icon  " style={{ color: "#FF0040" }} onClick={() => handleLike(story.id)} /> :
                                                     <AiOutlineHeart className="video-view-send-icon  " onClick={() => handleLike(story.id)} />}
 
 
@@ -292,7 +292,7 @@ const ViewStory = ({ post }) => {
                                         <div className="view-profile-div">
                                             <img src={user.userPhoto} className="view-profile-img" alt="" />
                                             <div className="view-profile-name">{user.name}</div>
-                                            
+
                                             <div className="view-profile-close-div">
                                                 <MdClose className="view-close-btn" onClick={goBack} />
                                             </div>

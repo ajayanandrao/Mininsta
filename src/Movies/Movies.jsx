@@ -63,6 +63,24 @@ const Movies = () => {
         fetchUsers();
     }, []);
 
+    const [hollywoodMovie, setHollywoodMovie] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'Hollywood'));
+                const userList = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setHollywoodMovie(userList);
+            } catch (error) {
+                console.log('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
 
     return (
         <>
@@ -120,12 +138,14 @@ const Movies = () => {
                     options={hollywood}
                     disableImagesLoaded={false}>
 
-                    {holly.map((holly) => {
+                    {hollywoodMovie.map((holly) => {
                         return (
                             <>
-                                <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+                                <Link to={`/hollywoodmovie/${holly.id}`}>
+                                    <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
 
-                                </div>
+                                    </div>
+                                </Link>
                             </>
                         )
                     })}
