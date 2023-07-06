@@ -95,7 +95,7 @@ const Movies = () => {
                         return (
                             <>
                                 <Link to={`/movieTrailer/${trailer.id}`}>
-                                    <div style={{ backgroundImage: `url(${trailer.img})` }} className="mover-trailer-card">
+                                    <div key={trailer.id} style={{ backgroundImage: `url(${trailer.img})` }} className="mover-trailer-card">
 
                                         <div className="trailer-data-div">
                                             <div className='trailer-name'>{trailer.name}</div>
@@ -129,6 +129,10 @@ const Movies = () => {
 
                     </div>
                 </div>
+                
+                <Link to="/requestMovie/">
+                    <h4 style={{ textAlign: "center", fontWeight: "600", color: "#088A85" }}>Request Movies</h4>
+                </Link>
 
                 <div className="category-div">Hollywood <div className="see-more">more</div></div>
 
@@ -142,7 +146,7 @@ const Movies = () => {
                         return (
                             <>
                                 <Link to={`/hollywoodmovie/${holly.id}`}>
-                                    <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+                                    <div key={holly.id} style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
 
                                     </div>
                                 </Link>
@@ -163,7 +167,7 @@ const Movies = () => {
                     {bolly.map((holly) => {
                         return (
                             <>
-                                <div style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+                                <div key={holly.id} style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
 
                                 </div>
                             </>

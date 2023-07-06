@@ -139,7 +139,7 @@ const HollywoodMovies = () => {
                 </div>
 
                 <h3 style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <button className="btn btn-success-custom" onClick={handleDownload}>
+                    <button className="btn-success-custom" onClick={handleDownload}>
                         Download
                     </button>
                 </h3>
@@ -148,7 +148,7 @@ const HollywoodMovies = () => {
 
             <div className="movie-back-btn">
                 <div className="back-arrow-div" onClick={goBack}>
-                    <ImArrowLeft2 class="bi bi-arrow-left movie-back-arrow-icon" onClick={handleDownload} />
+                    <ImArrowLeft2 className="bi bi-arrow-left movie-back-arrow-icon" onClick={handleDownload} />
                 </div>
             </div>
         </>

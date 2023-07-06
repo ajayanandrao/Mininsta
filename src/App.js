@@ -34,6 +34,7 @@ import MovieTrailer from './Movies/CategoryParam/MovieTrailer';
 import AddHollywood from './Movies/AddHMovie/AddHollywood';
 import AddTrailer from './Movies/AddTrailer';
 import HollywoodMovies from './Movies/HollywoodMovies';
+import RequestMovie from './Movies/Request/RequestMovie';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
           <Route path='profile' element={<UserProfile />} />
           <Route path='demo' element={<Demo />} />
           <Route path='movies' element={<Movies />} />
+          <Route path='requestMovie' element={<RequestMovie />} />
           <Route path='reels' element={<ReelsProps />} />
 
           {/* <Route path='movie/:id' element={<CategoryParam />} /> */}

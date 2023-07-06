@@ -73,84 +73,84 @@ const AddHollywood = () => {
 
                 },
             );
-            const ScreenShotUploadTaskOne = uploadBytesResumable(storageRef, screenShotOne);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            // const ScreenShotUploadTaskOne = uploadBytesResumable(storageRef, screenShotOne);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
-            const ScreenShotUploadTaskTwo = uploadBytesResumable(storageRef, screenShotTwo);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            //     },
+            // );
+            // const ScreenShotUploadTaskTwo = uploadBytesResumable(storageRef, screenShotTwo);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
-            const ScreenShotUploadTaskThree = uploadBytesResumable(storageRef, screenShotThree);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            //     },
+            // );
+            // const ScreenShotUploadTaskThree = uploadBytesResumable(storageRef, screenShotThree);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
-            const ScreenShotUploadTaskFour = uploadBytesResumable(storageRef, screenShotFour);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            //     },
+            // );
+            // const ScreenShotUploadTaskFour = uploadBytesResumable(storageRef, screenShotFour);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
-            const ScreenShotUploadTaskFive = uploadBytesResumable(storageRef, screenShotFour);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            //     },
+            // );
+            // const ScreenShotUploadTaskFive = uploadBytesResumable(storageRef, screenShotFour);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
-            const ScreenShotUploadTaskSix = uploadBytesResumable(storageRef, screenShotFour);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
-                    }
+            //     },
+            // );
+            // const ScreenShotUploadTaskSix = uploadBytesResumable(storageRef, screenShotFour);
+            // imgUploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         const progress = Math.round(
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            //         );
+            //         console.log("Loading:", progress);
+            //         if (progress == 100) {
+            //             console.log("sucessfully uploaded");
+            //         }
 
-                },
-            );
+            //     },
+            // );
 
             // Upload trailer video file
             const trailerVidUploadTask = uploadBytesResumable(TrailerRef, trailerVid);
@@ -169,10 +169,10 @@ const AddHollywood = () => {
                 getDownloadURL(imgUploadTask.snapshot.ref),
                 getDownloadURL(trailerVidUploadTask.snapshot.ref),
 
-                getDownloadURL(ScreenShotUploadTaskOne.snapshot.ref),
-                getDownloadURL(ScreenShotUploadTaskTwo.snapshot.ref),
-                getDownloadURL(ScreenShotUploadTaskThree.snapshot.ref),
-                getDownloadURL(ScreenShotUploadTaskFour.snapshot.ref),
+                // getDownloadURL(ScreenShotUploadTaskOne.snapshot.ref),
+                // getDownloadURL(ScreenShotUploadTaskTwo.snapshot.ref),
+                // getDownloadURL(ScreenShotUploadTaskThree.snapshot.ref),
+                // getDownloadURL(ScreenShotUploadTaskFour.snapshot.ref),
 
             ]).then(async ([imgDownloadURL, trailerVidDownloadURL, OneDownloadURL, TwoDownloadURL, ThreeDownloadURL, FourDownloadURL, FiveDownloadURL, SixDownloadURL]) => {
                 await addDoc(movieRef, {
@@ -181,12 +181,12 @@ const AddHollywood = () => {
                     img: imgDownloadURL,
                     trailer: trailerVidDownloadURL,
 
-                    one: OneDownloadURL,
-                    two: TwoDownloadURL,
-                    three: ThreeDownloadURL,
-                    four: FourDownloadURL,
-                    five: FiveDownloadURL,
-                    six: SixDownloadURL,
+                    // one: OneDownloadURL,
+                    // two: TwoDownloadURL,
+                    // three: ThreeDownloadURL,
+                    // four: FourDownloadURL,
+                    // five: FiveDownloadURL,
+                    // six: SixDownloadURL,
 
                     uid: v4()
                 });
@@ -219,7 +219,7 @@ const AddHollywood = () => {
 
                 <h3 style={{ textAlign: "center" }}>ScreenShot</h3>
 
-                <div>
+                {/* <div>
                     <label htmlFor="" className='mt-3'>
                         <input type="file" placeholder='trailer' onChange={(e) => setScreenShotOne(e.target.files[0])} />
                         one
@@ -244,7 +244,7 @@ const AddHollywood = () => {
                         <input type="file" placeholder='trailer' onChange={(e) => setScreenShotSix(e.target.files[0])} />
                         six
                     </label>
-                </div>
+                </div> */}
 
                 <button className='btn btn-info my-4' onClick={Save}>save</button>
             </div>
