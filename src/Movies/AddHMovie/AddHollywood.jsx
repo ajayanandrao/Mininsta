@@ -21,6 +21,8 @@ const AddHollywood = () => {
     const [screenShotTwo, setScreenShotTwo] = useState(null);
     const [screenShotThree, setScreenShotThree] = useState(null);
     const [screenShotFour, setScreenShotFour] = useState(null);
+    const [screenShotFive, setScreenShotFive] = useState(null);
+    const [screenShotSix, setScreenShotSix] = useState(null);
 
 
 
@@ -123,6 +125,32 @@ const AddHollywood = () => {
 
                 },
             );
+            const ScreenShotUploadTaskFive = uploadBytesResumable(storageRef, screenShotFour);
+            imgUploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    console.log("Loading:", progress);
+                    if (progress == 100) {
+                        console.log("sucessfully uploaded");
+                    }
+
+                },
+            );
+            const ScreenShotUploadTaskSix = uploadBytesResumable(storageRef, screenShotFour);
+            imgUploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    console.log("Loading:", progress);
+                    if (progress == 100) {
+                        console.log("sucessfully uploaded");
+                    }
+
+                },
+            );
 
             // Upload trailer video file
             const trailerVidUploadTask = uploadBytesResumable(TrailerRef, trailerVid);
@@ -146,7 +174,7 @@ const AddHollywood = () => {
                 getDownloadURL(ScreenShotUploadTaskThree.snapshot.ref),
                 getDownloadURL(ScreenShotUploadTaskFour.snapshot.ref),
 
-            ]).then(async ([imgDownloadURL, trailerVidDownloadURL, OneDownloadURL, TwoDownloadURL, ThreeDownloadURL, FourDownloadURL]) => {
+            ]).then(async ([imgDownloadURL, trailerVidDownloadURL, OneDownloadURL, TwoDownloadURL, ThreeDownloadURL, FourDownloadURL, FiveDownloadURL, SixDownloadURL]) => {
                 await addDoc(movieRef, {
                     name: name,
                     subName: subName,
@@ -157,6 +185,8 @@ const AddHollywood = () => {
                     two: TwoDownloadURL,
                     three: ThreeDownloadURL,
                     four: FourDownloadURL,
+                    five: FiveDownloadURL,
+                    six: SixDownloadURL,
 
                     uid: v4()
                 });
@@ -189,24 +219,32 @@ const AddHollywood = () => {
 
                 <h3 style={{ textAlign: "center" }}>ScreenShot</h3>
 
-
-                <label htmlFor="" className='mt-3'>
-                    <input type="file" placeholder='trailer' onChange={(e) => setScreenShotOne(e.target.files[0])} />
-                    one
-                </label>
-                <label htmlFor="" className='mt-3'>
-                    <input type="file" placeholder='trailer' onChange={(e) => setScreenShotTwo(e.target.files[0])} />
-                    two
-                </label>
-                <label htmlFor="" className='mt-3'>
-                    <input type="file" placeholder='trailer' onChange={(e) => setScreenShotThree(e.target.files[0])} />
-                    three
-                </label>
-                <label htmlFor="" className='mt-3'>
-                    <input type="file" placeholder='trailer' onChange={(e) => setScreenShotFour(e.target.files[0])} />
-                    four
-                </label>
-
+                <div>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotOne(e.target.files[0])} />
+                        one
+                    </label>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotTwo(e.target.files[0])} />
+                        two
+                    </label>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotThree(e.target.files[0])} />
+                        three
+                    </label>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotFour(e.target.files[0])} />
+                        four
+                    </label>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotFive(e.target.files[0])} />
+                        five
+                    </label>
+                    <label htmlFor="" className='mt-3'>
+                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotSix(e.target.files[0])} />
+                        six
+                    </label>
+                </div>
 
                 <button className='btn btn-info my-4' onClick={Save}>save</button>
             </div>

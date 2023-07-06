@@ -66,7 +66,16 @@ const HollywoodMovies = () => {
         return unsub();
     }, []);
 
-
+    const handleDownload = () => {
+        // Logic for downloading the trailer
+        const item = hollywoodData.find((item) => item.id === id);
+        if (item) {
+            const downloadLink = document.createElement('a');
+            downloadLink.href = item.trailer;
+            downloadLink.download = 'trailer.mp4';
+            downloadLink.click();
+        }
+    };
 
     if (!hollywood) {
         return <>
@@ -85,7 +94,7 @@ const HollywoodMovies = () => {
 
                         return (
                             <>
-                                <div className="hollywood-main-div">
+                                <div key={item.id} className="hollywood-main-div">
                                     <div className="hollywood-video-div">
                                         <video ref={videoRef} className="trailer-video" poster={thumbnailImageURL} onClick={() => handleVideoBtnClick()}>
                                             <source src={item.trailer} type="video/mp4" />
@@ -121,26 +130,27 @@ const HollywoodMovies = () => {
                     {hollywoodData.map((item) => {
                         return (
                             <>
-                                <img src={item.img} className='screenShot-img' alt="" />
+                                <div key={item.id}>
+                                    <img src={item.img} className='screenShot-img' alt="" />
+                                </div>
                             </>
                         )
                     })}
                 </div>
 
-                <h3 style={{ marginTop: "20px", textAlign: "center" }}>
-                    <button className='btn btn-success-custom'>Download</button>
+                <h3 style={{ marginTop: '20px', textAlign: 'center' }}>
+                    <button className="btn btn-success-custom" onClick={handleDownload}>
+                        Download
+                    </button>
                 </h3>
 
             </div>
 
             <div className="movie-back-btn">
                 <div className="back-arrow-div" onClick={goBack}>
-                    <ImArrowLeft2 class="bi bi-arrow-left movie-back-arrow-icon" />
-                    {/* <i class="bi bi-arrow-left movie-back-arrow-icon"></i> */}
+                    <ImArrowLeft2 class="bi bi-arrow-left movie-back-arrow-icon" onClick={handleDownload} />
                 </div>
             </div>
-
-            {/* <div className='singup-footer-bottom'>Copyright © Ajay Anandaro 2023. </div> */}
         </>
     )
 }
