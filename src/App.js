@@ -35,6 +35,12 @@ import AddHollywood from './Movies/AddHMovie/AddHollywood';
 import AddTrailer from './Movies/AddTrailer';
 import HollywoodMovies from './Movies/HollywoodMovies';
 import RequestMovie from './Movies/Request/RequestMovie';
+import BollywoodMovies from './Movies/BollywoodMovies';
+import CartoonMovies from './Movies/CartoonMovies';
+import LatestMovies from './Movies/LatestMovies';
+import Hollywood from './Movies/Hollywood/Hollywood';
+import Bollywood from './Movies/Hollywood/Bollywood';
+import Cartoon from './Movies/Hollywood/Cartoon';
 
 function App() {
 
@@ -64,21 +70,29 @@ function App() {
           <Route path='users/:id/message' element={<Messages />} />
           <Route path='users/:id/profile' element={<UsersProfilePage />} />
 
-          <Route path='movieTrailer/:id' element={<MovieTrailer />} />
+          {/* <Route path='movieTrailer/:id' element={<MovieTrailer />} /> */}
 
           <Route path='profile' element={<UserProfile />} />
           <Route path='demo' element={<Demo />} />
           <Route path='movies' element={<Movies />} />
           <Route path='requestMovie' element={<RequestMovie />} />
-          <Route path='reels' element={<ReelsProps />} />
+          <Route path='reels' element={<ReelsProps />} />/
 
           {/* <Route path='movie/:id' element={<CategoryParam />} /> */}
 
           <Route path='movie/:id' element={<AddHollywood />} />
-          <Route path='addT' element={<AddTrailer />} />
+          {/* <Route path='addT' element={<AddTrailer />} /> */}
 
 
           <Route path='hollywoodmovie/:id' element={<HollywoodMovies />} />
+          <Route path='bollywoodmovie/:id' element={<BollywoodMovies />} />
+          <Route path='cartoonMovie/:id' element={<CartoonMovies />} />
+          <Route path='latestMovie/:id' element={<LatestMovies />} />
+
+
+          <Route path='hollywood' element={<Hollywood />} />
+          <Route path='bollywood' element={<Bollywood />} />
+          <Route path='cartoon' element={<Cartoon />} />
 
         </Routes>
       </Router>

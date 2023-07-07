@@ -8,6 +8,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { BsFillArrowDownCircleFill, BsFillArrowUpCircleFill, BsFillHeartFill } from 'react-icons/bs';
 import { AuthContext } from '../AuthContaxt';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 const VideoItem = ({ post }) => {
     const { currentUser } = useContext(AuthContext);
@@ -81,6 +82,7 @@ const VideoItem = ({ post }) => {
     const [liked, setLiked] = useState(false);
     const [like, setLike] = useState([]);
     const [isliked, setIsliked] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -91,6 +93,7 @@ const VideoItem = ({ post }) => {
                         id: doc.id,
                         ...doc.data(),
                     }))
+
                 );
                 // Log the uid property of each document
             }
@@ -204,7 +207,7 @@ const VideoItem = ({ post }) => {
 
 const Reals = () => {
     const [userPhoto, setUserPhoto] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const colRef = collection(db, 'UserPostPhoto');
         const q = query(colRef, orderBy('bytime', 'desc'));
@@ -216,6 +219,7 @@ const Reals = () => {
             });
 
             setUserPhoto(fetchedPosts);
+            setLoading(false);
         });
 
         return () => {
@@ -245,11 +249,17 @@ const Reals = () => {
 
     return (
         <>
-            <div className="reel-position-div">
-                <div className="reel-scroll-div">
-                    {VideoData}
+
+            {loading ? <div className='skeleton-center'>
+                <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
+            </div > :
+                <div className="reel-position-div">
+                    <div className="reel-scroll-div">
+                        {VideoData}
+                    </div>
                 </div>
-            </div>
+            }
+
         </>
     );
 };

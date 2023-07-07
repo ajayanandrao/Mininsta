@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import SignUp from './SignUp'
 import { AuthContext } from '../AuthContaxt';
 import { auth, db } from '../Firebase';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, orderBy, query, setDoc, updateDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Box, TextField } from '@mui/material';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 
@@ -17,14 +18,15 @@ const Login = () => {
 
     const nav = useNavigate();
 
+
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
 
                 nav("/home")
-                // return (<a href="https://google.com"></a>)
             } else {
                 nav("/")
+
             }
         })
     }, []);
@@ -110,14 +112,14 @@ const Login = () => {
                             onChange={(e) => setPass(e.target.value)}
                             value={password}
                         />
-                        
+
                         <div class="" id="error-alert"></div>
 
                         <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
 
                         {/* <span className='forgot-text'>Forgotten password?</span> */}
                         <Link to="/forgotPassword" className='forgot-text'>Forgotten password?</Link>
-                        
+
                         <Link to="signUp/" className='link'>
                             <button className="btn-success-outline my-4">Create New Account</button>
                         </Link>

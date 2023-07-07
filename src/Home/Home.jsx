@@ -10,7 +10,7 @@ import FlipMove from 'react-flip-move';
 import { Height } from '@mui/icons-material';
 import { AiOutlineArrowUp } from "react-icons/ai";
 import StoryForm from '../Story/StoryForm';
-import PeopleFlickity from '../People/PeopleFlickity/PeopleFlickity';
+import { CircularProgress } from '@mui/material';
 const Home = () => {
 
     const [api, setApiData] = useState([]);
@@ -58,14 +58,22 @@ const Home = () => {
 
     return (
         <>
-            <div className="btn" onClick={handleScrollToTop} id="scrollTopBtn" >
-                <AiOutlineArrowUp className="top-arrow" />
-            </div>
-            <StoryForm />
-            <Post />
-            {/* <PeopleFlickity /> */}
-            <FlipMove>{newData}</FlipMove>
-            <div className='height' ></div>
+
+            {loading ? (
+                <div className='skeleton-center'>
+                    <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
+                </div >
+            ) : (
+                <>
+                    <div className="btn" onClick={handleScrollToTop} id="scrollTopBtn">
+                        <AiOutlineArrowUp className="top-arrow" />
+                    </div>
+                    <StoryForm />
+                    <Post />
+                    <FlipMove>{newData}</FlipMove>
+                    <div className="height"></div>
+                </>
+            )}
         </>
     )
 }

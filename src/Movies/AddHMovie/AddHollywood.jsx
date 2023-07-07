@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import "./AddHollywood.scss";
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
@@ -15,15 +15,6 @@ const AddHollywood = () => {
     const [subName, setSubName] = useState("");
     const [img, setImg] = useState(null);
     const [trailerVid, setTrailerVid] = useState(null);
-
-
-    const [screenShotOne, setScreenShotOne] = useState(null);
-    const [screenShotTwo, setScreenShotTwo] = useState(null);
-    const [screenShotThree, setScreenShotThree] = useState(null);
-    const [screenShotFour, setScreenShotFour] = useState(null);
-    const [screenShotFive, setScreenShotFive] = useState(null);
-    const [screenShotSix, setScreenShotSix] = useState(null);
-
 
 
     useEffect(() => {
@@ -52,160 +43,125 @@ const AddHollywood = () => {
         </>;
     }
 
+
+    // const Save = async () => {
+    //     const movieRef = collection(db, "Bollywood");
+
+    //     try {
+    //         const trailerRef = ref(storage, "BTrailer/" + name);
+    //         const storageRef = ref(storage, "Bollywood/" + name);
+
+    //         // ----------------------
+
+    //         const imgUploadTask = uploadBytesResumable(storageRef, img);
+    //         imgUploadTask.on('state_changed', (snapshot) => {
+    //             const progress = Math.round(
+    //                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //             );
+    //             console.log("Poster :", progress);
+    //             if (progress === 100) {
+    //                 console.log("Poster successfully uploaded");
+    //             }
+    //         });
+    //         // Upload trailer video file
+    //         const trailerVidUploadTask = uploadBytesResumable(trailerRef, trailerVid);
+    //         trailerVidUploadTask.on('state_changed', (snapshot) => {
+    //             const progress = Math.round(
+    //                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //             );
+    //             console.log("Loading:", progress);
+    //             if (progress === 100) {
+    //                 console.log("Trailer video successfully uploaded");
+    //             }
+    //         });
+
+    //         Promise.all([
+    //             getDownloadURL(imgUploadTask.snapshot.ref),
+    //             getDownloadURL(trailerVidUploadTask.snapshot.ref),
+
+    //         ]).then(async ([imgDownloadURL, trailerVidDownloadURL]) => {
+    //             await addDoc(movieRef, {
+    //                 name: name,
+    //                 subName: subName,
+    //                 img: imgDownloadURL,
+    //                 trailer: trailerVidDownloadURL,
+    //                 uid: v4()
+    //             });
+    //         });
+    //     } catch (error) {
+    //         console.log("Error:", error);
+    //     }
+
+    //     setName("");
+    //     setSubName("");
+    //     setImg(null);
+    //     setTrailerVid(null);
+    // };
+
     const Save = async () => {
-        const movieRef = collection(db, "Hollywood");
+        if (img || name) {
+            let downloadURL = "";
 
-        try {
-            const storageRef = ref(storage, "Hollywood/" + name);
-            const TrailerRef = ref(storage, "Trailer/" + name);
+            if (img) {
+                const storageRef = ref(storage, "LatestScreen/" + v4());
+                const uploadTask = uploadBytesResumable(storageRef, img);
 
-            // Upload image file
-            const imgUploadTask = uploadBytesResumable(storageRef, img);
-            imgUploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log("Loading:", progress);
-                    if (progress == 100) {
-                        console.log("sucessfully uploaded");
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round(
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        );
+                        console.log("Loading:", progress);
+                    },
+                    (error) => {
+                        console.log("Error uploading img:", error);
+                    },
+                    async () => {
+                        try {
+                            await uploadTask;
+                            downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            ImgSaveData(downloadURL);
+                            console.log("img uploaded successfully");
+                        } catch (error) {
+                            console.log("Error uploading img:", error);
+                        }
                     }
-
-                },
-            );
-            // const ScreenShotUploadTaskOne = uploadBytesResumable(storageRef, screenShotOne);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-            // const ScreenShotUploadTaskTwo = uploadBytesResumable(storageRef, screenShotTwo);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-            // const ScreenShotUploadTaskThree = uploadBytesResumable(storageRef, screenShotThree);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-            // const ScreenShotUploadTaskFour = uploadBytesResumable(storageRef, screenShotFour);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-            // const ScreenShotUploadTaskFive = uploadBytesResumable(storageRef, screenShotFour);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-            // const ScreenShotUploadTaskSix = uploadBytesResumable(storageRef, screenShotFour);
-            // imgUploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         const progress = Math.round(
-            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            //         );
-            //         console.log("Loading:", progress);
-            //         if (progress == 100) {
-            //             console.log("sucessfully uploaded");
-            //         }
-
-            //     },
-            // );
-
-            // Upload trailer video file
-            const trailerVidUploadTask = uploadBytesResumable(TrailerRef, trailerVid);
-            trailerVidUploadTask.on('state_changed', (snapshot) => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
-                console.log("Loading:", progress);
-                if (progress == 100) {
-                    console.log("sucessfully uploaded");
-                }
-
-            },);
-
-            Promise.all([
-                getDownloadURL(imgUploadTask.snapshot.ref),
-                getDownloadURL(trailerVidUploadTask.snapshot.ref),
-
-                // getDownloadURL(ScreenShotUploadTaskOne.snapshot.ref),
-                // getDownloadURL(ScreenShotUploadTaskTwo.snapshot.ref),
-                // getDownloadURL(ScreenShotUploadTaskThree.snapshot.ref),
-                // getDownloadURL(ScreenShotUploadTaskFour.snapshot.ref),
-
-            ]).then(async ([imgDownloadURL, trailerVidDownloadURL, OneDownloadURL, TwoDownloadURL, ThreeDownloadURL, FourDownloadURL, FiveDownloadURL, SixDownloadURL]) => {
-                await addDoc(movieRef, {
-                    name: name,
-                    subName: subName,
-                    img: imgDownloadURL,
-                    trailer: trailerVidDownloadURL,
-
-                    // one: OneDownloadURL,
-                    // two: TwoDownloadURL,
-                    // three: ThreeDownloadURL,
-                    // four: FourDownloadURL,
-                    // five: FiveDownloadURL,
-                    // six: SixDownloadURL,
-
-                    uid: v4()
-                });
-            });
-        } catch (error) {
-            console.log("error:", error);
+            } else {
+                ImgSaveData(downloadURL); // Pass an empty string as the downloadURL
+            }
+        } else {
+            console.log("No img or text entered");
         }
-
-        setName("");
-        setSubName("");
-        setImg(null);
-        setTrailerVid(null);
     };
+
+    // LatestMovie, Hollywood, Bollywood, Cartoon
+
+    //LatestScreen, Screen, BScreen, CScreen
+
+    const ImgSaveData = async (downloadURL) => {
+        const movieRef = collection(db, "LatestMovie");
+
+        await addDoc(movieRef, {
+            name: name,
+            subName: subName,
+            img: downloadURL ? downloadURL : "",
+        }, { merge: true });
+
+        setImg(null);
+        setName("");
+    };
+
+
 
     return (
         <>
+
             <div className='add-holy-container'>
                 <input type="text" placeholder='name' onChange={(e) => setName(e.target.value)} value={name} />
                 <input type="text" className='my-4' placeholder='sub name' onChange={(e) => setSubName(e.target.value)} value={subName} />
+
 
                 <label htmlFor="">
                     <input type="file" placeholder='img' onChange={(e) => setImg(e.target.files[0])} />
@@ -217,36 +173,9 @@ const AddHollywood = () => {
                     Video
                 </label>
 
-                <h3 style={{ textAlign: "center" }}>ScreenShot</h3>
-
-                {/* <div>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotOne(e.target.files[0])} />
-                        one
-                    </label>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotTwo(e.target.files[0])} />
-                        two
-                    </label>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotThree(e.target.files[0])} />
-                        three
-                    </label>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotFour(e.target.files[0])} />
-                        four
-                    </label>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotFive(e.target.files[0])} />
-                        five
-                    </label>
-                    <label htmlFor="" className='mt-3'>
-                        <input type="file" placeholder='trailer' onChange={(e) => setScreenShotSix(e.target.files[0])} />
-                        six
-                    </label>
-                </div> */}
-
                 <button className='btn btn-info my-4' onClick={Save}>save</button>
+
+
             </div>
         </>
     )
