@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Mininsta/static/css/main.c7459902.css",
+    "main.css": "/Mininsta/static/css/main.e2b2b000.css",
     "main.js": "/Mininsta/static/js/main.940c5074.js",
     "static/js/679.cec2d8ba.chunk.js": "/Mininsta/static/js/679.cec2d8ba.chunk.js",
     "static/js/787.3c880708.chunk.js": "/Mininsta/static/js/787.3c880708.chunk.js",
@@ -8,13 +8,13 @@
     "static/media/vl.png": "/Mininsta/static/media/vl.b9d816834a2726e6b81e.png",
     "static/media/emoji.png": "/Mininsta/static/media/emoji.01635c34bc0740667935.png",
     "index.html": "/Mininsta/index.html",
-    "main.c7459902.css.map": "/Mininsta/static/css/main.c7459902.css.map",
+    "main.e2b2b000.css.map": "/Mininsta/static/css/main.e2b2b000.css.map",
     "main.940c5074.js.map": "/Mininsta/static/js/main.940c5074.js.map",
     "679.cec2d8ba.chunk.js.map": "/Mininsta/static/js/679.cec2d8ba.chunk.js.map",
     "787.3c880708.chunk.js.map": "/Mininsta/static/js/787.3c880708.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7459902.css",
+    "static/css/main.e2b2b000.css",
     "static/js/main.940c5074.js"
   ]
 }
