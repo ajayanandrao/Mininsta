@@ -30,9 +30,9 @@ function TimeAgoComponent({ timestamp, onDelete }) {
             const now = new Date();
             const diff = now - new Date(timestamp);
 
-            const hoursPassed = Math.floor(diff / 1000 / 60 / 60);
+            const hoursPassed = diff / (1000 * 60 * 60); // Calculate hours passed
 
-            if (hoursPassed > 2) {
+            if (hoursPassed >= 2) { // Check if 2 or more hours have passed
                 onDelete();
             }
         };
@@ -46,6 +46,7 @@ function TimeAgoComponent({ timestamp, onDelete }) {
 
     return <ReactTimeago date={timestamp} />;
 }
+
 
 const CreateStorey = () => {
     const { currentUser } = useContext(AuthContext);
