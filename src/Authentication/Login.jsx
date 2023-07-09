@@ -16,19 +16,29 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPass] = useState("");
 
+    const [loading, setLoading] = useState(true);
+
     const nav = useNavigate();
 
 
     useEffect(() => {
-        auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-
-                nav("/home")
+                // Simulating an asynchronous operation with setTimeout
+                setLoading(true);
+                setTimeout(() => {
+                    nav("/home");
+                    setLoading(false);
+                }, 1000);
             } else {
-                nav("/")
-
+                nav("/");
+                setLoading(false);
             }
-        })
+        });
+
+        return () => {
+            unsubscribe(); // Cleanup the subscription when the component unmounts
+        };
     }, []);
 
     const login = (e) => {
@@ -96,37 +106,50 @@ const Login = () => {
 
     return (
         <>
-            <div className='login-form-container'>
-                <div className="login-form-container w3-animate-left w3-animate-opacity">
-                    <h3 className='login-title'>Mininsta</h3>
+
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
 
 
-                    <div className="form-inner-div">
-                        <input className="login-input mt-3" type="email"
-                            placeholder="Email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                        />
-                        <input className="login-input my-3" type="password"
-                            placeholder="Password"
-                            onChange={(e) => setPass(e.target.value)}
-                            value={password}
-                        />
 
-                        <div class="" id="error-alert"></div>
 
-                        <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
 
-                        {/* <span className='forgot-text'>Forgotten password?</span> */}
-                        <Link to="/forgotPassword" className='forgot-text'>Forgotten password?</Link>
 
-                        <Link to="signUp/" className='link'>
-                            <button className="btn-success-outline my-4">Create New Account</button>
-                        </Link>
+
+                <div className='login-form-container'>
+                    <div className="login-form-container w3-animate-left w3-animate-opacity">
+                        <h3 className='login-title'>Mininsta</h3>
+
+
+                        <div className="form-inner-div">
+                            <input className="login-input mt-3" type="email"
+                                placeholder="Email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                            />
+                            <input className="login-input my-3" type="password"
+                                placeholder="Password"
+                                onChange={(e) => setPass(e.target.value)}
+                                value={password}
+                            />
+
+                            <div class="" id="error-alert"></div>
+
+                            <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
+
+                            {/* <span className='forgot-text'>Forgotten password?</span> */}
+                            <Link to="/forgotPassword" className='forgot-text'>Forgotten password?</Link>
+
+                            <Link to="signUp/" className='link'>
+                                <button className="btn-success-outline my-4">Create New Account</button>
+                            </Link>
+                        </div>
+                        <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
                     </div>
-                    <div className='footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
                 </div>
-            </div>
+
+            )}
 
         </>
     )

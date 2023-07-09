@@ -124,6 +124,7 @@ const Messages = () => {
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
         return date.toLocaleString('en-US', options);
     }
+    
     function PhotoFormatTimestamp(timestamp) {
         const date = photoTime.toDate();
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
