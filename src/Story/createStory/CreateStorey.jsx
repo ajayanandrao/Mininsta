@@ -30,11 +30,10 @@ function TimeAgoComponent({ timestamp, onDelete }) {
             const now = new Date();
             const diff = now - new Date(timestamp);
 
-            const minutesPassed = Math.floor(diff / 1000 / 60);
+            const hoursPassed = Math.floor(diff / 1000 / 60 / 60);
 
-            if (minutesPassed > 7) {
+            if (hoursPassed > 2) {
                 onDelete();
-                // alert('7 min have passed!');
             }
         };
 
