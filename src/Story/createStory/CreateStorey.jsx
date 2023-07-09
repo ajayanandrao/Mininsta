@@ -24,15 +24,38 @@ import ReactPlayer from 'react-player';
 import "./CreateStory.scss"
 import { LinearProgress } from '@mui/material';
 
+function TimeAgoComponent({ timestamp, onDelete }) {
+    useEffect(() => {
+        const checkTimePassed = () => {
+            const now = new Date();
+            const diff = now - new Date(timestamp);
+
+            const minutesPassed = Math.floor(diff / 1000 / 60);
+
+            if (minutesPassed > 7) {
+                onDelete();
+                // alert('7 min have passed!');
+            }
+        };
+
+        const timer = setInterval(checkTimePassed, 1000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, [timestamp, onDelete]);
+
+    return <ReactTimeago date={timestamp} />;
+}
+
 const CreateStorey = () => {
     const { currentUser } = useContext(AuthContext);
     const [stories, setStories] = useState([]);
     const [newStoryImage, setNewStoryImage] = useState(null);
 
-
     const handleAddStory = async () => {
         if (!newStoryImage) {
-            alert('Please select image.');
+            alert('Please select an image.');
             return;
         }
         setNewStoryImage(null);
@@ -112,7 +135,6 @@ const CreateStorey = () => {
                 collection(db, 'stories', storyId, 'comments')
             );
 
-
             // Delete the story
             await deleteDoc(storyRef);
 
@@ -130,8 +152,6 @@ const CreateStorey = () => {
         }
     };
 
-
-
     useEffect(() => {
         const storiesCollection = collection(db, 'stories');
         const q = query(storiesCollection, where('visible', '==', true));
@@ -143,7 +163,6 @@ const CreateStorey = () => {
 
         return () => unsubscribe();
     }, []);
-
 
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
@@ -159,29 +178,6 @@ const CreateStorey = () => {
         }
     };
 
-    function TimeAgoComponent({ timestamp, onDelete }) {
-        useEffect(() => {
-            const checkTimePassed = () => {
-                const now = new Date();
-                const diff = now - new Date(timestamp);
-                const minutesPassed = Math.floor(diff / 1000 / 60 / 60);
-
-                if (minutesPassed === 5) {
-                    onDelete();
-                    // alert('1 minute has passed!');
-                }
-            };
-
-            const timer = setInterval(checkTimePassed, 1000);
-
-            return () => {
-                clearInterval(timer);
-            };
-        }, [timestamp, onDelete]);
-
-        return <ReactTimeago date={timestamp} />;
-    }
-
     const [comments, setComments] = useState([]);
     const fetchComments = async (storyId) => {
         try {
@@ -193,7 +189,6 @@ const CreateStorey = () => {
             console.error('Error fetching comments:', error);
         }
     };
-
 
     useEffect(() => {
         const storiesCollection = collection(db, 'stories');
@@ -211,7 +206,6 @@ const CreateStorey = () => {
         return () => unsubscribe();
     }, []);
 
-
     const [like, setLike] = useState([]);
     const fetchLike = async (storyId) => {
         try {
@@ -224,10 +218,8 @@ const CreateStorey = () => {
         }
     };
 
-
     const filteredComments = comments.filter((item) => item.storyUid === currentUser.uid);
-    const Like = like.filter((item) =>  currentUser.uid ===  item.storyUid);
-
+    const Like = like.filter((item) => currentUser.uid === item.storyUid);
 
     return (
         <>
@@ -284,8 +276,7 @@ const CreateStorey = () => {
                                     <button onClick={() => deleteStory(story.id)} className='mt-2 ms-3 btn-dengar-outline-custom'>Delete Story</button>
 
                                     <div className='timeago'>
-                                        <TimeAgoComponent timestamp={story.timestamp && story.timestamp.toDate()}
-                                            onDelete={() => deleteStory(story.id)} />
+                                        <TimeAgoComponent timestamp={story.timestamp && story.timestamp.toDate()} onDelete={() => deleteStory(story.id)} />
                                     </div>
                                 </div>
 
@@ -298,12 +289,10 @@ const CreateStorey = () => {
                 })}
             </div>
 
-
             <div className='comment-container'>
                 {comments.map((item) => {
                     if (item.storyUid === currentUser.uid) {
                         return (
-
                             <div style={{ marginBottom: "1rem", padding: "0 1rem" }}>
                                 <div className='comment-profile-div'>
                                     <img src={item.photoURL} className='comment-profile-img' alt="" />
@@ -313,17 +302,10 @@ const CreateStorey = () => {
                                     <span className='comment-color'>{item.comment}</span>
                                 </div>
                             </div>
-
                         );
                     }
                 })}
             </div>
-
-
-
-
-
-
         </>
     );
 };
