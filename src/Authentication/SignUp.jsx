@@ -124,7 +124,7 @@ const SignUp = () => {
 
 
             <div className="Signup-form-container signup-div w3-animate-right">
-                <h3 className='login-title'>Mininsta</h3>
+                <h3 className='login-title'>Chat App</h3>
 
                 <label htmlFor="photo" >
 

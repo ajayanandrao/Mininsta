@@ -119,7 +119,7 @@ const Login = () => {
 
                 <div className='login-form-container'>
                     <div className="login-form-container w3-animate-left w3-animate-opacity">
-                        <h3 className='login-title'>Mininsta</h3>
+                        <h3 className='login-title'>Chat App</h3>
 
 
                         <div className="form-inner-div">
