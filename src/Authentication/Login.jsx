@@ -8,7 +8,7 @@ import { collection, doc, orderBy, query, setDoc, updateDoc } from 'firebase/fir
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Box, TextField } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-
+import logo from "./../Image/img/logo192.png";
 
 
 const Login = () => {
@@ -111,7 +111,9 @@ const Login = () => {
 
             {loading ? (
                 <div className='login-wellcome-div'>
-                    
+
+                    <div className='loaing-logo' style={{ backgroundImage: `url(${logo})` }} >
+                    </div>
                 </div>
             ) : (
 
