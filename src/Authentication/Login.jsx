@@ -31,8 +31,10 @@ const Login = () => {
                     setLoading(false);
                 }, 1000);
             } else {
-                nav("/");
-                setLoading(false);
+                setTimeout(() => {
+                    nav("/");
+                    setLoading(false); // Stop showing loading state
+                }, 1000);
             }
         });
 
@@ -109,10 +111,7 @@ const Login = () => {
 
             {loading ? (
                 <div className='login-wellcome-div'>
-                    <div>{currentUser && <>Wellcome</>}</div>
-                    {/* <div className='wellcome-text'>
-                        <h5 className='wellcome-text'>{currentUser && currentUser.displayName}</h5>
-                    </div> */}
+                    
                 </div>
             ) : (
 
@@ -134,7 +133,7 @@ const Login = () => {
                                 value={password}
                             />
 
-                            <div class="" id="error-alert"></div>
+                            <div className="" id="error-alert"></div>
 
                             <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
 

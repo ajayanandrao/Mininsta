@@ -40,9 +40,40 @@ const MobileNavebar = () => {
         return unsub;
     }, []);
 
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Simulating an asynchronous operation with setTimeout
+                setLoading(true);
+                setTimeout(() => {
+                    const x = document.getElementById("navId");
+                    const y = document.getElementById("navIdB");
+                    if (x.style.display || y.style.display == "none") {
+                        x.style.display = "flex";
+                        setLoading(false);
+                    }
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    const x = document.getElementById("navId");
+                    const y = document.getElementById("navIdB");
+                    if (x.style.display || x.style.display  == "flex") {
+                        x.style.display = "none";
+                        setLoading(false);
+                    }
+                }, 1000);
+            }
+        });
+
+        return () => {
+            unsubscribe(); // Cleanup the subscription when the component unmounts
+        };
+    }, []);
+
     return (
         <>
-            <div className="mobile-nav-container" id='navIdB'>
+            <div className="mobile-nav-container" style={{ display: "none" }} id='navId'>
                 <Link to="home/" style={{ textDecoration: 'none' }}> <div className='mobile-nav-title'>
                     <img src={v} className='logo' alt="" />
                 </div></Link>
@@ -71,11 +102,10 @@ const MobileNavebar = () => {
                         </Link>
                     </span>
 
-
                 </div>
             </div>
 
-            <div className="mobile-nav-bottom-container " id='navId'>
+            <div className="mobile-nav-bottom-container " style={{ display: "none" }} id='navIdB'>
                 <Link to={"home/"}>
                     <AiFillHome className='mobile-nav-bottom-icon' />
                 </Link>
