@@ -32,7 +32,7 @@ function TimeAgoComponent({ timestamp, onDelete }) {
 
             const hoursPassed = diff / (1000 * 60 * 60); // Calculate hours passed
 
-            if (hoursPassed >= 2) { // Check if 2 or more hours have passed
+            if (hoursPassed > 2) { // Check if 2 or more hours have passed
                 onDelete();
             }
         };

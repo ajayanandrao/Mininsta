@@ -11,16 +11,22 @@ const People = ({ userP }) => {
 
     const { currentUser } = useContext(AuthContext);
     const [search, setSearch] = useState("");
+
     const nav = useNavigate();
     const goBack = () => {
         nav(-1);
     }
 
     const [api, setApiData] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
-        const colRef = collection(db, 'users');
+        const colRef = collection(db, "users");
         const unsubscribe = onSnapshot(colRef, (snapshot) => {
-            const newApi = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            const newApi = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+            setLoading(false); // Mark loading as false once data is fetched
             setApiData(newApi);
         });
 
@@ -31,6 +37,7 @@ const People = ({ userP }) => {
 
     const [friendRequests, setFriendRequests] = useState([]);
     const [addedUsers, setAddedUsers] = useState(false);
+
 
     const handleAddFriend = (id) => {
 
@@ -222,4 +229,83 @@ const People = ({ userP }) => {
 }
 
 export default People
+
+
+
+// {loading ? <>loading.......</> :
+//                         <div className="People-user-List">
+//                             {api
+//                                 .filter((value) => {
+//                                     if (search === "") {
+//                                         return value;
+//                                     } else if (value.name.toLowerCase().includes(search.toLowerCase())) {
+//                                         return value;
+//                                     }
+//                                 })
+//                                 .map((item) => {
+//                                     if (item.uid !== currentUser.uid) {
+//                                         const friendRequest = check.find(
+//                                             (request) =>
+//                                                 request.senderId === currentUser.uid &&
+//                                                 request.receiverUid === item.uid &&
+//                                                 request.status === 'pending'
+//                                         );
+
+//                                         const isFriendRequestAccepted = friendsList.some(
+//                                             (friend) => friend.userId === item.uid && friend.status === 'accepted'
+//                                         );
+
+//                                         if (!friendRequest && isFriendRequestAccepted) {
+//                                             // Skip rendering if there is no friend request and it is already accepted
+//                                             return null;
+//                                         }
+
+//                                         return (
+//                                             <div key={item.id}>
+//                                                 <div className="people-container">
+//                                                     <Link to={`/users/${item.uid}`}>
+//                                                         <div>
+//                                                             <img src={item.PhotoUrl} className="people-img" alt="" />
+//                                                         </div>
+//                                                     </Link>
+//                                                     <div className="people-name-div">
+//                                                         <div className="people-name">{item.name}</div>
+//                                                         <div className="people-btn-div">
+//                                                             {friendRequest ? (
+//                                                                 <div
+//                                                                     id={`cancel-${item.id}`}
+//                                                                     className="btn-dengar-custom ms-2"
+//                                                                     onClick={() =>
+//                                                                         cancelFriendRequest(item.id, currentUser.uid, item.uid)
+//                                                                     }
+//                                                                 >
+//                                                                     Cancel Request
+//                                                                 </div>
+//                                                             ) : isFriend(item.uid) ? (
+//                                                                 <div className="friend-request-accepted">Friend</div>
+//                                                             ) : (
+//                                                                 <div
+//                                                                     id={`add-${item.id}`}
+//                                                                     className="btn-primary-custom"
+//                                                                     onClick={() =>
+//                                                                         sendFriendRequest(
+//                                                                             item.id,
+//                                                                             item.uid,
+//                                                                             item.name,
+//                                                                             item.PhotoUrl
+//                                                                         )
+//                                                                     }
+//                                                                 >
+//                                                                     Add a friend
+//                                                                 </div>
+//                                                             )}
+//                                                         </div>
+//                                                     </div>
+//                                                 </div>
+//                                             </div>
+//                                         );
+//                                     }
+//                                 })}
+//                         </div>
+//                     }
 

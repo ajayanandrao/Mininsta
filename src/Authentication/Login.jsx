@@ -12,7 +12,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 const Login = () => {
-
+    const { currentUser } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPass] = useState("");
 
@@ -108,13 +108,13 @@ const Login = () => {
         <>
 
             {loading ? (
-                <div>Loading...</div>
+                <div className='login-wellcome-div'>
+                    <div>{currentUser && <>Wellcome</>}</div>
+                    {/* <div className='wellcome-text'>
+                        <h5 className='wellcome-text'>{currentUser && currentUser.displayName}</h5>
+                    </div> */}
+                </div>
             ) : (
-
-
-
-
-
 
 
                 <div className='login-form-container'>
