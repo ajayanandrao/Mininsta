@@ -522,7 +522,7 @@ const LatestMovies = () => {
                     if (item.id === id) {
                         return (
                             <>
-                                <div style={{ textAlign: "center", textTransform: "uppercase", fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>{item.name}</div>
+                                <div style={{ textAlign: "center", textTransform: "uppercase", fontSize: "18px", fontWeight: "600", marginTop: "10px" }}>{item.name}</div>
                             </>
                         )
                     }
