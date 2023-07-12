@@ -41,6 +41,9 @@ import LatestMovies from './Movies/LatestMovies';
 import Hollywood from './Movies/Hollywood/Hollywood';
 import Bollywood from './Movies/Hollywood/Bollywood';
 import Cartoon from './Movies/Hollywood/Cartoon';
+import Notification from './Notification/Notification';
+import NotificationProps from './Notification/NotificationProps';
+import NotificationPara from './Notification/NotificationPara';
 
 function App() {
 
@@ -70,6 +73,7 @@ function App() {
           <Route path='users/:id/message' element={<Messages />} />
           <Route path='users/:id/profile' element={<UsersProfilePage />} />
 
+
           {/* <Route path='movieTrailer/:id' element={<MovieTrailer />} /> */}
 
           <Route path='profile' element={<UserProfile />} />
@@ -77,6 +81,9 @@ function App() {
           <Route path='movies' element={<Movies />} />
           <Route path='requestMovie' element={<RequestMovie />} />
           <Route path='reels' element={<ReelsProps />} />/
+          <Route path='notification' element={<NotificationProps />} />
+
+          <Route path='notification/:id' element={<NotificationPara />} />
 
           {/* <Route path='movie/:id' element={<CategoryParam />} /> */}
 

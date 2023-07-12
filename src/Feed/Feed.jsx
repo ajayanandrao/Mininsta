@@ -104,7 +104,11 @@ const Feed = ({ post }) => {
         } else {
             await setDoc(doc(db, "AllPosts", post.id, "likes", currentUser.uid), {
                 userId: currentUser.uid,
-                name: currentUser.displayName
+                name: currentUser.displayName,
+                time: serverTimestamp(),
+                id: post.id,
+                img: post.img,
+                photoUrl: currentUser.photoURL
             });
             // element.style.color = '#FF0040';
         }

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import "./Option.scss";
-import { MdDarkMode } from "react-icons/md"
+import { MdDarkMode, MdMovieFilter } from "react-icons/md"
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../Firebase';
@@ -84,10 +84,10 @@ const Option = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link to="/reals/">
+                    <Link to="/reels/">
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
-                                <FcFilmReel />
+                                <MdMovieFilter />
                             </div>
                             <div className="option-mainu-name" >
                                 Reals

@@ -58,7 +58,7 @@ const MobileNavebar = () => {
                 setTimeout(() => {
                     const x = document.getElementById("navId");
                     const y = document.getElementById("navIdB");
-                    if (x.style.display || x.style.display  == "flex") {
+                    if (x.style.display || x.style.display == "flex") {
                         x.style.display = "none";
                         setLoading(false);
                     }
@@ -106,12 +106,15 @@ const MobileNavebar = () => {
             </div>
 
             <div className="mobile-nav-bottom-container " style={{ display: "none" }} id='navIdB'>
+
                 <Link to={"home/"}>
                     <AiFillHome className='mobile-nav-bottom-icon' />
                 </Link>
-                <div >
-                    <AiFillHeart className='mobile-nav-bottom-icon' />
-                </div>
+                <Link to='notification'>
+                    <div >
+                        <AiFillHeart className='mobile-nav-bottom-icon' />
+                    </div>
+                </Link>
 
                 <Link to="message/">
                     <div >
