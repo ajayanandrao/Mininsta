@@ -100,7 +100,10 @@ const Feed = ({ post }) => {
 
         if (liked) {
             await deleteDoc(doc(db, "AllPosts", post.id, "likes", currentUser.uid));
-            // element.style.color = 'white';
+
+            await deleteDoc(doc(db, "AllPosts", post.id, "Notification", currentUser.uid));
+
+
         } else {
             await setDoc(doc(db, "AllPosts", post.id, "likes", currentUser.uid), {
                 userId: currentUser.uid,
@@ -110,6 +113,16 @@ const Feed = ({ post }) => {
                 img: post.img,
                 photoUrl: currentUser.photoURL
             });
+            await setDoc(doc(db, "AllPosts", post.id, "Notification", currentUser.uid), {
+                userId: currentUser.uid,
+                name: currentUser.displayName,
+                time: serverTimestamp(),
+                id: post.id,
+                img: post.img,
+                photoUrl: currentUser.photoURL,
+                lik: "like",
+            });
+
             // element.style.color = '#FF0040';
         }
 
@@ -198,7 +211,14 @@ const Feed = ({ post }) => {
             uid: currentUser.uid,
             commentTime: serverTimestamp(),
         });
-
+        await addDoc(collection(db, 'AllPosts', id, 'Notification'), {
+            comment: getComment,
+            com: "comment",
+            name: currentUser.displayName,
+            photoUrl: currentUser.photoURL,
+            uid: currentUser.uid,
+            time: serverTimestamp(),
+        });
         setComment('');
     };
 

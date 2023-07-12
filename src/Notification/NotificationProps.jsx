@@ -45,7 +45,6 @@ const NotificationProps = () => {
                         return (
                             <div key={item.id}>
                                 <Notification post={item} postLike={item.likes} />
-                                {item.likes}
                             </div>
                         );
                     }

@@ -20,7 +20,7 @@ const Notification = ({ post, postLike }) => {
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
-            query(collection(db, 'AllPosts', post.id, 'likes'),
+            query(collection(db, 'AllPosts', post.id, 'Notification'),
                 orderBy('time', "desc")
             ),
             (snapshot) => {
@@ -40,7 +40,7 @@ const Notification = ({ post, postLike }) => {
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
-            query(collection(db, 'AllPosts', post.id, 'comments'),
+            query(collection(db, 'AllPosts', post.id, 'Notification'),
                 orderBy('time', "desc")
             ),
             (snapshot) => {
@@ -63,126 +63,91 @@ const Notification = ({ post, postLike }) => {
         setPostId(id);
     };
 
+    // function TimeAgoComponent({ timestamp }) {
+    //     return <ReactTimeago date={timestamp} />;
+    // }
+
+    function TimeAgoComponent({ timestamp }) {
+        const now = new Date().getTime();
+        const timeDifference = now - timestamp;
+        const seconds = Math.floor(timeDifference / 1000);
+
+        let timeAgo = '';
+
+        if (seconds < 60) {
+            timeAgo = `${seconds}s ago`;
+        } else if (seconds < 3600) {
+            const minutes = Math.floor(seconds / 60);
+            timeAgo = `${minutes}m ago`;
+        } else if (seconds < 86400) {
+            const hours = Math.floor(seconds / 3600);
+            timeAgo = `${hours}h ago`;
+        } else {
+            const days = Math.floor(seconds / 86400);
+            timeAgo = `${days}d ago`;
+        }
+
+        return <span>{timeAgo}</span>;
+    }
+
+
     return (
         <>
             <div className="notification">
                 <div>
-                    {isLiked.length > 0 &&
-                        <>
+                    {isLiked.map((item) => {
+                        return (
                             <Link to={`/notification/${post.id}`}>
-                                <div className='notification-inner-div' >
-                                    <div>
-                                        <img src={isLiked[0].photoUrl} className='notificatioin-profile-img' width={"80px"} alt="" />
-                                        {isLiked[0].name}
+                                <div style={{
+                                    marginBottom: "30px",
+                                    position: "relative"
+                                }} key={item.com}>
+
+                                    <div className='notification-profile-div'>
+                                        <div>
+                                            <img src={item.photoUrl} className='notificatioin-profile-img ' alt="" />
+                                        </div>
+                                        <span className='notification-profile-name'> {item.name}</span>
+                                        <TimeAgoComponent timestamp={item.time && item.time.toDate()} />
                                     </div>
 
-                                    <div className="noti-time">
-                                        <ReactTimeago
-                                            date={isLiked[0].time.toDate()}  // Assuming `isLiked[0].time` is a valid JavaScript Date object
-                                            className="feed-time"
-                                            formatter={(value, unit, suffix) => {
-                                                if (unit === 'second') {
-                                                    return 'just now';  // Customize the display for seconds if desired
-                                                } else {
-                                                    return value + ' ' + unit + ' ago';  // Display the time elapsed in the specified format
-                                                }
-                                            }}
-                                        />
+                                    <div className='noti-wrapper'>
+                                        <div className='text-div'>
+                                            {item.lik ? <>
+                                                <span className='noti-text' sty> <strong> {item.lik} </strong></span>
+                                                <span className='ms-2'>your post </span></> : ""}
+                                        </div>
+
+                                        <div className='text-div'>
+                                            {item.com ? <>
+                                                <span className='noti-text'><strong> {item.com} </strong></span>
+                                                <span className='ms-2'> your post</span></> : ""}
+                                        </div>
+
+                                        <div className='noti-post-img-div'>
+
+                                            {post.img && (post.name.includes('.jpg') || post.name.includes('.png')) ? (
+                                                <img src={post.photoURL} alt="Uploaded" className="notification-post-img" />
+                                            ) : post.img ? (
+
+                                                <div className="video-container">
+                                                    <video ref={videoRef} className="notification-post-img" >
+                                                        <source src={post.img} type="video/mp4" />
+                                                    </video>
+
+                                                </div>
+
+
+                                            ) : null}
+
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div className='noti-inner-div-text'>
-                                    <div style={{paddingLeft:"45px"}}>
-                                        {isLiked.length === 1 ?
-                                            <span> like your post</span> :
-                                            <>
-                                                <span style={{ fontSize: "12px" }}>
-                                                    {"and  "}
-                                                    <strong>{isLiked.length - 1} {"other"}</strong>
-                                                    {" like your post"}
-                                                </span>
-                                            </>
-                                        }
-                                    </div>
-
-                                    <div className='noti-post-img-div'>
-
-                                        {post.img && (post.name.includes('.jpg') || post.name.includes('.png')) ? (
-                                            <img src={post.img} alt="Uploaded" className="notification-post-img" />
-                                        ) : post.img ? (
-
-                                            <div className="video-container">
-                                                <video ref={videoRef} className="notification-post-img" >
-                                                    <source src={post.img} type="video/mp4" />
-                                                </video>
-
-                                            </div>
-
-
-                                        ) : null}
-
-                                    </div>
-
                                 </div>
                             </Link>
-                        </>
-                    }
-
-                    {isComment.length > 0 &&
-                        <>
-                            <div className='notification-inner-div'>
-                                <img src={isLiked[0].photoUrl} className='notificatioin-profile-img' width={"80px"} alt="" />
-                                <div className='noti-inner-div-text'>
-                                    <div className='notification-profile-name'>
-                                        {isComment[0].displayName}
-                                        <div style={{ fontWeight: "400", fontSize: "11px" }}>
-                                            <div className="feed-time">
-                                                <ReactTimeago
-                                                    date={isComment[0].time.toDate()}  // Assuming `isLiked[0].time` is a valid JavaScript Date object
-                                                    className="feed-time"
-                                                    formatter={(value, unit, suffix) => {
-                                                        if (unit === 'second') {
-                                                            return 'just now';  // Customize the display for seconds if desired
-                                                        } else {
-                                                            return value + ' ' + unit + ' ago';  // Display the time elapsed in the specified format
-                                                        }
-                                                    }}
-                                                />
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {isComment.length === 1 ?
-                                        <span> comment your post</span> :
-                                        <>
-                                            <span>
-                                                {" and other "}
-                                                <strong>{isComment.length - 1}</strong>
-                                            </span>
-                                        </>
-                                    }
-                                </div>
-                                <div className='noti-post-img-div'>
-
-                                    {post.img && (post.name.includes('.jpg') || post.name.includes('.png')) ? (
-                                        <img src={post.photoURL} alt="Uploaded" className="notification-post-img" />
-                                    ) : post.img ? (
-
-                                        <div className="video-container">
-                                            <video ref={videoRef} className="notification-post-img" >
-                                                <source src={post.img} type="video/mp4" />
-                                            </video>
-
-                                        </div>
+                        )
+                    })}
 
 
-                                    ) : null}
-
-                                </div>
-                            </div>
-                        </>
-                    }
                 </div>
             </div>
         </>
