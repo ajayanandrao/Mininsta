@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/Mininsta/static/css/main.b3bc739e.css",
-    "main.js": "/Mininsta/static/js/main.edb33e6f.js",
+    "main.css": "/Mininsta/static/css/main.c0c314e5.css",
+    "main.js": "/Mininsta/static/js/main.d36c312b.js",
     "static/js/679.cec2d8ba.chunk.js": "/Mininsta/static/js/679.cec2d8ba.chunk.js",
     "static/js/787.3c880708.chunk.js": "/Mininsta/static/js/787.3c880708.chunk.js",
     "static/media/sv.mp4": "/Mininsta/static/media/sv.98ba037f3bcb49af8fea.mp4",
     "static/media/vl.png": "/Mininsta/static/media/vl.b9d816834a2726e6b81e.png",
+    "static/media/c2.png": "/Mininsta/static/media/c2.abe65ce8dd578e8203c5.png",
     "static/media/logo192.png": "/Mininsta/static/media/logo192.052f2e1cfd165966b477.png",
     "static/media/emoji.png": "/Mininsta/static/media/emoji.01635c34bc0740667935.png",
     "index.html": "/Mininsta/index.html",
-    "main.b3bc739e.css.map": "/Mininsta/static/css/main.b3bc739e.css.map",
-    "main.edb33e6f.js.map": "/Mininsta/static/js/main.edb33e6f.js.map",
+    "main.c0c314e5.css.map": "/Mininsta/static/css/main.c0c314e5.css.map",
+    "main.d36c312b.js.map": "/Mininsta/static/js/main.d36c312b.js.map",
     "679.cec2d8ba.chunk.js.map": "/Mininsta/static/js/679.cec2d8ba.chunk.js.map",
     "787.3c880708.chunk.js.map": "/Mininsta/static/js/787.3c880708.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b3bc739e.css",
-    "static/js/main.edb33e6f.js"
+    "static/css/main.c0c314e5.css",
+    "static/js/main.d36c312b.js"
   ]
 }
