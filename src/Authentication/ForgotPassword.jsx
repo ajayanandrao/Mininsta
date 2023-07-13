@@ -41,7 +41,7 @@ const ForgotPassword = () => {
                         <h3 className='login-title'>Mininsta</h3>
                         <input
                             type="email"
-                            className='forgot-input'
+                            className='login-input-new '
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

@@ -502,7 +502,7 @@ const Feed = ({ post }) => {
                                 onClick={() => Heart(post.id)} className='feed-bottom-icon' />)}
 
 
-                            <div className='feed-like' onClick={() => showLike(post.id)}>
+                            <div className='feed-like ms-4' onClick={() => showLike(post.id)}>
                                 {like.length > 0 && like.length}
                             </div>
 
@@ -524,11 +524,13 @@ const Feed = ({ post }) => {
                             </div>
                         </div>
 
-                        {/* Comment */}
+                        {/* Comment  */}
                         <div className="feed-bottom-mainu">
-                            <BsFillChatDotsFill onClick={() => comment(post.id)} className='feed-bottom-icon' />
+                            <BsFillChatDotsFill  onClick={() => comment(post.id)} className='feed-bottom-icon' />
 
-                            <span className='comment-counter ms-2' >{commentCount > 0 && commentCount}</span>
+                            <Link to={`/notification/${post.id}`}>
+                                <span className='comment-counter ms-4' >{commentCount > 0 && commentCount}</span>
+                            </Link>
                         </div>
 
                         {/* Share */}

@@ -6,6 +6,10 @@ import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { BsFillCameraFill } from "react-icons/bs";
+import logoText from "./../Image/c2.png";
+import g from "./../Image/google.png";
+import f from "./../Image/facebook.png";
+import i from "./../Image/instagram.png";
 
 const SignUp = () => {
 
@@ -124,54 +128,50 @@ const SignUp = () => {
 
 
             <div className="Signup-form-container signup-div w3-animate-right">
-                <h3 className='login-title'>Chat App</h3>
+                <h3 className='login-title'><img width={"120px"} src={logoText} alt="" /></h3>
 
                 <label htmlFor="photo" >
-
-                    <div className='form-user-img' style={{ backgroundImage: `url("https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif")` }}>
-
-                        <img className="img-form" src={img ? URL.createObjectURL(img) :
-                            "https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif"} alt="" />
-
-
-                        <BsFillCameraFill className='signup-camera' />
-                    </div>
-
-
-                    {/* <img className="form-user-img" src={img ? URL.createObjectURL(img) :
-                        "https://habrastorage.org/webt/mq/3y/1h/mq3y1hxg36s7f3g0tojfo7iwp3q.gif"} alt="" /> */}
+                    {img ? <img className="singup-img-form" src={img ? URL.createObjectURL(img) : null} alt="" /> :
+                        (
+                            <div className='signup-camera-icon-div'><BsFillCameraFill className='signup-camera-icon' /></div>)}
 
                     <input type="file" className="photoinput" id="photo" onChange={(e) => setImg(e.target.files[0])} style={{ display: "none" }} />
                 </label>
 
                 <div className="form-inner-div">
-                    <input className="login-input mt-1" type="text"
+                    <input className="login-input-new mt-1" type="text"
                         placeholder="Name"
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                     />
-                    <input className="login-input mt-1" type="email"
+                    <input className="login-input-new mt-1" type="email"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
-                    <input className="login-input my-1" type="password"
+                    <input className="login-input-new my-1" type="password"
                         placeholder="Password"
                         onChange={(e) => setPass(e.target.value)}
                         value={password}
                     />
-                    <button className="btn-primary-custom w-100 my-5"
+                    <button className="btn-primary-custom w-100 my-4"
                         onClick={submit}>Sign Up</button>
-
-
+                    
+                    <div className='or'>or</div>
+                    <div className='link-icon-div'>
+                        <img className='link-icons' style={{ width: "30px" }} src={g} alt="" />
+                        <img style={{ width: "30px" }} src={f} alt="" />
+                        <img style={{ width: "30px" }} src={i} alt="" />
+                    </div>
 
                     <Link to="/" className='link'>
-                        <div className='create-new-a'> Already have an account ?</div>
+                        <div className='create-new-a mt-3'> Already have an account ?</div>
                     </Link>
 
                 </div>
             </div>
-                <div className='singup-footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
+
+            <div className='singup-footer-bottom'>Copyright © Ajay Anandaro 2023. </div>
 
         </>
     )

@@ -9,6 +9,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Box, TextField } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import logo from "./../Image/img/logo192.png";
+import logoText from "./../Image/c2.png";
 
 
 const Login = () => {
@@ -83,6 +84,10 @@ const Login = () => {
                     document.getElementById("error-alert").style.display = "flex";
                     document.getElementById("error-alert").innerHTML = "Wrong Password";
                 }
+                if (errorCode == "auth/missing-password") {
+                    document.getElementById("error-alert").style.display = "flex";
+                    document.getElementById("error-alert").innerHTML = "incorrect email and password";
+                }
                 if (errorCode == "auth/user-not-found") {
                     function alert() {
 
@@ -120,22 +125,27 @@ const Login = () => {
 
                 <div className='login-form-container'>
                     <div className="login-form-container w3-animate-left w3-animate-opacity">
-                        <h3 className='login-title'>Chat App</h3>
+                        <h3 className='login-title'>
+                            <img width={"120px"} src={logoText} alt="" />
+                        </h3>
 
 
                         <div className="form-inner-div">
-                            <input className="login-input mt-3" type="email"
+                            <input className="login-input-new mt-3" type="email"
                                 placeholder="Email"
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                             />
-                            <input className="login-input my-3" type="password"
+                            <input className="login-input-new my-3" type="password"
                                 placeholder="Password"
                                 onChange={(e) => setPass(e.target.value)}
                                 value={password}
                             />
+                            {/* <input className="login-input-new my-3" type="password"
+                                placeholder="Password"
+                            /> */}
 
-                            <div className="" id="error-alert"></div>
+                            <div className="" id="error-alert" ></div>
 
                             <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
 
