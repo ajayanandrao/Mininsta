@@ -127,7 +127,6 @@ const MobileNavebar = () => {
                         <MdMovieFilter className='mobile-nav-bottom-icon' />
                     </div>
                 </Link>
-
                 <Link to={"profile/"}>
                     <div >
                         <img src={currentUser && currentUser.photoURL} alt="" className='mobile-nav-bottom-photo' />

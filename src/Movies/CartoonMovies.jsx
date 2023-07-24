@@ -88,6 +88,7 @@ const CartoonMovies = () => {
 
             const item = cartoonData.find((item) => item.id === id);
             if (item) {
+                x.style.display = 'none';
                 const downloadLink = document.createElement('a');
                 downloadLink.href = item.trailer;
                 downloadLink.download = 'trailer.mp4';

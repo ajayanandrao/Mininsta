@@ -8,6 +8,7 @@ import { signOut } from 'firebase/auth';
 import { AuthContext } from '../AuthContaxt';
 import { MdMovie } from "react-icons/md";
 import { FcFilmReel } from "react-icons/fc";
+import { GiLovers } from "react-icons/gi";
 
 const Option = () => {
     const { currentUser } = useContext(AuthContext);
@@ -81,6 +82,16 @@ const Option = () => {
                             </div>
                             <div className="option-mainu-name" >
                                 Movies
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/Wedding/">
+                        <div className="option-mainu">
+                            <div className="option-mainu-icon">
+                                <GiLovers />
+                            </div>
+                            <div className="option-mainu-name" >
+                                Matrimony Arrange
                             </div>
                         </div>
                     </Link>
