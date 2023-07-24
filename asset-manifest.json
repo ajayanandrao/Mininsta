@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Mininsta/static/css/main.45a6b64f.css",
-    "main.js": "/Mininsta/static/js/main.594525a1.js",
+    "main.js": "/Mininsta/static/js/main.ca907ef3.js",
     "static/js/679.cec2d8ba.chunk.js": "/Mininsta/static/js/679.cec2d8ba.chunk.js",
     "static/js/787.3c880708.chunk.js": "/Mininsta/static/js/787.3c880708.chunk.js",
     "static/media/sv.mp4": "/Mininsta/static/media/sv.98ba037f3bcb49af8fea.mp4",
@@ -12,12 +12,12 @@
     "static/media/emoji.png": "/Mininsta/static/media/emoji.01635c34bc0740667935.png",
     "index.html": "/Mininsta/index.html",
     "main.45a6b64f.css.map": "/Mininsta/static/css/main.45a6b64f.css.map",
-    "main.594525a1.js.map": "/Mininsta/static/js/main.594525a1.js.map",
+    "main.ca907ef3.js.map": "/Mininsta/static/js/main.ca907ef3.js.map",
     "679.cec2d8ba.chunk.js.map": "/Mininsta/static/js/679.cec2d8ba.chunk.js.map",
     "787.3c880708.chunk.js.map": "/Mininsta/static/js/787.3c880708.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.45a6b64f.css",
-    "static/js/main.594525a1.js"
+    "static/js/main.ca907ef3.js"
   ]
 }
