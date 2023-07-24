@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import "./Hollywood.scss";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../Firebase';
-import { CircularProgress } from '@mui/material';
+import { Avatar, Box, CardMedia, CircularProgress, IconButton, Skeleton, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import m from "./../hollywood.json";
+import { Card, CardContent, CardHeader } from 'semantic-ui-react';
 
 const Hollywood = () => {
 
@@ -42,41 +44,75 @@ const Hollywood = () => {
             item.subName.toLowerCase().includes(search.toLowerCase())
     );
 
+
+
+
     return (
         <>
-            {loading ?
-                <div className='skeleton-center'>
-                    <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
-                </div >
-                :
-                <div className="hollywood-wrapper">
-                    <input type="text"
-                        placeholder='Serch Movie'
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        className='friend-search' />
 
-                    <div className="movie-grid-container">
-                        {filteredMovies.map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <Link to={`/hollywoodmovie/${item.id}`}>
-                                        <div className='movie-card-div'>
-                                            <div>
-                                                <img src={item.mobileImg} className='movie-card-img' alt="" />
+            <div className="hollywood-wrapper">
+                {loading ?
+
+                    <>
+                        <input type="text"
+                            placeholder='Serch Movie'
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            className='friend-search' />
+
+
+
+                        <div className="movie-grid-container">
+                            {m.map((item) => {
+                                return (
+
+                                    <div className="skelton-card">
+                                        <Skeleton variant="rectangular" className='skeleton' width={150} height={220} >
+                                        </Skeleton>
+                                        <Skeleton animation="wave" className='skelton-w' />
+                                        <Skeleton animation="wave" className='skelton-ww' />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </>
+
+                    // <div className='skeleton-center'>
+                    //     <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
+                    // </div >
+                    :
+                    <div className="hollywood-wrapper">
+                        <input type="text"
+                            placeholder='Serch Movie'
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            className='friend-search' />
+
+                        <div className="movie-grid-container">
+                            {filteredMovies.map((item) => {
+                                return (
+                                    <div key={item.id}>
+                                        <Link to={`/hollywoodmovie/${item.id}`}>
+                                            <div className='movie-card-div'>
+                                                <div className=''>
+                                                    {item.mobileImg ? <img src={item.mobileImg} className='movie-card-img' alt="" /> :
+                                                        <Skeleton variant="rectangular" className='skeleton' width={150} height={220} />
+                                                    }
+
+                                                </div>
+                                                <div className="movie-card-name-wrapper ">
+                                                    <div className='movie-card-name'>{item.name}</div>
+                                                    <div className='movie-card-subName'>{item.subName}</div>
+                                                </div>
                                             </div>
-                                            <div className="movie-card-name-wrapper">
-                                                <div className='movie-card-name'>{item.name}</div>
-                                                <div className='movie-card-subName'>{item.subName}</div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </div>
-                            )
-                        })}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </>
     )
 }

@@ -91,6 +91,7 @@
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
+    text-align: center;
 
     &:hover {
       background: #226a9b;
@@ -108,6 +109,7 @@
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
+    text-align: center;
 
     &:hover {
       background: #226a9b;
@@ -126,12 +128,14 @@
     font-size: 17px;
     font-weight: 500;
     text-transform: capitalize;
+    text-align: center;
 
   }
 
   .btn-success-custom {
     background: #28a745;
     display: inline-block;
+    text-align: center;
     border: none;
     padding: 0.3rem 0.8rem;
     border-radius: 5px;
@@ -158,6 +162,7 @@
     font-size: 17px;
     font-weight: 500;
     text-transform: capitalize;
+    text-align: center;
 
   }
 
@@ -172,6 +177,7 @@
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
+    text-align: center;
 
     &:hover {
       background: #55bbdd;
@@ -189,6 +195,7 @@
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
+    text-align: center;
 
     &:hover {
       background: #55bbdd;
@@ -211,5 +218,5 @@
     border-radius: 5px;
     color: black;
     cursor: pointer;
+    text-align: center;
   }
-

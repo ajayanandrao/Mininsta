@@ -8,7 +8,7 @@ import bolly from "./bollywood.json";
 import { Link } from 'react-router-dom';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../Firebase';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Skeleton } from '@mui/material';
 
 const Movies = () => {
     var flickityOptions = {
@@ -62,6 +62,7 @@ const Movies = () => {
                     ...doc.data(),
                 }));
                 setMovieTrailer(movieTrailerList);
+
             } catch (error) {
                 console.log('Error fetching movie trailers:', error);
             }
@@ -75,8 +76,10 @@ const Movies = () => {
                     ...doc.data(),
                 }));
                 setHollywoodMovie(hollywoodMovieList);
+
             } catch (error) {
                 console.log('Error fetching Hollywood movies:', error);
+
             }
         };
         const fetchBollywoodMovies = async () => {
@@ -87,8 +90,10 @@ const Movies = () => {
                     ...doc.data(),
                 }));
                 setBollywoodMovie(bollywoodMovieList);
+
             } catch (error) {
                 console.log('Error fetching Hollywood movies:', error);
+
             }
         };
         const fetchCartoonMovies = async () => {
@@ -99,8 +104,12 @@ const Movies = () => {
                     ...doc.data(),
                 }));
                 setCartoonMovie(cartoonMovieList);
+
+
             } catch (error) {
                 console.log('Error fetching Hollywood movies:', error);
+
+
             }
         };
         const fetchLatestMovies = async () => {
@@ -138,6 +147,8 @@ const Movies = () => {
                 <div className='skeleton-center'>
                     <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
                 </div >
+
+
             ) : (
                 <div className='movie-main-container'>
                     <Flickity
@@ -233,17 +244,19 @@ const Movies = () => {
                         options={bollywood}
                         disableImagesLoaded={false}>
 
-                        {bollywoodMovie.map((holly) => {
-                            return (
-                                <>
-                                    <Link key={holly.id} to={`/bollywoodmovie/${holly.id}`}>
-                                        <div key={holly.id} style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
+                        {
+                            bollywoodMovie.map((holly) => {
+                                return (
+                                    <>
+                                        <Link key={holly.id} to={`/bollywoodmovie/${holly.id}`}>
+                                            <div key={holly.id} style={{ backgroundImage: `url(${holly.img})` }} className="hollywood-card">
 
-                                        </div>
-                                    </Link>
-                                </>
-                            )
-                        })}
+                                            </div>
+                                        </Link>
+                                    </>
+                                )
+                            })
+                        }
 
                     </Flickity>
 

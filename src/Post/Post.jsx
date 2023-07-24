@@ -203,7 +203,7 @@ const Post = () => {
                 </Link>
               </div>
 
-              <input type="text" className='post-input mx-3' placeholder="What's on your mind ? "
+              <input type="text" className='post-input' placeholder="What's on your mind ? "
                 onChange={(e) => setPostText(e.target.value)}
                 value={postText}
                 onKeyDown={handleKey}

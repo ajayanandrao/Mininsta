@@ -70,10 +70,12 @@ const Home = () => {
                     </div>
                     <StoryForm />
                     <Post />
-                    <FlipMove>{newData}</FlipMove>
+                    <FlipMove>{newData}</FlipMove> 
                     <div className="height"></div>
                 </>
             )}
+
+
         </>
     )
 }

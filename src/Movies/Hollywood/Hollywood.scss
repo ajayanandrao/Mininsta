@@ -63,3 +63,46 @@
 
 
 }
+
+
+// .movie-grid-container-o {
+//     padding: 1rem;
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//     gap: 0.5rem;
+
+// }
+
+// .card-color {
+//     width: 100%;
+//     max-width: 200px;
+//     height: 220px;
+//     background-color: black;
+//     border-radius: 0.5rem;
+// }
+
+
+
+.skelton-card {
+    width: 150px;
+    height: 220px;
+    position: relative;
+    .skelton-w {
+        width: 50%;
+        height: 15px;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+    }
+    .skelton-ww {
+        width: 80%;
+        height: 15px;
+        position: absolute;
+        bottom: 30px;
+        left: 10px;
+    }
+}
+
+.skeleton {
+    border-radius: 0.5rem;
+}

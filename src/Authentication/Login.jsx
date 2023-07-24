@@ -141,15 +141,10 @@ const Login = () => {
                                 onChange={(e) => setPass(e.target.value)}
                                 value={password}
                             />
-                            {/* <input className="login-input-new my-3" type="password"
-                                placeholder="Password"
-                            /> */}
-
                             <div className="" id="error-alert" ></div>
 
                             <button className="btn-primary-custom w-100 my-4" onClick={login}>Login</button>
 
-                            {/* <span className='forgot-text'>Forgotten password?</span> */}
                             <Link to="/forgotPassword" className='forgot-text'>Forgotten password?</Link>
 
                             <Link to="signUp/" className='link'>

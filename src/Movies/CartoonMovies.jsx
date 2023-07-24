@@ -1,5 +1,5 @@
-import { collection, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
-import React, { useEffect, useRef, useState } from 'react'
+import { collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc } from 'firebase/firestore';
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db, storage } from '../Firebase';
 import { CircularProgress } from '@mui/material';
@@ -8,9 +8,10 @@ import { FaPlay } from 'react-icons/fa';
 import { ImArrowLeft2 } from 'react-icons/im'
 import { getDownloadURL, getMetadata, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4 } from 'uuid';
+import { AuthContext } from '../AuthContaxt';
 
 const CartoonMovies = () => {
-
+    const { currentUser } = useContext(AuthContext);
     const { id } = useParams();
     const [cartoon, Cartoon] = useState(null);
     const [cartoonData, setCartoonData] = useState([]);
@@ -67,16 +68,51 @@ const CartoonMovies = () => {
         return unsub();
     }, []);
 
+
     const handleDownload = () => {
-        // Logic for downloading the trailer
-        const item = cartoonData.find((item) => item.id === id);
-        if (item) {
-            const downloadLink = document.createElement('a');
-            downloadLink.href = item.trailer;
-            downloadLink.download = 'trailer.mp4';
-            downloadLink.click();
+
+        const x = document.getElementById('less');
+
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
         }
+        else {
+            x.style.display = 'none';
+        }
+
+        if (friendsList.length < 5) {
+            document.getElementById("less").innerHTML = `to download any movie you need to have minimum 5 friends. 
+            your total friends is ${friendsList.length}`;
+
+        } else {
+
+            const item = cartoonData.find((item) => item.id === id);
+            if (item) {
+                const downloadLink = document.createElement('a');
+                downloadLink.href = item.trailer;
+                downloadLink.download = 'trailer.mp4';
+                downloadLink.click();
+            }
+
+        }
+        // 0/
     };
+
+    const [friendsList, setFriendsList] = useState([]);
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const friendsQuery = query(collection(db, `allFriends/${currentUser.uid}/Friends`));
+                const friendsSnapshot = await getDocs(friendsQuery);
+                const friendsData = friendsSnapshot.docs.map(doc => doc.data());
+                setFriendsList(friendsData);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        };
+
+        fetchFriends();
+    }, [currentUser]);
 
     const [name, setName] = useState("");
     const [img, setImg] = useState(null);
@@ -632,11 +668,15 @@ const CartoonMovies = () => {
                     }
                 })} */}
 
-                <h3 style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <button className="btn-success-custom " onClick={handleDownload}>
+                <div style={{ marginTop: '20px', display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", textAlign: 'center' }}>
+
+                    <div class="alert alert-danger" role="alert" id='less' style={{ display: "none" }}>
+                    </div>
+
+                    <button className="btn-success-custom" onClick={handleDownload}>
                         Download
                     </button>
-                </h3>
+                </div>
 
             </div>
 

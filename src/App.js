@@ -44,6 +44,10 @@ import Cartoon from './Movies/Hollywood/Cartoon';
 import Notification from './Notification/Notification';
 import NotificationProps from './Notification/NotificationProps';
 import NotificationPara from './Notification/NotificationPara';
+import Wedding from './Wedding/Wedding';
+import WeddingMain from './Wedding/WeddingMain';
+import WeddingList from './Wedding/WeddingList';
+import WeddingListDetail from './Wedding/WeddingListDetail';
 
 function App() {
 
@@ -56,6 +60,7 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route exact path="forgotPassword" element={<ForgotPassword />} />
           <Route path="home" element={<Home />} />
+          <Route path="post" element={<Post />} />
 
           <Route path="story" element={<StoryForm />} />
           <Route path="createStory" element={<CreateStorey />} />
@@ -67,6 +72,11 @@ function App() {
           <Route path="search" element={<SearchUser />} />
           <Route path="message" element={<Message />} />
           <Route path="find_friend" element={<PeopleProps />} />
+
+          <Route path="Wedding" element={<WeddingMain />} />
+          <Route path="WeddingList" element={<WeddingList />} />
+          <Route path="AddWedding" element={<Wedding />} />
+          <Route path="WeddingList/:id" element={<WeddingListDetail />} />
 
           <Route path='users' element={<Users />} />
           <Route path='users/:id' element={<UsersDetails />} />
