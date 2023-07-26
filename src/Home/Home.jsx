@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./Home.scss";
 import Feed from '../Feed/Feed';
 import Post from '../Post/Post';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { AuthContext } from '../AuthContaxt';
 import { db } from '../Firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -11,15 +11,14 @@ import { Height } from '@mui/icons-material';
 import { AiOutlineArrowUp } from "react-icons/ai";
 import StoryForm from '../Story/StoryForm';
 import { CircularProgress } from '@mui/material';
+
 const Home = () => {
-
     const [api, setApiData] = useState([]);
-
     const { currentUser } = useContext(AuthContext);
 
-    const colRef = collection(db, 'AllPosts')
-    const q = query(colRef, orderBy('bytime', 'desc'))
-    const [docs, loading, error] = useCollectionData(q, orderBy('bytime', 'desc'))
+    const colRef = collection(db, 'AllPosts');
+    const q = query(colRef, orderBy('bytime', 'desc'));
+    const [docs, loading, error] = useCollectionData(q, orderBy('bytime', 'desc'));
 
     useEffect(() => {
         const colRef = collection(db, 'AllPosts');
@@ -39,7 +38,6 @@ const Home = () => {
         };
     }, []);
 
-
     const newData = api.map((item) => {
         return (
             <div key={item.id}>
@@ -49,29 +47,72 @@ const Home = () => {
     });
 
 
+    const [stories, setStories] = useState([]);
+
+    const StoryRef = collection(db, 'stories');
+
+    useEffect(() => {
+        const unsub = () => {
+            onSnapshot(StoryRef, (snapshot) => {
+                let newbooks = []
+                snapshot.docs.forEach((doc) => {
+                    newbooks.push({ ...doc.data(), id: doc.id })
+                });
+                setStories(newbooks);
+            })
+        };
+        return unsub();
+    }, []);
+
+
+    useEffect(() => {
+        // For each fetched post, check and delete if expired
+        stories.forEach((story) => {
+            const now = new Date();
+            const diff = now - story.timestamp.toDate();
+            const hoursPassed = diff / (1000 * 60 * 60); // Calculate hours passed
+
+            if (hoursPassed > 2) {
+                handleDeletePost(story.id);
+            }
+        });
+    }, [stories]); 
+
+    const handleDeletePost = async (storyId) => {
+        try {
+            const postRef = doc(db, 'stories', storyId);
+            // Delete the post
+            await deleteDoc(postRef);
+            // Optionally, you can delete associated comments, likes, etc., if required
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
+
     const handleScrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: 'smooth',
         });
     };
 
     return (
         <>
-
             {loading ? (
                 <div className='skeleton-center'>
                     <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
-                </div >
+                </div>
             ) : (
                 <>
-                    <div className="btn" onClick={handleScrollToTop} id="scrollTopBtn">
-                        <AiOutlineArrowUp className="top-arrow" />
+                    <div className='btn' onClick={handleScrollToTop} id='scrollTopBtn'>
+                        <AiOutlineArrowUp className='top-arrow' />
                     </div>
                     <StoryForm />
                     <Post />
-                    <FlipMove>{newData}</FlipMove> 
-                    <div className="height"></div>
+
+                    
+                    <FlipMove>{newData}</FlipMove>
+                    <div className='height'></div>
                 </>
             )}
 

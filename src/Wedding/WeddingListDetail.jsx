@@ -1,10 +1,10 @@
 import { CircularProgress } from '@mui/material';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../Firebase';
 import "./WeddingListDetail.scss";
-import { MdWork } from 'react-icons/md'
+import { HiOutlineArrowSmLeft } from 'react-icons/hi'
 
 const WeddingListDetail = () => {
     const { id } = useParams();
@@ -28,6 +28,11 @@ const WeddingListDetail = () => {
         fetchUser();
     }, [id]);
 
+    const nav = useNavigate();
+    const goBack = () => {
+        nav(-1);
+    }
+
     if (!data) {
         return <>
             <div className='skeleton-center'>
@@ -39,6 +44,11 @@ const WeddingListDetail = () => {
 
     return (
         <>
+            <div style={{ padding: "1rem", position: "fixed", top: "50px" }}>
+                <div className="btn-close-div" onClick={goBack}>
+                    <HiOutlineArrowSmLeft />
+                </div>
+            </div>
             <div className="weddinglistD-photo-div">
                 <div>
                     <img src={data.photoOne} className='weddinglistD-photo' alt="" />

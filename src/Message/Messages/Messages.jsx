@@ -479,7 +479,6 @@ const Messages = () => {
                                 value={messageInput}
                                 className="message-input"
                                 placeholder="Type..."
-                                autoFocus
                             />
 
                             <MdSend

@@ -1,10 +1,36 @@
+.weddinglist-search-div {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    margin-top: 1rem;
+
+    .weddinglist-search {
+        width: 100%;
+        max-width: 567px;
+        height: 40px;
+        border-radius: 50px;
+        border: none;
+        padding-inline-start: 10px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+}
+
 .weddingList-card-container {
     width: 100%;
     max-width: 567px;
     height: 300px;
     background-color: white;
-
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+
 
     .weddingList-sender-div {
         width: 100%;

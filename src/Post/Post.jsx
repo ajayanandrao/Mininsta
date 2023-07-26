@@ -17,6 +17,7 @@ import { FaPlay } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Box, LinearProgress } from '@mui/material';
 
+import imageCompression from 'image-compressor';
 
 const Post = () => {
   const { currentUser } = useContext(AuthContext);
@@ -41,6 +42,7 @@ const Post = () => {
 
 
 
+
   const handleUpload = async () => {
     setShowEmoji(false);
     setPostText("");
@@ -50,6 +52,13 @@ const Post = () => {
       let downloadURL = "";
 
       if (img) {
+        if (img.size > 7 * 1024 * 1024) {
+          document.getElementById("less").innerHTML = "File should be less than 7 MB";
+          return;
+        }
+        else {
+          document.getElementById("less").innerHTML = "";
+        }
 
         const storageRef = ref(storage, "PostVideo/" + v4());
         const uploadTask = uploadBytesResumable(storageRef, img);
@@ -90,6 +99,7 @@ const Post = () => {
     }
     // setPostText("");
   };
+
 
   const saveData = async (downloadURL) => {
     const allPostsColRef = collection(db, 'AllPosts');
@@ -240,6 +250,12 @@ const Post = () => {
                 </div>
               </div>
             </div>
+
+            <div id="less" className='mt-3'
+              style={{
+                textAlign: "center", color: "red",
+                fontSize: "16px"
+              }}></div>
 
             <div className="Selected-imageOrVideo-container">
 
