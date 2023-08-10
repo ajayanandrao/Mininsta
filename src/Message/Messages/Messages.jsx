@@ -317,7 +317,6 @@ const Messages = () => {
 
                                 {PhotoFormatTimestamp(photoTime)}
                                 <div className="photo-bg-div" style={{ backgroundImage: `url(${photo})` }}>
-
                                     <div className="photo-bg-inner-div">
 
                                         <div className="photo-close-div" onClick={() => setPhoto(null)}>
@@ -384,7 +383,7 @@ const Messages = () => {
                                                 className={`message-bubble ${isSender ? 'message-sender' : 'message-recipient'} ${hasImage ? 'has-image' : '' /* Add 'has-image' class when message has an image */
                                                     }`}
                                             >
-                                                {!isSender && <img className="message-img" src={user.userPhoto} alt="Sender" />}
+                                                {!isSender && <div> <img className="message-img" src={user.userPhoto} alt="Sender" /> </div>}
 
                                                 <div>
                                                     {isSender && hoveredMessageId === message.id && (
@@ -398,8 +397,12 @@ const Messages = () => {
                                                     )}
 
 
-                                                    {hasImage && <img onClick={() => ViewMessageImg(message.id, message.imageUrl, message.timestamp)} src={message.imageUrl}
-                                                        className='messageImg' alt="Message" />}
+                                                    {hasImage && 
+                                                   <div>
+                                                   <img onClick={() => ViewMessageImg(message.id, message.imageUrl, message.timestamp)} src={message.imageUrl}
+                                                        className='messageImg' alt="Message" />
+                                                    </div>
+                                                    }
 
                                                     {message.message && <div className="message-content">{message.message}</div>}
 

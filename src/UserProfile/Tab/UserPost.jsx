@@ -19,8 +19,17 @@ const UserPost = ({ post }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
 
-    const handleVideoBtnClick = () => {
+    const handleVideoBtnClick = (id) => {
         const video = videoRef.current;
+        const previewVideos = document.querySelectorAll('.video');
+
+        // Pause all preview videos
+        previewVideos.forEach((previewVideo) => {
+            if (previewVideo !== video) {
+                previewVideo.pause();
+            }
+        });
+
         if (video.paused) {
             video.play();
             setIsPlaying(true);
@@ -29,6 +38,7 @@ const UserPost = ({ post }) => {
             setIsPlaying(false);
         }
     };
+
 
     // Like Post 
 
@@ -331,12 +341,12 @@ const UserPost = ({ post }) => {
                             <img width={"300px"} src={post.img} alt="Uploaded" className="Feed-Post-img" />
                         ) : post.img ? (
 
-                            <div className="video-container">
-                                <video ref={videoRef} className="video" onClick={handleVideoBtnClick}>
+                            <div className="video-container " id={`video${post.id}`}>
+                                <video ref={videoRef} className="video" onClick={() => handleVideoBtnClick(post.id)}>
                                     <source src={post.img} type="video/mp4" />
                                 </video>
                                 {!isPlaying && (
-                                    <a className="intro-banner-vdo-play-btn pinkBg" onClick={handleVideoBtnClick} target="_blank">
+                                    <a className="intro-banner-vdo-play-btn pinkBg" onClick={() => handleVideoBtnClick(post.id)} target="_blank">
                                         <div className="play-button" >
                                             <FaPlay className='play-button' />
                                         </div>

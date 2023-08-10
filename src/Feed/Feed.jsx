@@ -305,18 +305,31 @@ const Feed = ({ post }) => {
         const profile = document.getElementById(`profileView-${id}`);
         const del = document.getElementById(`del-${id}`);
 
-        if (x.style.display == 'none') {
+        // Check if the clicked dropdown is currently closed
+        if (x.style.display === 'none') {
+            closeAllDropdowns(); // Close all other open dropdowns
             x.style.display = 'block';
             profile.style.display = 'none';
         } else {
             x.style.display = 'none';
         }
+
+        // Hide edit and delete options for other users' posts
         if (currentUser.displayName !== post.displayName) {
             document.getElementById(`edit-${id}`).style.display = 'none';
             profile.style.display = 'block';
             del.style.display = 'none';
         }
     }
+
+    // Function to close all open dropdowns
+    function closeAllDropdowns() {
+        const dropdowns = document.querySelectorAll('.feed-option-mainu-div');
+        dropdowns.forEach(dropdown => {
+            dropdown.style.display = 'none';
+        });
+    }
+
 
     function postEdit(id) {
         // const x = document.getElementById(`edit-${id}`);
@@ -526,7 +539,7 @@ const Feed = ({ post }) => {
 
                         {/* Comment  */}
                         <div className="feed-bottom-mainu">
-                            <BsFillChatDotsFill  onClick={() => comment(post.id)} className='feed-bottom-icon' />
+                            <BsFillChatDotsFill onClick={() => comment(post.id)} className='feed-bottom-icon' />
 
                             <Link to={`/notification/${post.id}`}>
                                 <span className='comment-counter ms-4' >{commentCount > 0 && commentCount}</span>

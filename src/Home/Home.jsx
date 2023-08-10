@@ -76,7 +76,7 @@ const Home = () => {
                 handleDeletePost(story.id);
             }
         });
-    }, [stories]); 
+    }, [stories]);
 
     const handleDeletePost = async (storyId) => {
         try {
@@ -110,7 +110,7 @@ const Home = () => {
                     <StoryForm />
                     <Post />
 
-                    
+
                     <FlipMove>{newData}</FlipMove>
                     <div className='height'></div>
                 </>

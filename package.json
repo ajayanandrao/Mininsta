@@ -19,6 +19,7 @@
     "emoji-picker-react": "^4.4.9",
     "firebase": "^9.22.2",
     "flickity": "^2.3.0",
+    "fluent-ffmpeg": "^2.1.2",
     "framer-motion": "^7.6.18",
     "image-compressor": "^2.0.3",
     "react": "^18.2.0",

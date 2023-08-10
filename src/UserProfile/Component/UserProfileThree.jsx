@@ -6,6 +6,7 @@ import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import UserPhoto from '../Tab/UserPhoto';
 import Friends from '../Tab/Friends ';
+import { CircularProgress, LinearProgress } from '@mui/material';
 
 const ProfileThree = () => {
     const { currentUser } = useContext(AuthContext);
@@ -26,6 +27,8 @@ const ProfileThree = () => {
     }
 
     const [api, setApiData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const colRef = collection(db, 'AllPosts');
         const q = query(colRef, orderBy('bytime', 'desc'));
@@ -37,6 +40,7 @@ const ProfileThree = () => {
             });
 
             setApiData(fetchedPosts);
+            setLoading(false);
         });
 
         return () => {
@@ -83,7 +87,15 @@ const ProfileThree = () => {
                 <div className='content-div'>
 
                     <div id="Post" className="tabcontent w3-animate-opacity" style={{ display: "block" }}>
+                        {loading ?
 
+                            <>
+                                <div className='skeleton-center'>
+                                    <CircularProgress className='circularprogress' /> <span className='loadinga'> Loading... </span>
+                                </div>
+                            </>
+
+                            : ""}
                         {
                             api.map((item) => {
                                 if (currentUser && currentUser.uid === item.uid) {
@@ -106,21 +118,16 @@ const ProfileThree = () => {
 
                     <div id="Friend" style={{ display: "none" }} className="tabcontent w3-animate-opacity">
                         {/* <Friends /> */}
-                        <Friends currentuser={currentuser}/>
+                        <Friends currentuser={currentuser} />
                     </div>
 
                     <div id="Photo" style={{ display: "none" }} className="tabcontent w3-animate-opacity">
 
                         <UserPhoto />
-                        {/* <div className='photo-grid-center'>
-                            <div className='photo-grid'>
 
-
-                            </div>
-                        </div> */}
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

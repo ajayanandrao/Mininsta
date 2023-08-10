@@ -8,6 +8,10 @@ import { Timestamp, addDoc, arrayUnion, collection, doc, onSnapshot, orderBy, qu
 import { db, storage } from '../Firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4, uuidv4 } from "uuid";
+import imageCompression from 'image-compressor';
+
+
+
 
 
 import Picker from '@emoji-mart/react';
@@ -17,9 +21,11 @@ import { FaPlay } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Box, LinearProgress } from '@mui/material';
 
-import imageCompression from 'image-compressor';
+
 
 const Post = () => {
+
+
   const { currentUser } = useContext(AuthContext);
   const colRef = collection(db, "AllPosts");
   const q = query(colRef, orderBy("bytime", "desc"));
@@ -41,6 +47,31 @@ const Post = () => {
   }, []);
 
 
+  const compressImage = async (imageFile, maxWidth) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const aspectRatio = img.width / img.height;
+        const newWidth = Math.min(maxWidth, img.width);
+        const newHeight = newWidth / aspectRatio;
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust the compression quality if needed
+      };
+
+      img.onerror = reject;
+
+      img.src = URL.createObjectURL(imageFile);
+    });
+  };
 
 
   const handleUpload = async () => {
@@ -52,53 +83,87 @@ const Post = () => {
       let downloadURL = "";
 
       if (img) {
-        if (img.size > 7 * 1024 * 1024) {
-          document.getElementById("less").innerHTML = "File should be less than 7 MB";
-          return;
-        }
-        else {
-          document.getElementById("less").innerHTML = "";
-        }
+        if (img.type.startsWith('image/')) {
+          try {
+            const compressedImgBlob = await compressImage(img, 800); // Adjust maxWidth as needed
+            const storageRef = ref(storage, "PostImages/" + v4());
+            const uploadTask = uploadBytesResumable(storageRef, compressedImgBlob);
 
-        const storageRef = ref(storage, "PostVideo/" + v4());
-        const uploadTask = uploadBytesResumable(storageRef, img);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const progress = Math.round(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                if (progress < 100) {
+                  document.getElementById("p1").style.display = "block";
+                } else {
+                  document.getElementById("p1").style.display = "none";
+                }
+                console.log("Loading:", progress);
+              },
+              (error) => {
+                console.log("Error uploading image:", error);
+              },
+              async () => {
+                try {
+                  await uploadTask;
+                  downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                  saveData(downloadURL);
+                  console.log('Image uploaded successfully');
+                } catch (error) {
+                  console.log('Error uploading image:', error);
+                }
+              }
             );
-            if (progress < 100) {
-              document.getElementById("p1").style.display = "block";
-            } else {
-              document.getElementById("p1").style.display = "none";
-            }
-            console.log("Loading:", progress);
-          },
-          (error) => {
-            console.log("Error uploading img:", error);
-          },
-          async () => {
-            try {
-              await uploadTask;
-              downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              saveData(downloadURL);
-
-              console.log('img uploaded successfully');
-            } catch (error) {
-              console.log('Error uploading img:', error);
-            }
+          } catch (error) {
+            console.log("Error compressing image:", error);
+            return;
           }
-        );
+        } else if (img.type.startsWith('video/')) {
+          const storageRef = ref(storage, "PostVideos/" + v4());
+          const uploadTask = uploadBytesResumable(storageRef, img);
+
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+              if (progress < 100) {
+                document.getElementById("p1").style.display = "block";
+              } else {
+                document.getElementById("p1").style.display = "none";
+              }
+              console.log("Loading:", progress);
+            },
+            (error) => {
+              console.log("Error uploading video:", error);
+            },
+            async () => {
+              try {
+                await uploadTask;
+                downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                saveData(downloadURL);
+                console.log('Video uploaded successfully');
+              } catch (error) {
+                console.log('Error uploading video:', error);
+              }
+            }
+          );
+        }
       } else {
-        saveData(downloadURL); // Pass an empty string as the downloadURL
+        saveData(downloadURL);
       }
     } else {
-      console.log('No img or text entered');
+      console.log('No image or text entered');
     }
-    // setPostText("");
   };
+
+
+
+
+
 
 
   const saveData = async (downloadURL) => {
