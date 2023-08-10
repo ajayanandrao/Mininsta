@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { db, storage } from '../../Firebase';
 import { Box, CircularProgress, LinearProgress } from '@mui/material';
 import "./Messages.scss";
-import { MdClose, MdDeleteForever, MdOutlineReply, MdOutlineSend, MdSend } from 'react-icons/md';
+import { MdClose, MdDelete, MdDeleteForever, MdOutlineReply, MdOutlineSend, MdSend } from 'react-icons/md';
 import { FaThumbsUp } from 'react-icons/fa';
 import { BsFillCameraFill } from 'react-icons/bs';
 import { AuthContext } from '../../AuthContaxt';
@@ -124,7 +124,7 @@ const Messages = () => {
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
         return date.toLocaleString('en-US', options);
     }
-    
+
     function PhotoFormatTimestamp(timestamp) {
         const date = photoTime.toDate();
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -177,13 +177,49 @@ const Messages = () => {
     //     setMessageInput("");
     // };
 
-    const sendMessage = async (uid, name, recipientImg) => {
-        // Create a new document reference for the messages collection
-        const messagesRef = collection(db, 'messages');
-        setMessageInput("");
 
-        if (senderId) {
+    const compressImage = async (imageFile, maxWidth) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const aspectRatio = img.width / img.height;
+                const newWidth = Math.min(maxWidth, img.width);
+                const newHeight = newWidth / aspectRatio;
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust the compression quality if needed
+            };
+
+            img.onerror = reject;
+
+            img.src = URL.createObjectURL(imageFile);
+        });
+    };
+
+    const sendMessage = async (uid, name, recipientImg) => {
+        try {
+
             const content = replyInput || messageInput;
+            if (!senderId) {
+                return; // Return early if senderId is not defined
+            }
+
+            if (!content) {
+                return;
+            }
+
+            const messagesRef = collection(db, 'messages');
+            setMessageInput("");
+
+
             const newMessage = {
                 sender: currentUser.uid,
                 senderImg: currentUser.photoURL,
@@ -193,60 +229,63 @@ const Messages = () => {
                 timestamp: serverTimestamp(),
             };
 
-            if (img) {
-                const storageRef = ref(storage, `messageImages/${img.name}`);
-                const uploadTask = uploadBytesResumable(storageRef, img, 'data_url');
+            if (img && img.type.startsWith('image/')) {
+                try {
+                    const compressedImgBlob = await compressImage(img, 800);
 
-                // Listen to the upload progress events
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        // Handle progress updates here
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload progress: ' + progress + '%');
-                        if (progress < 100) {
-                            document.getElementById("progress").style.display = "block";
-                        } else {
-                            setImg(null);
-                            document.getElementById("progress").style.display = "none";
+                    const storageRef = ref(storage, `messageImages/${img.name}`);
+                    const uploadTask = uploadBytesResumable(storageRef, compressedImgBlob);
+
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload progress: ' + progress + '%');
+                            if (progress < 100) {
+                                document.getElementById("progress").style.display = "block";
+                            } else {
+                                setImg(null);
+                                document.getElementById("progress").style.display = "none";
+                            }
+                        },
+                        (error) => {
+                            console.error('Upload error:', error);
+                        },
+                        async () => {
+                            const imageUrl = await getDownloadURL(storageRef);
+                            newMessage.imageUrl = imageUrl;
+                            await addDoc(messagesRef, newMessage);
                         }
-                    },
-                    (error) => {
-                        // Handle any errors that occur during the upload
-                        console.error('Upload error:', error);
-                    },
-                    async () => {
-                        // Upload completed successfully
-                        console.log('Upload completed');
-                        // Get the download URL of the uploaded image
-                        const imageUrl = await getDownloadURL(storageRef);
-                        newMessage.imageUrl = imageUrl;
-                        await addDoc(messagesRef, newMessage);
-                    }
-                );
+                    );
+
+                } catch (error) {
+                    console.log("Error compressing image:", error);
+                    return;
+                }
             } else {
                 await addDoc(messagesRef, newMessage);
             }
 
-            await addDoc(collection(db, `allFriends/${uid}/Message`), {
-                userId: currentUser.uid,
-                name: currentUser.displayName,
-                photoUrl: currentUser.photoURL,
-                time: serverTimestamp(),
-            });
+            // Update sender's and recipient's friend lists
+            await Promise.all([
+                addDoc(collection(db, `allFriends/${uid}/Message`), {
+                    userId: currentUser.uid,
+                    name: currentUser.displayName,
+                    photoUrl: currentUser.photoURL,
+                    time: serverTimestamp(),
+                }),
+                addDoc(collection(db, `allFriends/${currentUser.uid}/Message`), {
+                    userId: uid,
+                    name: name,
+                    photoUrl: recipientImg,
+                    time: serverTimestamp(),
+                })
+            ]);
 
-            // Add receiver to sender's friends list
-            await addDoc(collection(db, `allFriends/${currentUser.uid}/Message`), {
-                userId: uid,
-                name: name,
-                photoUrl: recipientImg,
-                time: serverTimestamp(),
-            });
+            setMessageInput("");
+        } catch (error) {
+            console.error("Error sending message:", error);
         }
-
-        setMessageInput("");
-
     };
-
 
 
     const deleteMessage = async (messageId) => {
@@ -313,23 +352,21 @@ const Messages = () => {
                         <div className='photo-div'>
                             <div className="photo-div-inner">
 
-
-
-                                {PhotoFormatTimestamp(photoTime)}
-                                <div className="photo-bg-div" style={{ backgroundImage: `url(${photo})` }}>
-                                    <div className="photo-bg-inner-div">
-
-                                        <div className="photo-close-div" onClick={() => setPhoto(null)}>
-                                            <IoMdClose className='photo-close' />
-                                        </div>
-
-                                        <div className="photo-close-div" onClick={() => DeletePhoto(photoid)}>
-                                            <DeleteForever className='photo-delete' />
-                                        </div>
+                                <div className="photo-option-div">
+                                    <div className="photo-delete-div">
+                                        <div className="photo-time"> {PhotoFormatTimestamp(photoTime)}</div>
+                                        <MdDelete onClick={() => DeletePhoto(photoid)} style={{ fontSize: "26px" }} className='photo-delete' />
+                                    </div>
+                                    <div className="photo-close-div">
+                                        <IoMdClose onClick={() => setPhoto(null)} style={{ fontSize: "26px" }} className='photo-delete' />
                                     </div>
                                 </div>
 
-                                {/* <img src={photo} className='photo' alt="" /> */}
+                                <div className="photo-img-div">
+                                    <img src={photo} className='photo-img' alt="" />
+                                </div>
+
+
                             </div>
                         </div>
                     }
@@ -340,10 +377,6 @@ const Messages = () => {
                         <img className='message-profile-img' src={user.userPhoto} alt="" />
                         <span className='message-profile-name'>{user.name}</span>
                     </div>
-
-                    {/* <div className="main-wrapper"> */}
-
-
 
 
                     <div className="message-list-container">
@@ -397,11 +430,11 @@ const Messages = () => {
                                                     )}
 
 
-                                                    {hasImage && 
-                                                   <div>
-                                                   <img onClick={() => ViewMessageImg(message.id, message.imageUrl, message.timestamp)} src={message.imageUrl}
-                                                        className='messageImg' alt="Message" />
-                                                    </div>
+                                                    {hasImage &&
+                                                        <div>
+                                                            <img onClick={() => ViewMessageImg(message.id, message.imageUrl, message.timestamp)} src={message.imageUrl}
+                                                                className='messageImg' alt="Message" />
+                                                        </div>
                                                     }
 
                                                     {message.message && <div className="message-content">{message.message}</div>}
@@ -436,8 +469,6 @@ const Messages = () => {
                     </div>
 
 
-
-                    {/* </div> */}
                     <div className='message-input-wrapper'>
                         <div className='view-Reply'>
                             <div className='view-replay-sms'>

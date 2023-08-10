@@ -12,6 +12,7 @@ const UserPhoto = () => {
 
     const { currentUser } = useContext(AuthContext);
     const [userPhoto, setUserPhoto] = useState([]);
+    const [photoTime, setPhotoTime] = useState("");
 
     useEffect(() => {
         const colRef = collection(db, 'UserPostPhoto');
@@ -72,16 +73,11 @@ const UserPhoto = () => {
 
     };
 
-    // const ViewPhotoDiv = (id) => {
-    //     const x = document.getElementById(`viewPhotoDiv-${id}`);
 
-    //     if (x.style.display == 'none') {
-    //         x.style.display = 'flex';
-    //     } else {
-    //         x.style.display = 'none';
-    //     }
-
-    // }
+    const formatTimestamp = (timestamp) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+        return new Intl.DateTimeFormat('en-US', options).format(timestamp.toDate());
+    };
 
 
     const newData = userPhoto.map((post) => {
@@ -99,6 +95,8 @@ const UserPhoto = () => {
 
                                 <div className='viewimg-option-inner-div'>
                                     <div className='viewimg-option-delete'>
+
+                                        <div className="photo-time">{formatTimestamp(post.bytime)}</div>
                                         <MdDelete style={{ fontSize: "26px" }} onClick={() => deletePhoto(post.id)} />
                                     </div>
                                     <div className='viewimg-option-close'>
@@ -113,11 +111,6 @@ const UserPhoto = () => {
                                 <img src={post.img} className='viewimg' alt="" />
                             </div>
                         </div>
-
-                        {/* <div className="ViewImg-center">
-                            sldjfklsdjf
-                            <img src={post.img} className='View-Img' alt="" />
-                        </div> */}
                     </div>
 
                     {post.img && isImage(post.name) &&

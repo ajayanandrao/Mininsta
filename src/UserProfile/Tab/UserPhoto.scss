@@ -81,10 +81,11 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.63);
+	backdrop-filter: blur(15px);
 	z-index: 9999;
 	cursor: pointer;
-    overflow: hidden;
+	overflow: hidden;
 
 	.viewImg-relative {
 		position: relative;
@@ -102,13 +103,19 @@
 			.viewimg-option-inner-div {
 				width: 100%;
 				display: flex;
+				align-items: center;
 				padding: 1rem;
 				.viewimg-option-delete {
 					flex: 1;
 					display: flex;
 					height: 30px;
 					// background: red;
-					justify-content: end;
+					justify-content: space-between;
+					align-items: center;
+
+					.photo-time {
+						font-size: 14px;
+					}
 				}
 				.viewimg-option-close {
 					flex: 0.8;
