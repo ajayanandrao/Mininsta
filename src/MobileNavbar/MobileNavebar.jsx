@@ -11,7 +11,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { collection, onSnapshot } from "firebase/firestore";
 import { MdMovieFilter } from "react-icons/md";
 import v from "./../Image/img/vl.png";
-import h from "./../Image/h1.png";
+import video from "./../Image/v1.png";
 
 const MobileNavebar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -139,7 +139,8 @@ const MobileNavebar = () => {
 
         <Link to="reels">
           <div>
-            <MdMovieFilter className="mobile-nav-bottom-icon" />
+            <img src={video} className="mobile-nav-icons" alt="" />
+            {/* <MdMovieFilter className="mobile-nav-bottom-icon" /> */}
           </div>
         </Link>
         <Link to={"profile/"}>
