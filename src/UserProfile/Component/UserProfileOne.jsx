@@ -9,6 +9,8 @@ import { auth, db, storage } from '../../Firebase';
 import { addDoc, collection, doc, getDoc, onSnapshot, serverTimestamp, setDoc } from 'firebase/firestore';
 import { CircularProgress, LinearProgress } from '@mui/material';
 import { IoIosCloseCircle, IoMdClose } from 'react-icons/io';
+import imageCompression from 'image-compressor';
+
 
 const ProfileOne = () => {
     const { currentUser } = useContext(AuthContext);
@@ -34,46 +36,83 @@ const ProfileOne = () => {
 
     const profileDataRef = doc(db, "UpdateProfile", currentUser?.uid ?? 'default');
 
+    const compressImageProfile = async (imageFile, maxWidth) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const aspectRatio = img.width / img.height;
+                const newWidth = Math.min(maxWidth, img.width);
+                const newHeight = newWidth / aspectRatio;
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust the compression quality if needed
+            };
+
+            img.onerror = reject;
+
+            img.src = URL.createObjectURL(imageFile);
+        });
+    };
+
+
     const handleUpload = async (file) => {
         setLoading(true);
 
-        try {
-            // Create a Firebase Storage reference to the NewProfilePhotos folder with a unique name
-            const timestamp = new Date().getTime();
-            const storageRef = ref(storage, `NewProfilePhotos/${timestamp}-${file.name}`);
+        if (file) {
+            if (file.type.startsWith('image/')) {
+
+                try {
+                    // Create a Firebase Storage reference to the NewProfilePhotos folder with a unique name
+
+                    const compressedImgBlob = await compressImageProfile(file, 800);
+
+                    const timestamp = new Date().getTime();
+                    const storageRef = ref(storage, `NewProfilePhotos/${timestamp}-${file.name}`);
+
+                    // Upload the selected image file to Firebase Storage
+                    await uploadBytes(storageRef, compressedImgBlob);
+                    // Get download URL for uploaded file
+                    const downloadURL = await getDownloadURL(storageRef);
+
+                    // Update user profile with new photoURL
+                    await updateProfile(auth.currentUser, { photoURL: downloadURL });
+
+                    await setDoc(profileDataRef, {
+                        userPhoto: downloadURL,
+                    }, { merge: true });
+
+                    const userPostPhotoRef = collection(db, "UserPostPhoto");
+
+                    await addDoc(userPostPhotoRef, {
+                        name: img ? img.name : '',
+                        img: img ? downloadURL : '', // Only use the downloadURL if a img was uploaded
+                        uid: currentUser.uid,
+                        photoURL: currentUser.photoURL,
+                        displayName: currentUser.displayName,
+                        bytime: serverTimestamp(), // Use the server timestamp here
+                    });
 
 
+                    window.location.reload();
 
-            // Upload the selected image file to Firebase Storage
-            await uploadBytes(storageRef, file);
+                    console.log('Profile photo updated successfully!');
+                } catch (error) {
+                    console.error('Error updating profile photo:', error);
+                }
 
-            // Get download URL for uploaded file
-            const downloadURL = await getDownloadURL(storageRef);
-
-            // Update user profile with new photoURL
-            await updateProfile(auth.currentUser, { photoURL: downloadURL });
-
-            await setDoc(profileDataRef, {
-                userPhoto: downloadURL,
-            }, { merge: true });
-
-            const userPostPhotoRef = collection(db, "UserPostPhoto");
-
-            await addDoc(userPostPhotoRef, {
-                name: img ? img.name : '',
-                img: img ? downloadURL : '', // Only use the downloadURL if a img was uploaded
-                uid: currentUser.uid,
-                photoURL: currentUser.photoURL,
-                displayName: currentUser.displayName,
-                bytime: serverTimestamp(), // Use the server timestamp here
-            });
-
-            console.log('Profile photo updated successfully!');
-        } catch (error) {
-            console.error('Error updating profile photo:', error);
+            }
         }
 
         setLoading(false);
+
     };
 
     //  Cover Photo
@@ -121,49 +160,67 @@ const ProfileOne = () => {
     }, []);
 
 
-    const CoverUpload = () => {
-        setLoading(true);
-        const imageRef = ref(storage, `images/${cover.name}`);
-        // Convert the cover photo to WebP format using a canvas
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const img = new Image();
-        img.src = URL.createObjectURL(cover);
-        img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            context.drawImage(img, 0, 0);
-            canvas.toBlob((blob) => {
-                // Upload the WebP version to Firebase Storage
-                const webpImageRef = ref(storage, `images/${cover.name.replace(/\.[^/.]+$/, '')}.webp`);
-                uploadBytes(webpImageRef, blob)
-                    .then((snapshot) => {
-                        console.log("Uploaded WebP image successfully");
-                        getDownloadURL(webpImageRef).then((url) => {
-                            setImageUrl(url);
-                            setDoc(profileDataRef, {
-                                CoverPhoto: url,
-                                // Store the WebP version URL
-                                webpImageUrl: url,
-                            }, { merge: true })
-                                .then(() => {
-                                    console.log("Image URL added to Firestore");
-                                    setLoading(false);
-                                    off();
-                                })
-                                .catch((error) => {
-                                    console.error("Error adding image URL to Firestore:", error);
-                                    setLoading(false);
-                                });
-                        });
-                    })
-                    .catch((error) => {
-                        console.error("Error uploading WebP image", error);
-                        setLoading(false);
-                    });
-            }, 'image/webp');
-        };
+
+    const compressImage = async (imageFile, maxWidth) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const aspectRatio = img.width / img.height;
+                const newWidth = Math.min(maxWidth, img.width);
+                const newHeight = newWidth / aspectRatio;
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust the compression quality if needed
+            };
+
+            img.onerror = reject;
+
+            img.src = URL.createObjectURL(imageFile);
+        });
     };
+
+    const CoverUpload = async () => {
+        setLoading(true);
+
+        if (cover) {
+            if (cover.type.startsWith('image/')) {
+                try {
+                    const compressedImgBlob = await compressImage(cover, 800);
+
+                    const imageRef = ref(storage, `images/${cover.name}`);
+                    uploadBytes(imageRef, compressedImgBlob)
+                        .then(async (snapshot) => {
+                            console.log("Uploaded image successfully");
+                            const url = await getDownloadURL(imageRef);
+                            setImageUrl(url);
+
+                            await setDoc(profileDataRef, {
+                                CoverPhoto: url
+                            }, { merge: true });
+
+                            console.log("Image URL added to Firestore");
+                        })
+                        .catch((error) => {
+                            console.error("Error uploading image", error);
+                        });
+                } catch (error) {
+                    console.log("Error compressing Cover Image:", error);
+                }
+            }
+        }
+
+        setLoading(false);
+        off();
+    };
+
 
 
 
@@ -205,7 +262,7 @@ const ProfileOne = () => {
                                                             {loading ? (<LinearProgress />) : ""}
 
                                                             <label htmlFor="cover-img">
-                                                                <img className='Cover-img' src={cover ? URL.createObjectURL(cover) : (imageUrl ? imageUrl : item.CoverPhoto )} alt="" />
+                                                                <img className='Cover-img' src={cover ? URL.createObjectURL(cover) : (imageUrl ? imageUrl : item.CoverPhoto)} alt="" />
                                                             </label>
 
                                                             <input type="file" id='cover-img' onChange={(e) => setCover(e.target.files[0])} style={{ display: "none" }} />
@@ -259,3 +316,35 @@ const ProfileOne = () => {
 }
 
 export default ProfileOne
+
+
+
+
+// const CoverUpload = () => {
+//     setLoading(true);
+//     const imageRef = ref(storage, `images/${cover.name}`);
+//     uploadBytes(imageRef, cover)
+//         .then((snapshot) => {
+//             console.log("Uploaded image successfully");
+//             getDownloadURL(imageRef).then((url) => {
+//                 setImageUrl(url);
+//                 setDoc(profileDataRef, {
+//                     CoverPhoto: url
+//                 },
+//                     { merge: true })
+//                     .then(() => {
+//                         console.log("Image URL added to Firestore");
+//                         setLoading(false);
+//                         off();
+//                     })
+//                     .catch((error) => {
+//                         console.error("Error adding image URL to Firestore:", error);
+//                         setLoading(false);
+//                     });
+//             });
+//         })
+//         .catch((error) => {
+//             console.error("Error uploading image", error);
+//             setLoading(false);
+//         });
+// };

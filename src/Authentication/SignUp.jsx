@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./Signup.scss";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db, storage } from "./../Firebase";
 import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -13,6 +13,7 @@ import i from "./../Image/instagram.png";
 
 const SignUp = () => {
 
+    const nav = useNavigate();
 
     const [img, setImg] = useState(null);
     const [name, setName] = useState("");
@@ -31,88 +32,125 @@ const SignUp = () => {
     }, []);
 
 
+    const compressImage = async (imageFile, maxWidth) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const aspectRatio = img.width / img.height;
+                const newWidth = Math.min(maxWidth, img.width);
+                const newHeight = newWidth / aspectRatio;
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust the compression quality if needed
+            };
+
+            img.onerror = reject;
+
+            img.src = URL.createObjectURL(imageFile);
+        });
+    };
+
     const submit = async (e) => {
         e.preventDefault();
 
-        try {
-            const res = await createUserWithEmailAndPassword(auth, email, password)
+        if (img) {
+            if (img.type.startsWith('image/')) {
 
-            const storageRef = ref(storage, "userPhotos/" + name);
-            const uploadTask = uploadBytesResumable(storageRef, img);
-            // ------------------
+                try {
 
-            uploadTask.on('state_changed',
-                (snapshot) => {
+                    const compressedImgBlob = await compressImage(img, 800);
+                    const res = await createUserWithEmailAndPassword(auth, email, password)
 
-                },
-                (error) => {
-                    // Handle unsuccessful uploads
-                },
-                () => {
+                    const storageRef = ref(storage, "userPhotos/" + name);
+                    const uploadTask = uploadBytesResumable(storageRef, compressedImgBlob);
+                    // ------------------
 
-                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                        // console.log('File available at', downloadURL);
-                        await updateProfile(res.user, {
-                            displayName: name,
-                            photoURL: downloadURL,
-                        }).then(() => {
-                            // Profile updated!
-                            // ...
-                        }).catch((error) => {
-                            // An error occurred
-                            // ...
-                        });
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
 
-                        await addDoc(colRef, {
-                            uid: res.user.uid,
-                            name: name,
-                            email: email,
-                            password: password,
-                            PhotoUrl: downloadURL,
-                            // bytime: serverTimestamp(),
-                        });
+                        },
+                        (error) => {
+                            // Handle unsuccessful uploads
+                        },
+                        () => {
 
-                        const PresenceRef = doc(db, "userPresece", res.user.uid);
+                            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                                // console.log('File available at', downloadURL);
+                                await updateProfile(res.user, {
+                                    displayName: name,
+                                    photoURL: downloadURL,
+                                }).then(() => {
+                                    // Profile updated!
+                                    // ...
+                                }).catch((error) => {
+                                    // An error occurred
+                                    // ...
+                                });
 
-                        await setDoc(PresenceRef, {
-                            status: "online",
-                            uid: res.user.uid,
-                            presenceName: name,
-                            email: email,
-                            photoUrl: downloadURL,
-                            presenceTime: new Date()
-                        })
+                                await addDoc(colRef, {
+                                    uid: res.user.uid,
+                                    name: name,
+                                    email: email,
+                                    password: password,
+                                    PhotoUrl: downloadURL,
+                                    // bytime: serverTimestamp(),
+                                });
 
-                        const PresenceRefOnline = doc(db, "OnlyOnline", res.user.uid);
+                                const PresenceRef = doc(db, "userPresece", res.user.uid);
 
-                        const userData = {
-                            status: 'Online',
-                            uid: res.user.uid || '',
-                            presenceName: res.user.displayName || '',
-                            presenceName: name || '',
-                            email: email || '',
-                            photoUrl: res.user.photoURL || '',
-                            presenceTime: new Date()
-                            // presenceTime: new Date()
-                        };
-                        await setDoc(PresenceRefOnline, userData);
+                                await setDoc(PresenceRef, {
+                                    status: "online",
+                                    uid: res.user.uid,
+                                    presenceName: name,
+                                    email: email,
+                                    photoUrl: downloadURL,
+                                    presenceTime: new Date()
+                                })
 
-                        setDoc(doc(db, "userPostsList", res.user.uid), { messages: [] });
+                                const PresenceRefOnline = doc(db, "OnlyOnline", res.user.uid);
 
-                        const UpdateProfile = doc(db, "UpdateProfile", res.user.uid);
+                                const userData = {
+                                    status: 'Online',
+                                    uid: res.user.uid || '',
+                                    presenceName: res.user.displayName || '',
+                                    presenceName: name || '',
+                                    email: email || '',
+                                    photoUrl: res.user.photoURL || '',
+                                    presenceTime: new Date()
+                                    // presenceTime: new Date()
+                                };
 
-                        await setDoc(UpdateProfile, {
-                            name: name,
-                            userPhoto: downloadURL,
-                            uid: res.user.uid,
-                        });
+                                await setDoc(PresenceRefOnline, userData);
 
-                    });
+                                setDoc(doc(db, "userPostsList", res.user.uid), { messages: [] });
+
+                                const UpdateProfile = doc(db, "UpdateProfile", res.user.uid);
+
+                                await setDoc(UpdateProfile, {
+                                    name: name,
+                                    userPhoto: downloadURL,
+                                    uid: res.user.uid,
+                                });
+
+                            });
+                        }
+                    );
+
+                    nav("/home");
+
+                } catch (err) {
+                    alert(err.message);
                 }
-            );
+            }
 
-        } catch (err) {
-            alert(err.message);
         }
 
         setImg(null);
@@ -125,8 +163,6 @@ const SignUp = () => {
 
     return (
         <>
-
-
             <div className="Signup-form-container signup-div w3-animate-right">
                 <h3 className='login-title'><img width={"120px"} src={logoText} alt="" /></h3>
 
@@ -156,7 +192,7 @@ const SignUp = () => {
                     />
                     <button className="btn-primary-custom w-100 my-4"
                         onClick={submit}>Sign Up</button>
-                    
+
                     <div className='or'>or</div>
                     <div className='link-icon-div'>
                         <img className='link-icons' style={{ width: "30px" }} src={g} alt="" />

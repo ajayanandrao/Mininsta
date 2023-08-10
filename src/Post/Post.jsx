@@ -362,3 +362,66 @@ const Post = () => {
 }
 
 export default Post
+
+
+
+// =========================
+
+// const handleUpload = async () => {
+//   setShowEmoji(false);
+//   setPostText("");
+//   setImg(null);
+
+//   if (img || postText) {
+//     let downloadURL = "";
+
+//     if (img) {
+
+
+//       const storageRef = ref(storage, "PostVideo/" + v4());
+//       const uploadTask = uploadBytesResumable(storageRef, img);
+
+//       uploadTask.on(
+//         "state_changed",
+//         (snapshot) => {
+//           const progress = Math.round(
+//             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//           );
+//           if (progress < 100) {
+//             document.getElementById("p1").style.display = "block";
+//           } else {
+//             document.getElementById("p1").style.display = "none";
+//           }
+//           console.log("Loading:", progress);
+//         },
+//         (error) => {
+//           console.log("Error uploading img:", error);
+//         },
+//         async () => {
+//           try {
+//             await uploadTask;
+//             downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+//             saveData(downloadURL);
+
+//             console.log('img uploaded successfully');
+//           } catch (error) {
+//             console.log('Error uploading img:', error);
+//           }
+//         }
+//       );
+//     } else {
+//       saveData(downloadURL); // Pass an empty string as the downloadURL
+//     }
+//   } else {
+//     console.log('No img or text entered');
+//   }
+//   setPostText("");
+// };
+
+// if (img.size > 50 * 1024 * 1024) {
+//   document.getElementById("less").innerHTML = "File should be less than 7 MB";
+//   return;
+// }
+// else {
+//   document.getElementById("less").innerHTML = "";
+// }

@@ -5,6 +5,8 @@ import { db } from '../../Firebase';
 import { AuthContext } from '../../AuthContaxt';
 import { FiMaximize } from "react-icons/fi"
 import { MdDelete } from "react-icons/md"
+import { IoMdClose } from "react-icons/io"
+import { useNavigate } from 'react-router-dom';
 
 const UserPhoto = () => {
 
@@ -57,22 +59,30 @@ const UserPhoto = () => {
             x.style.display = 'none';
         }
     };
-
-    const ViewPhotoDiv = (id) => {
-        const x = document.getElementById(`viewPhotoDiv-${id}`);
+    const deletePhoto = async (id) => {
+        const x = document.getElementById(`ViewImg${id}`);
 
         if (x.style.display == 'none') {
             x.style.display = 'flex';
         } else {
             x.style.display = 'none';
         }
-
-    }
-
-    const deletePhoto = async (id) => {
         const colRef = doc(db, 'UserPostPhoto', id);
         await deleteDoc(colRef);
-    }
+
+    };
+
+    // const ViewPhotoDiv = (id) => {
+    //     const x = document.getElementById(`viewPhotoDiv-${id}`);
+
+    //     if (x.style.display == 'none') {
+    //         x.style.display = 'flex';
+    //     } else {
+    //         x.style.display = 'none';
+    //     }
+
+    // }
+
 
     const newData = userPhoto.map((post) => {
         if (post.uid === currentUser.uid) {
@@ -80,21 +90,41 @@ const UserPhoto = () => {
             return (
                 <>
 
-                    <div id={`ViewImg${post.id}`} style={{ display: "none" }} className='ViewImg' onClick={() => closeViewPhoto(post.id)}>
-                        <div className="ViewImg-center">
-                            <img src={post.img} className='View-Img' alt="" />
+                    <div id={`ViewImg${post.id}`} style={{ display: "none" }}
+                        className='ViewImg' >
+
+                        <div className="viewImg-relative">
+
+                            <div className="viewimg-option">
+
+                                <div className='viewimg-option-inner-div'>
+                                    <div className='viewimg-option-delete'>
+                                        <MdDelete style={{ fontSize: "26px" }} onClick={() => deletePhoto(post.id)} />
+                                    </div>
+                                    <div className='viewimg-option-close'>
+                                        <IoMdClose style={{ fontSize: "26px" }} onClick={() => closeViewPhoto(post.id)} />
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div className='viewimg-div'>
+                                <img src={post.img} className='viewimg' alt="" />
+                            </div>
                         </div>
+
+                        {/* <div className="ViewImg-center">
+                            sldjfklsdjf
+                            <img src={post.img} className='View-Img' alt="" />
+                        </div> */}
                     </div>
 
                     {post.img && isImage(post.name) &&
                         (
-                            <div key={post.id} onClick={() => ViewPhotoDiv(post.id)} className='photo-card' style={{ backgroundImage: `url(${post.img})` }}
-
-                            >
-                                <div className="photo-card-icon-div" style={{ display: "none" }} id={`viewPhotoDiv-${post.id}`}>
-                                    <FiMaximize className="photo-card-icon" onClick={() => ViewPhoto(post.id)} />
-                                    <MdDelete className="photo-card-icon" onClick={() => deletePhoto(post.id)} />
-                                </div>
+                            <div key={post.id} onClick={() => { ViewPhoto(post.id) }}
+                                className='photo-card'
+                                style={{ backgroundImage: `url(${post.img})` }}>
 
                             </div >
                         )

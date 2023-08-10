@@ -12,6 +12,15 @@ import { Link } from 'react-router-dom';
 const StoryForm = () => {
     const { currentUser } = useContext(AuthContext);
 
+    const dataRef = collection(db, "users");
+    const [userPhoto, setUserPhoto] = useState(null);
+    useEffect(() => {
+        const unsub = onSnapshot(dataRef, (snapshot) => {
+          setUserPhoto(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        });
+        return unsub;
+      }, []);
+
     const [stories, setStories] = useState([]);
     useEffect(() => {
         const storiesCollection = collection(db, 'stories');
