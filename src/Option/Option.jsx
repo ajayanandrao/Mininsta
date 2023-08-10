@@ -9,6 +9,10 @@ import { AuthContext } from '../AuthContaxt';
 import { MdMovie } from "react-icons/md";
 import { FcFilmReel } from "react-icons/fc";
 import { GiLovers } from "react-icons/gi";
+import love from "./../Image/hearts100.png";
+import video from "./../Image/v3.png";
+import movie from "./../Image/m4.png";
+import { BsFillDoorClosedFill } from 'react-icons/bs';
 
 const Option = () => {
     const { currentUser } = useContext(AuthContext);
@@ -54,14 +58,6 @@ const Option = () => {
                         <span className='option-profile-text'>{currentUser && currentUser.displayName}</span>
                     </div>
 
-                    {/* <div className="option-mainu">
-                        <div className="option-mainu-icon">
-                            <i className="bi bi-moon-fill"></i>
-                        </div>
-                        <div className="option-mainu-name">
-                            Dark Mode
-                        </div>
-                    </div> */}
                     <Link to="/setting/">
                         <div className="option-mainu">
 
@@ -78,7 +74,8 @@ const Option = () => {
                     <Link to="/movies/">
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
-                                <MdMovie />
+                                {/* <MdMovie /> */}
+                                <img src={movie} style={{width:"30px"}} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Movies
@@ -88,7 +85,8 @@ const Option = () => {
                     <Link to="/Wedding/">
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
-                                <GiLovers />
+                                {/* <GiLovers /> */}
+                            <img src={love} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Matrimony Arrange
@@ -98,7 +96,8 @@ const Option = () => {
                     <Link to="/reels/">
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
-                                <MdMovieFilter />
+                                {/* <MdMovieFilter /> */}
+                                <img src={video} style={{width:"30px"}} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Reals
@@ -108,7 +107,8 @@ const Option = () => {
 
                     <div className="option-mainu">
                         <div className="option-mainu-icon">
-                            <i className="bi bi-door-open-fill" onClick={LogOut}></i>
+                            <BsFillDoorClosedFill className="" style={{fontSize:"30px"}}/>
+                            {/* <i className="bi bi-door-open-fill" onClick={LogOut}></i> */}
                         </div>
                         <div className="option-mainu-name" onClick={LogOut}>
                             Log Out
