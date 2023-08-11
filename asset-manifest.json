@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Mininsta/static/css/main.f4fa172e.css",
-    "main.js": "/Mininsta/static/js/main.1e4fa1e4.js",
+    "main.css": "/Mininsta/static/css/main.7b58135a.css",
+    "main.js": "/Mininsta/static/js/main.796dd5a5.js",
     "static/js/679.cec2d8ba.chunk.js": "/Mininsta/static/js/679.cec2d8ba.chunk.js",
     "static/js/787.3c880708.chunk.js": "/Mininsta/static/js/787.3c880708.chunk.js",
     "static/media/sv.mp4": "/Mininsta/static/media/sv.98ba037f3bcb49af8fea.mp4",
@@ -11,16 +11,21 @@
     "static/media/v3.png": "/Mininsta/static/media/v3.0efdc4adae986bf53235.png",
     "static/media/c2.png": "/Mininsta/static/media/c2.abe65ce8dd578e8203c5.png",
     "static/media/logo192.png": "/Mininsta/static/media/logo192.052f2e1cfd165966b477.png",
+    "static/media/v4.png": "/Mininsta/static/media/v4.28cc82c60fa12597c21b.png",
     "static/media/emoji.png": "/Mininsta/static/media/emoji.01635c34bc0740667935.png",
+    "static/media/sms1.png": "/Mininsta/static/media/sms1.e3dba9becc17348b571c.png",
+    "static/media/h3.png": "/Mininsta/static/media/h3.fe043c66763d8d3deee7.png",
     "static/media/loc1.png": "/Mininsta/static/media/loc1.7601b189128da9c3abee.png",
+    "static/media/d2.png": "/Mininsta/static/media/d2.1088ba4002bcb2489bda.png",
+    "static/media/home3.png": "/Mininsta/static/media/home3.fe33441fe125a7c99238.png",
     "index.html": "/Mininsta/index.html",
-    "main.f4fa172e.css.map": "/Mininsta/static/css/main.f4fa172e.css.map",
-    "main.1e4fa1e4.js.map": "/Mininsta/static/js/main.1e4fa1e4.js.map",
+    "main.7b58135a.css.map": "/Mininsta/static/css/main.7b58135a.css.map",
+    "main.796dd5a5.js.map": "/Mininsta/static/js/main.796dd5a5.js.map",
     "679.cec2d8ba.chunk.js.map": "/Mininsta/static/js/679.cec2d8ba.chunk.js.map",
     "787.3c880708.chunk.js.map": "/Mininsta/static/js/787.3c880708.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f4fa172e.css",
-    "static/js/main.1e4fa1e4.js"
+    "static/css/main.7b58135a.css",
+    "static/js/main.796dd5a5.js"
   ]
 }
