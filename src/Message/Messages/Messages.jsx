@@ -358,7 +358,7 @@ const Messages = () => {
                                         <MdDelete onClick={() => DeletePhoto(photoid)} style={{ fontSize: "26px" }} className='photo-delete' />
                                     </div>
                                     <div className="photo-close-div">
-                                        <IoMdClose onClick={() => setPhoto(null)} style={{ fontSize: "26px" }} className='photo-delete' />
+                                        <IoMdClose onClick={() => setPhoto(null)} style={{ fontSize: "26px", color:"black" }} className='photo-delete' />
                                     </div>
                                 </div>
 

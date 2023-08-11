@@ -13,7 +13,7 @@ import love from "./../Image/h3.png";
 import video from "./../Image/v4.png";
 import movie from "./../Image/m4.png";
 import setting from "./../Image/s1.png";
-import door from "./../Image/d2.png";
+import door from "./../Image/d4.png";
 import { BsFillDoorClosedFill } from 'react-icons/bs';
 
 const Option = () => {

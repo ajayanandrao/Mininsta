@@ -100,7 +100,7 @@ const UserPhoto = () => {
                                         <MdDelete style={{ fontSize: "26px" }} onClick={() => deletePhoto(post.id)} />
                                     </div>
                                     <div className='viewimg-option-close'>
-                                        <IoMdClose style={{ fontSize: "26px" }} onClick={() => closeViewPhoto(post.id)} />
+                                        <IoMdClose style={{ fontSize: "26px", color:"black" }} onClick={() => closeViewPhoto(post.id)} />
                                     </div>
 
 
