@@ -11,7 +11,10 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { collection, onSnapshot } from "firebase/firestore";
 import { MdMovieFilter } from "react-icons/md";
 import v from "./../Image/img/vl.png";
+import home from "./../Image/home3.png";
+import heart from "./../Image/h3.png";
 import video from "./../Image/v3.png";
+import sms from "./../Image/sms1.png";
 
 const MobileNavebar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -122,18 +125,20 @@ const MobileNavebar = () => {
         id="navIdB"
       >
         <Link to={"home/"}>
-          {/* <img src={h} width={"25px"} alt="" /> */}
-          <AiFillHome className='mobile-nav-bottom-icon' />
+          <img src={home} width={"30px"} alt="" />
+          {/* <AiFillHome className='mobile-nav-bottom-icon' /> */}
         </Link>
         <Link to="notification">
           <div>
-            <AiFillHeart className="mobile-nav-bottom-icon" />
+            <img src={heart} style={{width:"28px"}} alt="" />
+            {/* <AiFillHeart className="mobile-nav-bottom-icon" /> */}
           </div>
         </Link>
 
         <Link to="message/">
           <div>
-            <i className="bi bi-messenger"></i>
+            {/* <i className="bi bi-messenger"></i> */}
+            <img src={sms} style={{width:"28px"}} alt="" />
           </div>
         </Link>
 

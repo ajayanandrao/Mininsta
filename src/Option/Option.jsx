@@ -9,9 +9,11 @@ import { AuthContext } from '../AuthContaxt';
 import { MdMovie } from "react-icons/md";
 import { FcFilmReel } from "react-icons/fc";
 import { GiLovers } from "react-icons/gi";
-import love from "./../Image/hearts100.png";
-import video from "./../Image/v3.png";
+import love from "./../Image/h3.png";
+import video from "./../Image/v4.png";
 import movie from "./../Image/m4.png";
+import setting from "./../Image/s1.png";
+import door from "./../Image/d2.png";
 import { BsFillDoorClosedFill } from 'react-icons/bs';
 
 const Option = () => {
@@ -62,7 +64,8 @@ const Option = () => {
                         <div className="option-mainu">
 
                             <div className="option-mainu-icon">
-                                <i className="bi bi-gear-fill"></i>
+                                <img src={setting} style={{ width: "35px" }} className='option-image-icon ' alt="" />
+                                {/* <i className="bi bi-gear-fill"></i> */}
                             </div>
                             <div className="option-mainu-name">
                                 Setting
@@ -75,7 +78,7 @@ const Option = () => {
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
                                 {/* <MdMovie /> */}
-                                <img src={movie} style={{width:"30px"}} className='option-image-icon' alt="" />
+                                <img src={movie} style={{ width: "35px" }} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Movies
@@ -86,7 +89,7 @@ const Option = () => {
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
                                 {/* <GiLovers /> */}
-                            <img src={love} className='option-image-icon' alt="" />
+                                <img src={love} style={{ width: "35px" }} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Matrimony Arrange
@@ -97,7 +100,7 @@ const Option = () => {
                         <div className="option-mainu">
                             <div className="option-mainu-icon">
                                 {/* <MdMovieFilter /> */}
-                                <img src={video} style={{width:"30px"}} className='option-image-icon' alt="" />
+                                <img src={video} style={{ width: "35px" }} className='option-image-icon' alt="" />
                             </div>
                             <div className="option-mainu-name" >
                                 Reals
@@ -107,7 +110,8 @@ const Option = () => {
 
                     <div className="option-mainu">
                         <div className="option-mainu-icon">
-                            <BsFillDoorClosedFill className="" style={{fontSize:"30px"}}/>
+                            {/* <BsFillDoorClosedFill className="" style={{ fontSize: "35px" }} /> */}
+                            <img src={door} style={{ width: "30px" }} alt="" />
                             {/* <i className="bi bi-door-open-fill" onClick={LogOut}></i> */}
                         </div>
                         <div className="option-mainu-name" onClick={LogOut}>
